@@ -7494,16 +7494,10 @@
               vial.style.setProperty('margin', '0 auto 2px auto', 'important');
               var label = vial.querySelector('.photo-vial-label');
               if (label) {
-                label.style.cssText += ';color:#111!important;opacity:1!important;visibility:visible!important;z-index:10!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;transform:none!important;filter:none!important;left:8%!important;right:8%!important;top:42%!important;height:48%!important;';
-                label.querySelectorAll('.photo-vial-product, .photo-vial-product span, .photo-vial-dose').forEach(function(n) {
-                  n.style.setProperty('color', '#111', 'important');
-                  n.style.setProperty('opacity', '1', 'important');
-                  n.style.setProperty('visibility', 'visible', 'important');
-                  n.style.setProperty('display', n.classList.contains('photo-vial-product') ? 'flex' : 'block', 'important');
-                  if (n.classList.contains('photo-vial-dose') || n.tagName === 'SPAN') {
-                    n.style.setProperty('font-weight', '800', 'important');
-                  }
-                });
+                // Hidden: .hx-force-label already renders the product name/dose on this card,
+                // so this legacy label just duplicated it and, when the vial art shifts on
+                // narrow screens, showed as stray text bleeding outside the bottle image.
+                label.style.cssText = 'opacity:0!important;visibility:hidden!important;pointer-events:none!important;';
               }
             }
           } else {
