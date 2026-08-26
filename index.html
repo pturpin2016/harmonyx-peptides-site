@@ -7379,14 +7379,7 @@
     }
 
     // Most Popular allowlist — curated featured products (hero row)
-    const MOST_POPULAR_IDS = new Set([
-      'nad-1000mg-29',
-      'klow-80mg-26',
-      'r-luxe-30mg-13',
-      'wolverine-20mg-21',
-      'mots-c-40mg-32',
-      'glutathione-1500mg-42'
-    ]);
+    ;
 
     
     
@@ -7538,7 +7531,10 @@
 
     function renderCatalog() {
       const filtered = getFilteredProducts();
-      const featured = filtered.filter(product => MOST_POPULAR_IDS.has(product.id));
+      const featured = filtered
+        .filter(product => Number.isFinite(product.popularRank))
+        .sort((a, b) => a.popularRank - b.popularRank)
+        .slice(0, 8);
 
       let html = '';
 
