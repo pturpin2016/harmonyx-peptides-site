@@ -18,6 +18,14 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="HarmonyX">
 
+  <!-- Perf: open the catalog-API connection early and start fetching the
+  two shared vial/bottle template images (used by nearly every product
+  card) in parallel with HTML parsing, instead of waiting for the
+  catalog fetch -> render pass -> lazy-load trigger to request them. -->
+  <link rel="preconnect" href="https://harmonyx-proxy.pturpin2016.workers.dev">
+  <link rel="preload" as="image" href="https://pub-d475d060317e4fc189c2744f92462331.r2.dev/Vial%20template.png">
+  <link rel="preload" as="image" href="https://pub-d475d060317e4fc189c2744f92462331.r2.dev/HarmonyX-Nasal-Spray-Bottle.jpg">
+
   <style>
 :root {
       --black: #050505;
