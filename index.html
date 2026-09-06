@@ -17809,6 +17809,7 @@
     font-size: 12px;
     padding: 8px 10px;
     line-height: 1;
+    min-height: 44px;
   }
   #hxInstallBanner .hx-ib-install {
     background: var(--gold, #d6b55a);
@@ -17818,6 +17819,7 @@
     white-space: nowrap;
   }
   #hxInstallBanner .hx-ib-close {
+    min-width: 44px;
     padding: 8px;
     color: var(--muted, #b7ab88);
     border-color: transparent;
@@ -17892,14 +17894,48 @@
   var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
 
   if (isIOS) {
-    // iOS Safari has no install prompt API - show manual instructions.
+    /*
+     * iOS Safari has no beforeinstallprompt API. Give the visitor a real
+     * action instead of static text: open the native share sheet, where
+     * "Add to Home Screen" is available. If Web Share is unavailable, update
+     * the banner with the exact Safari menu path.
+     */
     show(
       '<img src="/icon-192.png" alt="">' +
       '<div class="hx-ib-text">' +
         '<p class="hx-ib-title">Install the HarmonyX app</p>' +
-        '<p class="hx-ib-sub">Tap the Share icon, then "Add to Home Screen".</p>' +
+        '<p class="hx-ib-sub">Tap Install, then choose "Add to Home Screen".</p>' +
       '</div>' +
-      '<div class="hx-ib-actions"><button class="hx-ib-close" aria-label="Dismiss">&times;</button></div>'
+      '<div class="hx-ib-actions">' +
+        '<button class="hx-ib-install hx-ios-install" type="button">Install</button>' +
+        '<button class="hx-ib-close" type="button" aria-label="Dismiss">&times;</button>' +
+      '</div>',
+      function () {
+        var installBtn = banner.querySelector('.hx-ios-install');
+        var instruction = banner.querySelector('.hx-ib-sub');
+        if (!installBtn) return;
+
+        installBtn.addEventListener('click', function () {
+          if (navigator.share) {
+            navigator.share({
+              title: 'HarmonyX Peptides',
+              url: window.location.href
+            }).catch(function (error) {
+              if (error && error.name === 'AbortError') return;
+              if (instruction) {
+                instruction.textContent =
+                  'Tap the browser menu (\u2022\u2022\u2022), tap Share, then choose "Add to Home Screen".';
+              }
+            });
+            return;
+          }
+
+          if (instruction) {
+            instruction.textContent =
+              'Tap the browser menu (\u2022\u2022\u2022), tap Share, then choose "Add to Home Screen".';
+          }
+        });
+      }
     );
   } else {
     window.addEventListener('beforeinstallprompt', function (e) {
