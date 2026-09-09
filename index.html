@@ -7366,8 +7366,8 @@
       const raw = String(value || '').trim().toLowerCase();
 
       const aliases = {
-        'reta': 'r-luxe',
-        'retatrutide': 'r-luxe'
+        'reta': 'glp-3x',
+        'retatrutide': 'glp-3x'
       };
 
       return aliases[raw] || raw;
@@ -7377,7 +7377,7 @@
       const name = product.name.toLowerCase();
       const aliases = [];
 
-      if (name.includes('r-luxe')) {
+      if (name.includes('glp-3x')) {
         aliases.push('reta', 'retatrutide');
       }
 
