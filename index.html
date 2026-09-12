@@ -17824,7 +17824,14 @@
     #hxInstallBanner { align-items: flex-start; }
     #hxInstallBanner .hx-ib-actions { flex-direction: column; }
   }
-       </style>
+       
+    /* HarmonyX v7.85 -- Doctor-Led Sourcing plaque: constrain width so the centered icon+text group reads as a proportioned card instead of a small island in a full-width bar */
+    .pc-authorized-section {
+      max-width: 780px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+</style>
 <div id="hxInstallBanner" role="dialog" aria-label="Install HarmonyX app"></div>
 <script>
 (function () {
