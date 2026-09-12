@@ -17395,10 +17395,13 @@
     yesBtn.disabled = true;
     if (denied) denied.hidden = true;
 
-    // Bot check: Enter Site also requires a passed Turnstile challenge,
-    // same widget already used at checkout elsewhere on the site.
+    // Bot check on harmony-x.com. Staging/preview hosts (pages.dev) cannot
+    // complete this widget — the sitekey is registered to the live domain —
+    // so checkboxes alone are enough there. Production still requires both.
+    const isLiveHost = /(^|\.)harmony-x\.com$/i.test(location.hostname);
     let hxAgeGateTurnstileWidgetId = null;
-    let turnstileVerified = false;
+    let turnstileVerified = !isLiveHost;
+    if (!isLiveHost && turnstileContainer) turnstileContainer.style.display = 'none';
 
     const updateGateButton = () => {
       yesBtn.disabled = !(checkbox.checked && researchCheckbox.checked && turnstileVerified);
@@ -17416,7 +17419,7 @@
       try {
         hxAgeGateTurnstileWidgetId = turnstile.render(turnstileContainer, {
           sitekey: '0x4AAAAAAEPLL-DfcGg0HyYD',
-          theme: 'dark',
+          theme: 'light',
           appearance: 'always',
           callback: function () {
             turnstileVerified = true;
@@ -17435,7 +17438,7 @@
         console && console.warn && console.warn('renderAgeGateTurnstile', e);
       }
     }
-    renderAgeGateTurnstile();
+    if (isLiveHost) renderAgeGateTurnstile();
 
     yesBtn.addEventListener('click', () => {
       if (!checkbox.checked || !researchCheckbox.checked || !turnstileVerified) return;
