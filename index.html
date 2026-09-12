@@ -16,7 +16,17 @@
       href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="/assets/index-BR7ih8hd.js"></script>
+    <script>
+      try {
+        navigator.serviceWorker.getRegistrations().then(function (regs) {
+          regs.forEach(function (reg) { reg.unregister(); });
+        });
+        caches.keys().then(function (keys) {
+          keys.forEach(function (key) { caches.delete(key); });
+        });
+      } catch (e) {}
+    </script>
+    <script type="module" crossorigin src="/assets/index-BOFb5T4F.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-BQhajn4H.css">
   </head>
   <body class="antialiased">
