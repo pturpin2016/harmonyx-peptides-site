@@ -1,19 +1,14 @@
 # HarmonyX daylight rebuild
 
-Staging branch for the brighter catalog. **Do not merge to `main` until Cloudflare Pages is switched** — `main` still auto-deploys the current static site to harmony-x.com.
+Staging branch for the brighter catalog. **Do not merge to `main` until you have placed a test order on the preview and confirmed Paul/Thabby received the ticket.**
 
-## What this rebuild is
+Preview (Cloudflare Pages): https://daylight.harmonyx-peptides.pages.dev/
 
-- Ivory / espresso / bronze catalog
-- HarmonyX lockup, doctor-led sourcing, Integrity · Trust · Transparency
-- Catalog grouping, most-popular lead vials, COA page
-- Live inventory from `harmonyx-proxy.pturpin2016.workers.dev`
-- Orders POST to `/api/order` with Cloudflare Turnstile when the host is harmony-x.com
+## This branch
 
-## Cutover (when you are ready)
+- Ivory / espresso / bronze catalog on the existing static site (same cart, same worker, same Google Script orders)
+- Unique labeled vial photos per product
+- HarmonyX lockup, Integrity · Trust · Transparency, doctor-led sourcing, extra mile notes
+- Turnstile theme set to light
 
-1. Keep this branch as a Cloudflare Pages **preview** first.
-2. Confirm a test request tickets Paul and Thabby.
-3. Point the production Pages project at this build, or merge to `main` only after the build command is set.
-
-Until then, harmony-x.com stays on the existing static site.
+`main` still serves the current live site at harmony-x.com.

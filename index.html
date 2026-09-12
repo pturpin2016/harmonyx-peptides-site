@@ -6184,7 +6184,137 @@
     }
 
       </style>
-  </head>
+  
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style id="daylight-cutover">
+  :root {
+    --hx-ivory: #F7F3EC;
+    --hx-paper: #FFFDF8;
+    --hx-ink: #1A1814;
+    --hx-muted: #6B6458;
+    --hx-line: #E7E0D4;
+    --hx-bronze: #B08A3E;
+  }
+  html, body {
+    background: var(--hx-ivory) !important;
+    color: var(--hx-ink) !important;
+    font-family: Inter, system-ui, sans-serif !important;
+  }
+  h1, h2, h3, .hx-brand-hero-title, .hx-contact-title, .why-harmony-heading h2,
+  .pc-authorized-title {
+    font-family: "Instrument Serif", Georgia, serif !important;
+    color: var(--hx-ink) !important;
+    letter-spacing: -0.03em !important;
+  }
+  .hx-atom-field, .hx-mito, .hx-cell, .hx-amino, .hx-dna { display: none !important; }
+  .photo-vial-label { display: none !important; }
+  header.hx-v4-hero {
+    background: var(--hx-ivory) !important;
+    border-bottom: 1px solid var(--hx-line) !important;
+    color: var(--hx-ink) !important;
+  }
+  header.hx-v4-hero h1, header.hx-v4-hero p { color: var(--hx-ink) !important; }
+  .hx-brand-hero, .hx-trust-strip, .why-harmony, .pc-authorized-section,
+  .catalog-toolbar, .main, .footer, .hx-video-spotlight {
+    background: var(--hx-ivory) !important;
+    color: var(--hx-ink) !important;
+  }
+  .hx-brand-hero-inner { max-width: 1120px !important; }
+  .hx-brand-hero {
+    display: grid !important;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 48px;
+    align-items: center;
+    padding: 56px 24px !important;
+  }
+  @media (max-width: 800px) {
+    .hx-brand-hero { grid-template-columns: 1fr !important; }
+  }
+  .hx-hero-vial {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 0 var(--hx-line);
+    background: #EDE6D8;
+  }
+  .hx-hero-vial img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: center;
+  }
+  .hx-brand-hero-title { font-size: clamp(2.6rem, 6vw, 4.2rem) !important; }
+  .hx-brand-hero-title em, .why-harmony-motto {
+    display: block;
+    font-style: italic;
+    color: rgba(26,24,20,.8);
+  }
+  .product-card, .supply-card, .hx-contact-card, .pc-authorized-plaque,
+  .why-harmony-card, .hx-video-spotlight-shell {
+    background: var(--hx-paper) !important;
+    border: 1px solid var(--hx-line) !important;
+    box-shadow: 0 1px 0 var(--hx-line) !important;
+    color: var(--hx-ink) !important;
+  }
+  .product-card:hover {
+    transform: none !important;
+    border-color: var(--hx-bronze) !important;
+  }
+  .photo-vial, .photo-vial-image {
+    background: #EDE6D8 !important;
+  }
+  .photo-vial-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+  .tab-button, .field input, .field select, button.primary-button,
+  .hx-brand-hero-cta {
+    border-radius: 6px !important;
+  }
+  .hx-brand-hero-cta, button.primary-button, .tab-button.active {
+    background: var(--hx-ink) !important;
+    color: var(--hx-ivory) !important;
+    border-color: var(--hx-ink) !important;
+  }
+  .hx-trust-item, .why-harmony-card h3, .pc-authorized-kicker,
+  .hx-brand-hero-kicker, .hx-contact-kicker, .why-harmony-kicker {
+    color: var(--hx-ink) !important;
+  }
+  .pc-authorized-kicker, .why-harmony-kicker, .hx-brand-hero-kicker,
+  .hx-contact-kicker {
+    color: var(--hx-bronze) !important;
+    letter-spacing: 0.28em !important;
+    text-transform: uppercase !important;
+    font-size: 11px !important;
+  }
+  .hx-age-gate-panel {
+    background: var(--hx-paper) !important;
+    color: var(--hx-ink) !important;
+    border: 1px solid var(--hx-line) !important;
+  }
+  .hx-age-gate-brand { color: var(--hx-ink) !important; letter-spacing: 0.02em !important; }
+  .hx-age-gate { background: var(--hx-ivory) !important; }
+  .footer, .footer a { color: var(--hx-ink) !important; }
+  .accent-x { color: var(--hx-bronze); }
+  .hx-lockup { display: inline-flex; align-items: stretch; gap: 10px; }
+  .hx-lockup img { width: auto; height: 2.6rem; }
+  .hx-lockup-text { display: flex; flex-direction: column; justify-content: center; line-height: 1; }
+  .hx-lockup-name { font-family: "Instrument Serif", Georgia, serif; font-size: 1.4rem; }
+  .hx-lockup-sub { margin-top: 6px; font-size: 10px; letter-spacing: 0.32em; color: var(--hx-muted); }
+  .daylight-notes { max-width: 1120px; margin: 0 auto; padding: 72px 24px; border-top: 1px solid var(--hx-line); }
+  .daylight-notes h2 { font-size: 2.6rem; }
+  .daylight-notes ul { display: grid; gap: 32px; grid-template-columns: 1fr 1fr; list-style: none; padding: 0; margin: 48px 0 0; }
+  @media (max-width: 700px) { .daylight-notes ul { grid-template-columns: 1fr; } }
+  .daylight-notes li { border-top: 1px solid var(--hx-line); padding-top: 20px; }
+  .daylight-notes q { font-family: "Instrument Serif", Georgia, serif; font-size: 1.5rem; }
+  .pc-authorized-logo { content: url("/helix-x.png"); width: 56px; height: 56px; object-fit: contain; }
+</style>
+
+</head>
 
 <body>
 
@@ -6234,9 +6364,9 @@
     <div class="hx-age-gate-scrim" aria-hidden="true"></div>
     <div class="hx-age-gate-panel">
       <div class="hx-age-gate-mark" aria-hidden="true">
-        <img src="HX-Mark-Gold.png" alt="" width="180" height="168" loading="eager" decoding="async">
+        <img src="helix-x.png" alt="" width="180" height="168" loading="eager" decoding="async">
       </div>
-      <div class="hx-age-gate-brand">HARMONY X PEPTIDES</div>
+      <div class="hx-age-gate-brand">Harmony<span class="accent-x">X</span></div>
       <div class="hx-age-gate-rule"></div>
       <h2 id="hxAgeGateTitle">Restricted Access — Research Purchasers Only</h2>
       <p id="hxAgeGateDesc">
@@ -6259,7 +6389,7 @@
       </label>
 
       <div class="hx-age-gate-turnstile">
-        <div id="hxAgeGateTurnstile" class="cf-turnstile" data-sitekey="0x4AAAAAAEPLL-DfcGg0HyYD" data-theme="dark" data-appearance="always"></div>
+        <div id="hxAgeGateTurnstile" class="cf-turnstile" data-sitekey="0x4AAAAAAEPLL-DfcGg0HyYD" data-theme="light" data-appearance="always"></div>
       </div>
 
       <div class="hx-age-gate-actions">
@@ -6443,8 +6573,8 @@
       <div class="hx-v4-brand hx-v4-brand-image" aria-label="HarmonyX Peptides">
         <img class="hx-brand-asset hx-brand-asset-hero" src="https://pub-d475d060317e4fc189c2744f92462331.r2.dev/HarmonyX-Hero.png" alt="HarmonyX Peptides">
       </div>
-      <h1>Precision Research. Source Integrity.</h1>
-      <p>High-purity research peptides for those who demand more.</p>
+      <h1>Harmony<span class="accent-x">X</span></h1>
+      <p>Private research catalog</p>
     </div>
   </header>
 
@@ -6470,6 +6600,9 @@
         <a class="hx-brand-hero-cta" href="#hxMostPopular">Explore the Catalog</a>
       </div>
     </div>
+    <figure class="hx-hero-vial">
+      <img src="/images/hero-vial.jpg" alt="NAD+ research vial on limestone in daylight">
+    </figure>
   </section>
 
   <!-- Trust strip — high-end confidence signals -->
@@ -6546,33 +6679,34 @@
     <div class="why-harmony-shell">
       <div class="why-harmony-heading">
         <div class="why-harmony-kicker">The Harmony X Standard</div>
-        <h2 id="whyHarmonyTitle">Why Harmony X</h2>
-        <p>Every detail is designed to create a more refined, transparent, and professional research-ordering experience.</p>
+        <h2 id="whyHarmonyTitle">Why HarmonyX</h2>
+        <p class="why-harmony-motto">Integrity. Trust. Transparency.</p>
+        <p><strong><em>Integrity, trust, and transparency</em></strong> are not slogans here. They are how we source, how we answer, and how we ship.</p>
       </div>
 
       <div class="why-harmony-grid">
         <article class="why-harmony-card" style="--hx-delay:40ms">
           <div class="why-harmony-icon" aria-hidden="true">◇</div>
-          <h3>Source Integrity</h3>
-          <p>Products are selected and presented with consistency, clarity, and responsible sourcing at the center.</p>
+          <h3>Integrity</h3>
+          <p>What we source, how we label it, and what we stand behind — including COA testing on every vial.</p>
         </article>
 
         <article class="why-harmony-card" style="--hx-delay:110ms">
           <div class="why-harmony-icon" aria-hidden="true">◎</div>
-          <h3>Private Ordering</h3>
-          <p>Every request is reviewed directly, creating a more personal and carefully managed ordering experience.</p>
+          <h3>Trust</h3>
+          <p>You deal with Paul and Thabby, not a ticket queue. Private requests, reviewed by hand.</p>
         </article>
 
         <article class="why-harmony-card" style="--hx-delay:180ms">
           <div class="why-harmony-icon" aria-hidden="true">✦</div>
-          <h3>Research Focus</h3>
-          <p>The catalog is built specifically for professional research environments and research-use-only applications.</p>
+          <h3>Transparency</h3>
+          <p>Clear pricing, research-use-only language, and certificates available whenever you ask.</p>
         </article>
 
         <article class="why-harmony-card" style="--hx-delay:250ms">
           <div class="why-harmony-icon" aria-hidden="true">⬡</div>
-          <h3>Premium Experience</h3>
-          <p>From product discovery to order review, the entire journey is designed to feel polished and intentional.</p>
+          <h3>Personalization</h3>
+          <p>We love to personalize every request — which vials belong in the work, and how the order is packed.</p>
         </article>
       </div>
     </div>
@@ -6789,7 +6923,7 @@
       <div class="pc-authorized-logo-wrap">
         <img
           class="pc-authorized-logo"
-          src="/HX-Mark-Gold.png"
+          src="/helix-x.png"
           alt="Harmony X mark"
         >
       </div>
@@ -6797,12 +6931,25 @@
       <div class="pc-authorized-copy">
         <div class="pc-authorized-kicker">What Sets Us Apart</div>
         <h2 class="pc-authorized-title" id="pcAuthorizedTitle">Doctor-Led Sourcing</h2>
-        <p class="pc-authorized-note">At Harmony X, doctor-led sourcing is at the core of every product decision. Each batch is laboratory tested and its Certificate of Analysis verified before it reaches our catalog &mdash; available to researchers by request.</p>
+        <p class="pc-authorized-note">Doctor-led sourcing is central to Harmony<span class="accent-x">X</span>’s commitment to quality. We support that commitment with laboratory testing and published Certificates of Analysis, giving researchers direct access to product testing results.</p>
       </div>
     </div>
   </section>
 
 
+
+  
+  <section class="daylight-notes" aria-labelledby="extraMileTitle">
+    <p class="why-harmony-kicker">PAUL & THABBY</p>
+    <h2 id="extraMileTitle">Going the extra mile.</h2>
+    <p>That’s what separates Harmony<span class="accent-x">X</span> from other peptide research sites. We love to personalize every request — Paul and Thabby read each one, and treat it as a conversation, not a cart.</p>
+    <ul>
+      <li><q>10 star service! Paul and Thabby took time to guide me through the best options that fit my research needs.</q><p>Alex</p></li>
+      <li><q>Products were well packed. Quality service!</q><p>Michael</p></li>
+      <li><q>Really knowledgeable. I love how fast they responded to my questions.</q><p>Lisa</p></li>
+      <li><q>Finally a peptide company I can trust!</q><p>Miles</p></li>
+    </ul>
+  </section>
 
   <footer class="footer" id="contact" style="scroll-margin-top:16px;">
         <div class="hx-contact-card">
@@ -7734,15 +7881,17 @@
       return renderPhotoVial(productName);
     }
 
-        function renderPremiumVial(productName) {
+        function renderPremiumVial(productName, productId) {
       const labelData = getVialLabelData(productName);
       const labelText = escapeHtml(labelData.fullText);
       const normalizedForPhoto = String(productName || '').toLowerCase();
       const isNasalSprayPhoto =
         normalizedForPhoto.includes('nasal') && normalizedForPhoto.includes('spray');
-      const vialPhotoSrc = isNasalSprayPhoto
-        ? 'https://pub-d475d060317e4fc189c2744f92462331.r2.dev/HarmonyX-Nasal-Spray-Bottle.jpg'
-        : 'https://pub-d475d060317e4fc189c2744f92462331.r2.dev/Vial%20template.png';
+      const vialPhotoSrc = productId
+        ? ('/vials/' + encodeURIComponent(productId) + '.jpg')
+        : (isNasalSprayPhoto
+          ? 'https://pub-d475d060317e4fc189c2744f92462331.r2.dev/HarmonyX-Nasal-Spray-Bottle.jpg'
+          : 'https://pub-d475d060317e4fc189c2744f92462331.r2.dev/Vial%20template.png');
       const vialPhotoAlt = isNasalSprayPhoto
         ? 'Harmony X nasal spray bottle'
         : 'Harmony X peptide vial';
@@ -8196,7 +8345,7 @@
 
             <div class="product-visual">
               <div class="vial-art${showPopularExtras ? ' hx-pop-stage' : ''}">
-                ${renderPremiumVial(product.name)}
+                ${renderPremiumVial(product.name, product.id)}
               </div>
 
               <div class="product-copy">
@@ -8424,7 +8573,7 @@
           </label>
 
           <div class="field" style="margin-top:10px;">
-            <div class="cf-turnstile" data-sitekey="0x4AAAAAAEPLL-DfcGg0HyYD" data-theme="dark" data-appearance="always"></div>
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAEPLL-DfcGg0HyYD" data-theme="light" data-appearance="always"></div>
           </div>
 
           <div class="checkout-section-title">Promo code</div>
@@ -9121,7 +9270,7 @@
       function mediaHtml(p){
         const special=typeof getSpecialProductImage==='function'?getSpecialProductImage(p.name):null;
         if(special)return `<div class="supply-visual-stage ${special.className}"><img class="supply-feature-image" src="${escapeAttribute(special.src)}" alt="${escapeAttribute(special.alt)}"></div>`;
-        return `<div class="vial-art">${renderPremiumVial(p.name)}</div>`;
+        return `<div class="vial-art">${renderPremiumVial(p.name, p.id)}</div>`;
       }
       function tags(p){
         const rawHighlights =
