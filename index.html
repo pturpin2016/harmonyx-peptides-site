@@ -17825,11 +17825,44 @@
     #hxInstallBanner .hx-ib-actions { flex-direction: column; }
   }
        
-    /* HarmonyX v7.85 -- Doctor-Led Sourcing plaque: constrain width so the centered icon+text group reads as a proportioned card instead of a small island in a full-width bar */
-    .pc-authorized-section {
-      max-width: 780px !important;
-      margin-left: auto !important;
-      margin-right: auto !important;
+    
+    /* HarmonyX v7.86 -- Doctor-Led Sourcing plaque: fix icon corners clipped by object-fit:cover+rounded border, un-cramp title/paragraph spacing, restore full-width banner (reverting v7.85's width cap per feedback) and give the icon+text group better proportions */
+    .pc-authorized-logo-wrap {
+      width: 120px !important;
+      height: 120px !important;
+      padding: 18px !important;
+      box-sizing: border-box !important;
+    }
+    .pc-authorized-logo {
+      object-fit: contain !important;
+      transform: none !important;
+    }
+    .pc-authorized-plaque {
+      gap: 32px !important;
+      padding: 34px 42px !important;
+    }
+    .pc-authorized-copy {
+      max-width: 680px !important;
+    }
+    .pc-authorized-kicker {
+      margin-bottom: 10px !important;
+    }
+    .pc-authorized-title {
+      margin: 0 0 12px !important;
+    }
+    .pc-authorized-note {
+      margin-top: 4px !important;
+    }
+    @media (max-width: 699px) {
+      .pc-authorized-logo-wrap {
+        width: 84px !important;
+        height: 84px !important;
+        padding: 12px !important;
+      }
+      .pc-authorized-plaque {
+        padding: 26px 20px !important;
+        gap: 18px !important;
+      }
     }
 </style>
 <div id="hxInstallBanner" role="dialog" aria-label="Install HarmonyX app"></div>
