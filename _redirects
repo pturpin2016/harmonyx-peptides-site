@@ -1,1 +1,9 @@
-/coas /index.html 200
+/coas    /index.html   200
+/coas/   /index.html   200
+/faq     /faq.html     200
+/faq/    /faq.html     200
+/privacy /privacy.html 200
+/privacy/ /privacy.html 200
+/research-use /research-use.html 200
+/research-use/ /research-use.html 200
+/*       /index.html   200
