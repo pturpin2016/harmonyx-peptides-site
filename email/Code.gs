@@ -1,4 +1,4 @@
-// Harmony-X Backend v5.6 - Daylight emails + invoice
+// Harmony-X Backend v5.7 - Daylight emails, contact form, Excel export auth
 /**
  * Google Apps Script backend for the Harmony-X Cloudflare Pages site.
  * Customer-facing catalog data is read from the "Master Catalog" sheet.
@@ -3746,6 +3746,18 @@ function handleContact_(payload) {
     message: 'Message received.'
   };
 }
+
+
+/**
+ * Run this once from the Apps Script editor after pasting (select it in the
+ * function dropdown, then click Run, then Allow). It asks Google for the
+ * missing "connect to external services" permission so owner emails can
+ * attach the Excel invoice. Safe to leave in place.
+ */
+function grantExcelExportPermission() {
+  UrlFetchApp.fetch('https://www.google.com', {muteHttpExceptions: true});
+}
+
 
 
 
