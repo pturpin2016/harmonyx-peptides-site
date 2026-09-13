@@ -17,3 +17,6 @@
 
 /guides/*
   Cache-Control: no-cache
+
+/email/*
+  Cache-Control: no-cache
