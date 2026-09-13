@@ -5,16 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HarmonyX order email preview</title>
   <style>
-    body { margin: 0; background: #F7F3EC; color: #1A1814; font-family: Inter, Arial, sans-serif; }
-    .bar { padding: 18px 24px; border-bottom: 1px solid rgba(26,24,20,.1); }
-    .bar p { margin: 0; font-size: 13px; color: #6B6458; }
-    iframe { width: 100%; min-height: 1100px; border: 0; background: #F7F3EC; }
+    body { margin: 0; background: #F7F3EC; color: #1A1814; font-family: Georgia, serif; }
+    .bar { padding: 22px 24px 8px; }
+    h1 { margin: 0 0 6px; font-size: 28px; font-weight: 400; }
+    p { margin: 0 0 18px; font-family: Arial, sans-serif; font-size: 14px; color: #6B6458; }
+    nav { display: flex; gap: 10px; padding: 0 24px 16px; font-family: Arial, sans-serif; }
+    a { color: #B08A3E; }
+    iframe { width: 100%; min-height: 1200px; border: 0; background: #F7F3EC; }
   </style>
 </head>
 <body>
   <div class="bar">
-    <p>Preview of the customer confirmation — ivory, espresso, bronze. This is what the next live order email should look like after the Apps Script paste.</p>
+    <h1>Daylight order emails</h1>
+    <p>This is the new look. It does not go live until the Apps Script paste is saved.</p>
   </div>
-  <iframe src="/email/sample-customer.html" title="Customer order email"></iframe>
+  <nav>
+    <a href="/email/sample-customer.html">Customer confirmation</a>
+    <a href="/email/sample-internal.html">Your copy (new order request)</a>
+    <a href="/email/apps-script.js">Paste this into Apps Script</a>
+  </nav>
+  <iframe src="/email/sample-internal.html" title="Owner order email"></iframe>
 </body>
 </html>
