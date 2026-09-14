@@ -47,6 +47,30 @@
       }
     </script>
     <script>
+      (function () {
+        var path = location.pathname.replace(/\/+$/, "") || "/";
+        if (path === "/coas") {
+          location.replace("/coas/");
+          return;
+        }
+        document.addEventListener(
+          "click",
+          function (e) {
+            var a = e.target && e.target.closest ? e.target.closest("a") : null;
+            if (!a) return;
+            var href = a.getAttribute("href") || "";
+            if (href === "/coas" || href === "/coas/" || href.indexOf("/coas/") === 0) {
+              e.preventDefault();
+              e.stopPropagation();
+              if (typeof e.stopImmediatePropagation === "function") e.stopImmediatePropagation();
+              window.location.assign(href === "/coas" ? "/coas/" : href);
+            }
+          },
+          true
+        );
+      })();
+    </script>
+    <script>
       try {
         navigator.serviceWorker.getRegistrations().then(function (regs) {
           regs.forEach(function (reg) { reg.unregister(); });
