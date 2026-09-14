@@ -5,54 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>HarmonyX — Private Research Catalog</title>
     <meta name="theme-color" content="#F7F3EC" />
-    <meta
-      name="description"
-      content="HarmonyX private research catalog — precision peptides for qualified research purchasers. COA-tested, discrete ordering, Northern California pickup or USPS Priority."
-    />
+    <meta name="description" content="HarmonyX private research catalog — precision peptides for qualified research purchasers." />
     <link rel="canonical" href="https://harmonyxpeptides.com/" />
-    <meta property="og:site_name" content="HarmonyX" />
     <meta property="og:title" content="HarmonyX — Private Research Catalog" />
-    <meta
-      property="og:description"
-      content="Precision peptides for qualified research purchasers. COA-tested. Local pickup in Lathrop, Manteca, Stockton, and Tracy, or USPS Priority."
-    />
     <meta property="og:image" content="https://harmonyxpeptides.com/og.jpg" />
-    <meta property="og:url" content="https://harmonyxpeptides.com/" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="HarmonyX — Private Research Catalog" />
-    <meta
-      name="twitter:description"
-      content="Precision peptides for qualified research purchasers. COA-tested, discrete ordering."
-    />
-    <meta name="twitter:image" content="https://harmonyxpeptides.com/og.jpg" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/og.jpg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "HarmonyX",
-        "legalName": "HarmonyX LLC",
-        "url": "https://harmonyxpeptides.com/",
-        "email": "research@harmony-x.com",
-        "telephone": "+13609106274",
-        "description": "Private research catalog of laboratory peptides. Not for human or veterinary consumption."
-      }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <script>
       (function () {
-        var path = location.pathname.replace(/\/+$/, "") || "/";
+        function goCoas() {
+          window.location.replace("https://harmonyxpeptides.com/coas/");
+        }
+        var path = (location.pathname || "").replace(/\/+$/, "") || "/";
         if (path === "/coas") {
-          location.replace("/coas/");
+          goCoas();
           return;
         }
+        var push = history.pushState.bind(history);
+        var replace = history.replaceState.bind(history);
+        function trapped(url) {
+          if (!url) return false;
+          var u = String(url);
+          try {
+            u = new URL(u, location.origin).pathname;
+          } catch (err) {}
+          u = u.replace(/\/+$/, "") || "/";
+          return u === "/coas";
+        }
+        history.pushState = function (state, title, url) {
+          if (trapped(url)) {
+            goCoas();
+            return;
+          }
+          return push(state, title, url);
+        };
+        history.replaceState = function (state, title, url) {
+          if (trapped(url)) {
+            goCoas();
+            return;
+          }
+          return replace(state, title, url);
+        };
         document.addEventListener(
           "click",
           function (e) {
@@ -61,9 +54,8 @@
             var href = a.getAttribute("href") || "";
             if (href === "/coas" || href === "/coas/" || href.indexOf("/coas/") === 0) {
               e.preventDefault();
-              e.stopPropagation();
-              if (typeof e.stopImmediatePropagation === "function") e.stopImmediatePropagation();
-              window.location.assign(href === "/coas" ? "/coas/" : href);
+              if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+              goCoas();
             }
           },
           true
@@ -75,16 +67,8 @@
         navigator.serviceWorker.getRegistrations().then(function (regs) {
           regs.forEach(function (reg) { reg.unregister(); });
         });
-        caches.keys().then(function (keys) {
-          keys.forEach(function (key) { caches.delete(key); });
-        });
       } catch (e) {}
     </script>
-    <script
-      src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-      async
-      defer
-    ></script>
     <script type="module" crossorigin src="/assets/index-9c40fe5d.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-XAOMhhJ0.css">
   </head>
