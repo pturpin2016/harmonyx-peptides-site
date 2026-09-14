@@ -1,13 +1,20 @@
 async function loadCoaPdf(name) {
-  const archives = ["coas-pdfs.zip", "coas-pdfs (4).zip", "coas-pdfs%20(4).zip"];
+  const archives = [];
+  for (let i = 0; i <= 12; i++) {
+    const suffix = i === 0 ? "" : " (" + i + ")";
+    archives.push("coas-pdfs" + suffix + ".zip");
+  }
+  archives.push("coas-pdfs.zip");
   let lastErr = new Error("Could not load certificate archive");
   for (const archive of archives) {
     try {
       const res = await fetch(archive);
       if (!res.ok) continue;
-      const zip = await JSZip.loadAsync(await res.arrayBuffer());
+      const buf = await res.arrayBuffer();
+      if (buf.byteLength < 1000) continue;
+      const zip = await JSZip.loadAsync(buf);
       const file = zip.file("coas/" + name) || zip.file(name);
-      if (!file) throw new Error("PDF not found: " + name);
+      if (!file) continue;
       const blob = await file.async("blob");
       return URL.createObjectURL(new Blob([blob], { type: "application/pdf" }));
     } catch (err) {
