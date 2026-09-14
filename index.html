@@ -33,33 +33,23 @@
           return u === "/coas";
         }
         history.pushState = function (state, title, url) {
-          if (trapped(url)) {
-            goCoas();
-            return;
-          }
+          if (trapped(url)) { goCoas(); return; }
           return push(state, title, url);
         };
         history.replaceState = function (state, title, url) {
-          if (trapped(url)) {
-            goCoas();
-            return;
-          }
+          if (trapped(url)) { goCoas(); return; }
           return replace(state, title, url);
         };
-        document.addEventListener(
-          "click",
-          function (e) {
-            var a = e.target && e.target.closest ? e.target.closest("a") : null;
-            if (!a) return;
-            var href = a.getAttribute("href") || "";
-            if (href === "/coas" || href === "/coas/" || href.indexOf("/coas/") === 0) {
-              e.preventDefault();
-              if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-              goCoas();
-            }
-          },
-          true
-        );
+        document.addEventListener("click", function (e) {
+          var a = e.target && e.target.closest ? e.target.closest("a") : null;
+          if (!a) return;
+          var href = a.getAttribute("href") || "";
+          if (href === "/coas" || href === "/coas/" || href.indexOf("/coas/") === 0) {
+            e.preventDefault();
+            if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+            goCoas();
+          }
+        }, true);
       })();
     </script>
     <script>
@@ -71,8 +61,126 @@
     </script>
     <script type="module" crossorigin src="/assets/index-9c40fe5d%20(2).js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-XAOMhhJ0.css">
+    <style>
+      #hxOffer {
+        position: fixed; inset: 0; z-index: 80;
+        display: none; align-items: flex-end; justify-content: center;
+        background: rgba(26,24,20,.38); padding: 1rem;
+      }
+      #hxOffer.open { display: flex; }
+      @media (min-width: 640px) { #hxOffer { align-items: center; } }
+      #hxOffer .card {
+        position: relative; width: 100%; max-width: 24rem;
+        background: #FFFCF7; color: #1A1814;
+        border: 1px solid rgba(26,24,20,.12);
+        border-radius: 14px; overflow: hidden;
+        box-shadow: 0 18px 50px rgba(26,24,20,.18);
+        font-family: Inter, system-ui, sans-serif;
+      }
+      #hxOffer .hero {
+        background: #F7F3EC; padding: 1.35rem 1.35rem 1.1rem;
+        border-bottom: 1px solid rgba(26,24,20,.1);
+      }
+      #hxOffer .kicker {
+        margin: 0; font-size: .7rem; font-weight: 600;
+        letter-spacing: .18em; color: #B08A3E; text-transform: uppercase;
+      }
+      #hxOffer h2 {
+        margin: .35rem 0 0;
+        font-family: "Instrument Serif", Georgia, serif;
+        font-size: 2rem; font-weight: 400; letter-spacing: -.02em; line-height: 1.1;
+      }
+      #hxOffer .lede { margin: .55rem 0 0; color: #6B6458; font-size: .9rem; line-height: 1.55; }
+      #hxOffer .offers { padding: 1rem 1.25rem 1.2rem; display: grid; gap: .7rem; }
+      #hxOffer .offer {
+        border: 1px solid rgba(26,24,20,.12); border-radius: 10px;
+        padding: .85rem .95rem; background: #F7F3EC;
+      }
+      #hxOffer .offer strong { display: block; font-size: 1.05rem; font-weight: 600; }
+      #hxOffer .offer span {
+        display: inline-block; margin-top: .25rem;
+        font-family: ui-monospace, Menlo, monospace;
+        font-size: .78rem; letter-spacing: .04em; color: #B08A3E;
+      }
+      #hxOffer .offer p { margin: .3rem 0 0; color: #6B6458; font-size: .82rem; line-height: 1.45; }
+      #hxOffer .actions { padding: 0 1.25rem 1.25rem; }
+      #hxOffer a.shop {
+        display: block; text-align: center; text-decoration: none;
+        background: #1A1814; color: #F7F3EC;
+        border-radius: 8px; padding: .8rem 1rem; font-size: .92rem; font-weight: 500;
+      }
+      #hxOffer a.shop:hover { background: #B08A3E; color: #FFFCF7; }
+      #hxOffer .fine { margin: .65rem 0 0; text-align: center; color: #6B6458; font-size: .72rem; line-height: 1.45; }
+      #hxOffer .x {
+        position: absolute; top: .65rem; right: .65rem;
+        width: 2.25rem; height: 2.25rem; border: 0; border-radius: 999px;
+        background: rgba(247,243,236,.92); color: #1A1814; cursor: pointer; font-size: 1.2rem;
+      }
+    </style>
   </head>
   <body class="antialiased">
     <div id="root"></div>
+    <div id="hxOffer" role="dialog" aria-modal="true" aria-labelledby="hxOfferTitle">
+      <div class="card">
+        <button class="x" type="button" aria-label="Close offer flyer" id="hxOfferClose">×</button>
+        <div class="hero">
+          <p class="kicker">Current offers</p>
+          <h2 id="hxOfferTitle">Two ways to save.</h2>
+          <p class="lede">Apply the code on your request. Paul and Thabby confirm the discount on the invoice.</p>
+        </div>
+        <div class="offers">
+          <div class="offer">
+            <strong>10% off first order</strong>
+            <span>WELCOME10</span>
+            <p>For new research purchasers on their first request.</p>
+          </div>
+          <div class="offer">
+            <strong>20% off $300+</strong>
+            <span>VIP20</span>
+            <p>Use on merchandise totals of $300 or more, after other notes on the request.</p>
+          </div>
+        </div>
+        <div class="actions">
+          <a class="shop" id="hxOfferShop" href="#catalog">Shop the catalog</a>
+          <p class="fine">One code per request. Research use only. Local pickup stays free. USPS is $15, or free at $400+.</p>
+        </div>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var KEY = "hx_offers_fall26_v1";
+        var el = document.getElementById("hxOffer");
+        if (!el) return;
+        function dismissed() {
+          try { return localStorage.getItem(KEY) === "1"; } catch (e) { return false; }
+        }
+        function dismiss() {
+          try { localStorage.setItem(KEY, "1"); } catch (e) {}
+          el.classList.remove("open");
+        }
+        function aged() {
+          try { return localStorage.getItem("hx_age_ok_v1") === "1"; } catch (e) { return false; }
+        }
+        function show() {
+          if (dismissed()) return;
+          el.classList.add("open");
+        }
+        document.getElementById("hxOfferClose").addEventListener("click", dismiss);
+        document.getElementById("hxOfferShop").addEventListener("click", dismiss);
+        el.addEventListener("click", function (e) {
+          if (e.target === el) dismiss();
+        });
+        if (aged()) {
+          setTimeout(show, 500);
+        } else {
+          var n = 0;
+          var t = setInterval(function () {
+            n += 1;
+            if (aged()) { clearInterval(t); setTimeout(show, 400); }
+            if (n > 120) clearInterval(t);
+          }, 500);
+        }
+      })();
+    </script>
   </body>
 </html>
