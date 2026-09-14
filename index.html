@@ -66,6 +66,16 @@
       })();
     </script>
     <script>
+      document.addEventListener("error", function (e) {
+        var t = e.target;
+        if (!t || t.tagName !== "IMG") return;
+        var s = t.getAttribute("src") || "";
+        if (/vials\/bacteriostatic-water-(3|10)ml/i.test(s)) {
+          t.src = "/vials/bacteriostatic-water-30ml.jpg?v=16";
+        }
+      }, true);
+    </script>
+    <script>
       (function () {
         function goCoas() {
           window.location.replace("https://harmonyxpeptides.com/coas/");
