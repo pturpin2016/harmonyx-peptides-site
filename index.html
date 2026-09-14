@@ -71,9 +71,36 @@
         if (!t || t.tagName !== "IMG") return;
         var s = t.getAttribute("src") || "";
         if (/vials\/bacteriostatic-water-(3|10)ml/i.test(s)) {
-          t.src = "/vials/bacteriostatic-water-30ml.jpg?v=16";
+          t.src = "/vials/bacteriostatic-water-30ml.jpg?v=17";
         }
       }, true);
+    </script>
+    <script>
+      (function () {
+        function sizeFrom(img) {
+          var s = ((img.getAttribute("src") || "") + " " + (img.getAttribute("alt") || "")).toLowerCase();
+          if (s.indexOf("3ml") >= 0 || s.indexOf("3 ml") >= 0) return "3 mL";
+          if (s.indexOf("10ml") >= 0 || s.indexOf("10 ml") >= 0) return "10 mL";
+          return "";
+        }
+        function label(img) {
+          var text = sizeFrom(img);
+          if (!text) return;
+          var wrap = img.parentElement;
+          if (!wrap || wrap.querySelector(".hx-vial-size")) return;
+          wrap.classList.add("hx-vial-wrap");
+          var el = document.createElement("span");
+          el.className = "hx-vial-size";
+          el.textContent = text;
+          wrap.appendChild(el);
+        }
+        function scan() {
+          document.querySelectorAll("img").forEach(label);
+        }
+        new MutationObserver(scan).observe(document.documentElement, { childList: true, subtree: true });
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", scan);
+        else scan();
+      })();
     </script>
     <script>
       (function () {
@@ -126,6 +153,22 @@
     <script type="module" crossorigin src="/assets/index-9c40fe5d%20(2).js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-XAOMhhJ0.css">
     <style>
+      .hx-vial-wrap { position: relative; container-type: size; }
+      .hx-vial-size {
+        position: absolute;
+        left: 50.2%;
+        top: 59.6%;
+        transform: translate(-50%, -50%);
+        font-family: "Instrument Serif", Georgia, serif;
+        font-size: 7.2cqmin;
+        color: #2a2218;
+        background: #f2e9df;
+        padding: 0 0.28em 0.04em;
+        line-height: 1;
+        pointer-events: none;
+        letter-spacing: 0.01em;
+        white-space: nowrap;
+      }
       #hxOffer {
         position: fixed; inset: 0; z-index: 80;
         display: none; align-items: flex-end; justify-content: center;
