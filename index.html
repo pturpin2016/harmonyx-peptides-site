@@ -13,67 +13,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <script>
       (function () {
-        var extras = [
-          {
-            id: "bacteriostatic-water-3ml-53",
-            name: "Bacteriostatic Water 3mL",
-            category: "Laboratory Supplies",
-            description: "Sterile diluent intended for laboratory reconstitution procedures.",
-            productDetails: "Sterile bacteriostatic water intended for laboratory reconstitution procedures. Laboratory use only.",
-            highlights: "Sterile Diluent | 0.9% Benzyl Alcohol | 3 mL",
-            researchGuideUrl: "https://harmonyxpeptides.com/guides/bac-water-3ml.html",
-            featured: true,
-            popularRank: null,
-            retailPrice: 5.99,
-            localStock: true
-          },
-          {
-            id: "bacteriostatic-water-10ml-54",
-            name: "Bacteriostatic Water 10mL",
-            category: "Laboratory Supplies",
-            description: "Sterile diluent intended for laboratory reconstitution procedures.",
-            productDetails: "Sterile bacteriostatic water intended for laboratory reconstitution procedures. Laboratory use only.",
-            highlights: "Sterile Diluent | 0.9% Benzyl Alcohol | 10 mL",
-            researchGuideUrl: "https://harmonyxpeptides.com/guides/bac-water-10ml.html",
-            featured: true,
-            popularRank: null,
-            retailPrice: 10.99,
-            localStock: true
-          }
-        ];
-        var orig = window.fetch;
-        window.fetch = function (input, init) {
-          var url = typeof input === "string" ? input : (input && input.url) || "";
-          return orig.apply(this, arguments).then(function (res) {
-            if (!/\/api\/catalog|catalog-fallback\.json/.test(url)) return res;
-            return res.clone().json().then(function (data) {
-              if (!data || !Array.isArray(data.products)) return res;
-              var seen = {};
-              data.products.forEach(function (p) {
-                seen[p.id] = 1;
-                seen[String(p.name || "").toLowerCase()] = 1;
-              });
-              extras.forEach(function (p) {
-                if (!seen[p.id] && !seen[p.name.toLowerCase()]) data.products.push(p);
-              });
-              return new Response(JSON.stringify(data), {
-                status: 200,
-                headers: { "Content-Type": "application/json" }
-              });
-            }).catch(function () { return res; });
-          });
-        };
-      })();
-    </script>
-    <script>
-      (function () {
+        var PHOTO = "/vials/bacteriostatic-water-30ml.jpg?v=18";
         function swap(img) {
           var s = img.getAttribute("src") || "";
-          if (/bacteriostatic-water-3ml/i.test(s) && !/\.svg(\?|$)/i.test(s)) {
-            img.src = "/vials/bacteriostatic-water-3ml.svg";
-          } else if (/bacteriostatic-water-10ml/i.test(s) && !/\.svg(\?|$)/i.test(s)) {
-            img.src = "/vials/bacteriostatic-water-10ml.svg";
-          }
+          var alt = img.getAttribute("alt") || "";
+          if (!/bacteriostatic-water-(3|10)ml/i.test(s + " " + alt)) return;
+          if (s.indexOf("bacteriostatic-water-30ml.jpg") >= 0) return;
+          img.src = PHOTO;
         }
         function scan() {
           document.querySelectorAll("img").forEach(swap);
@@ -86,8 +32,7 @@
         });
         document.addEventListener("error", function (e) {
           var t = e.target;
-          if (!t || t.tagName !== "IMG") return;
-          swap(t);
+          if (t && t.tagName === "IMG") swap(t);
         }, true);
         if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", scan);
         else scan();
