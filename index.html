@@ -13,13 +13,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <script>
       (function () {
-        var PHOTO = "/vials/bacteriostatic-water-30ml.jpg?v=18";
+        var PHOTO_3 = "/vials/wyRll.jpg?v=19";
+        var PHOTO_10 = "/vials/Kedd6.jpg?v=19";
+        function pick(img) {
+          var s = ((img.getAttribute("src") || "") + " " + (img.getAttribute("alt") || "")).toLowerCase();
+          if (/bacteriostatic-water-3ml|3ml/.test(s) && /bacteriostatic|bac water|wyRll|3 ml/.test(s)) {
+            if (s.indexOf("30ml") >= 0) return "";
+            if (/10ml|10 ml/.test(s) && !/3ml|3 ml/.test(s)) return "";
+            return PHOTO_3;
+          }
+          if (/bacteriostatic-water-10ml|10ml/.test(s) && /bacteriostatic|bac water|kedd6|10 ml/.test(s)) {
+            if (s.indexOf("30ml") >= 0) return "";
+            return PHOTO_10;
+          }
+          return "";
+        }
         function swap(img) {
-          var s = img.getAttribute("src") || "";
-          var alt = img.getAttribute("alt") || "";
-          if (!/bacteriostatic-water-(3|10)ml/i.test(s + " " + alt)) return;
-          if (s.indexOf("bacteriostatic-water-30ml.jpg") >= 0) return;
-          img.src = PHOTO;
+          if (img.getAttribute("data-hx-bac")) return;
+          var next = pick(img);
+          if (!next) return;
+          img.setAttribute("data-hx-bac", "1");
+          img.src = next;
         }
         function scan() {
           document.querySelectorAll("img").forEach(swap);
