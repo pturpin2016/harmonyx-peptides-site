@@ -13,19 +13,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <script>
       (function () {
-        var PHOTO_3 = "/vials/wyRll.jpg?v=19";
-        var PHOTO_10 = "/vials/Kedd6.jpg?v=19";
+        var PHOTO_3 = "/vials/G258A.jpg?v=20";
+        var PHOTO_10 = "/vials/FN2Ku.jpg?v=20";
         function pick(img) {
           var s = ((img.getAttribute("src") || "") + " " + (img.getAttribute("alt") || "")).toLowerCase();
-          if (/bacteriostatic-water-3ml|3ml/.test(s) && /bacteriostatic|bac water|wyRll|3 ml/.test(s)) {
-            if (s.indexOf("30ml") >= 0) return "";
-            if (/10ml|10 ml/.test(s) && !/3ml|3 ml/.test(s)) return "";
-            return PHOTO_3;
-          }
-          if (/bacteriostatic-water-10ml|10ml/.test(s) && /bacteriostatic|bac water|kedd6|10 ml/.test(s)) {
-            if (s.indexOf("30ml") >= 0) return "";
-            return PHOTO_10;
-          }
+          if (s.indexOf("30ml") >= 0 || s.indexOf("30 ml") >= 0) return "";
+          if (/bacteriostatic-water-3ml|\b3ml\b|3 ml/.test(s) && /bacteriostatic|bac water|g258a|wyrll|rs4gu/.test(s)) return PHOTO_3;
+          if (/bacteriostatic-water-10ml|\b10ml\b|10 ml/.test(s) && /bacteriostatic|bac water|fn2ku|kedd6|s7ciu/.test(s)) return PHOTO_10;
           return "";
         }
         function swap(img) {
@@ -46,7 +40,10 @@
         });
         document.addEventListener("error", function (e) {
           var t = e.target;
-          if (t && t.tagName === "IMG") swap(t);
+          if (t && t.tagName === "IMG") {
+            t.removeAttribute("data-hx-bac");
+            swap(t);
+          }
         }, true);
         if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", scan);
         else scan();
