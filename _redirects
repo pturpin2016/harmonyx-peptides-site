@@ -4,3 +4,7 @@
 /privacy/ /index.html   200
 /research-use /index.html   200
 /research-use/ /index.html   200
+
+/guides/*   /coas/   302
+/guides     /coas/   302
+/PDF%20Peptides%20One%20Pager/*   /coas/   302
