@@ -154,10 +154,47 @@
         width: 2.25rem; height: 2.25rem; border: 0; border-radius: 999px;
         background: rgba(247,243,236,.92); color: #1A1814; cursor: pointer; font-size: 1.2rem;
       }
+
+      /* Decorative molecular layer: visual only, never blocks application UI. */
+      .hx-molecular-shell {
+        position: relative;
+        isolation: isolate;
+        min-height: 100vh;
+        overflow: hidden;
+      }
+      .hx-molecular-shell::before {
+        content: "";
+        position: fixed;
+        z-index: -1;
+        top: 0;
+        right: 0;
+        width: min(74vw, 980px);
+        height: 100vh;
+        pointer-events: none;
+        user-select: none;
+        background: url("/assets/molecular-hero-background.svg") right center / contain no-repeat;
+        opacity: .42;
+        transform: translateX(11%);
+      }
+      @media (max-width: 760px) {
+        .hx-molecular-shell::before {
+          width: 118vw;
+          height: 62vh;
+          top: 8rem;
+          right: -33vw;
+          opacity: .18;
+          transform: none;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .hx-molecular-shell::before { transform: none; }
+      }
     </style>
   </head>
   <body class="antialiased">
-    <div id="root"></div>
+    <main class="hx-molecular-shell">
+      <div id="root"></div>
+    </main>
     <div id="hxOffer" role="dialog" aria-modal="true" aria-labelledby="hxOfferTitle">
       <div class="card">
         <button class="x" type="button" aria-label="Close offer flyer" id="hxOfferClose">×</button>
