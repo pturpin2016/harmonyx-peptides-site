@@ -155,42 +155,76 @@
         background: rgba(247,243,236,.92); color: #1A1814; cursor: pointer; font-size: 1.2rem;
       }
 
-      /* Decorative molecular layer: visual only, never blocks application UI. */
+      /* Decorative 3D molecular accents, local to selected sections only. */
       .hx-molecular-shell {
+        min-height: 100vh;
+      }
+      #top > main {
+        overflow: clip;
+      }
+      #top > main > section:first-child,
+      #catalog > div:first-child,
+      #process {
         position: relative;
         isolation: isolate;
-        min-height: 100vh;
-        background: #F7F3EC;
       }
-      .hx-molecular-shell::before {
-        content: "";
-        position: fixed;
-        z-index: 0;
-        top: 0;
-        right: 0;
-        width: min(100vw, 1400px);
-        height: 100vh;
-        pointer-events: none;
-        user-select: none;
-        background: url("/assets/molecular-hero-background.svg") right center / contain no-repeat;
-        opacity: .85;
-      }
-      .hx-molecular-shell > #root {
+      #top > main > section:first-child > *,
+      #catalog > div:first-child > *,
+      #process > * {
         position: relative;
         z-index: 1;
       }
-      /* Only the catalog canvas is transparent; cards and gates stay opaque. */
-      .hx-molecular-shell > #root > #top {
-        background-color: transparent;
+      #top > main > section:first-child::before,
+      #catalog > div:first-child::before,
+      #process::before {
+        content: "";
+        position: absolute;
+        z-index: 0;
+        pointer-events: none;
+        user-select: none;
+        background: url("/assets/molecular-pearl-3d.webp") center / contain no-repeat;
+        width: 560px;
+        height: 374px;
+        opacity: .5;
+      }
+      #top > main > section:first-child::before {
+        top: 35px;
+        right: -225px;
+        transform: rotate(-16deg);
+        mask-image: linear-gradient(150deg, transparent 8%, #000 38%, #000 75%, transparent 96%);
+      }
+      #catalog > div:first-child::before {
+        width: 390px;
+        height: 260px;
+        top: -100px;
+        right: 130px;
+        transform: rotate(15deg);
+        opacity: .24;
+        mask-image: linear-gradient(90deg, transparent, #000 45%, #000 78%, transparent);
+      }
+      #process::before {
+        left: -185px;
+        bottom: -100px;
+        transform: rotate(28deg);
+        opacity: .3;
+        mask-image: linear-gradient(90deg, #000 20%, transparent 82%);
       }
       @media (max-width: 760px) {
-        .hx-molecular-shell::before {
-          width: 100vw;
-          height: 620px;
-          top: 4rem;
-          right: 0;
-          opacity: .6;
+        #top > main > section:first-child::before {
+          width: 300px;
+          height: 200px;
+          top: 5px;
+          right: -115px;
+          opacity: .38;
         }
+        #catalog > div:first-child::before {
+          width: 230px;
+          height: 154px;
+          top: -55px;
+          right: -95px;
+          opacity: .25;
+        }
+        #process::before { display: none; }
       }
     </style>
   </head>
