@@ -155,28 +155,22 @@
         background: rgba(247,243,236,.92); color: #1A1814; cursor: pointer; font-size: 1.2rem;
       }
 
-      /* Decorative 3D molecular accents, local to selected sections only. */
+      /* One soft 3D chain connects the lower hero copy and vial image. */
       .hx-molecular-shell {
         min-height: 100vh;
       }
       #top > main {
         overflow: clip;
       }
-      #top > main > section:first-child,
-      #catalog > div:first-child,
-      #process {
+      #top > main > section:first-child {
         position: relative;
         isolation: isolate;
       }
-      #top > main > section:first-child > *,
-      #catalog > div:first-child > *,
-      #process > * {
+      #top > main > section:first-child > * {
         position: relative;
         z-index: 1;
       }
-      #top > main > section:first-child::before,
-      #catalog > div:first-child::before,
-      #process::before {
+      #top > main > section:first-child::before {
         content: "";
         position: absolute;
         z-index: 0;
@@ -185,46 +179,33 @@
         background: url("/assets/molecular-pearl-3d.webp") center / contain no-repeat;
         width: 560px;
         height: 374px;
-        opacity: .5;
+        opacity: .42;
+        left: calc(50% - 310px);
+        bottom: -25px;
+        transform: rotate(10deg);
+        mask-image: linear-gradient(120deg, transparent 8%, #000 30%, #000 75%, transparent 98%);
       }
-      #top > main > section:first-child::before {
-        top: 35px;
-        right: -225px;
-        transform: rotate(-16deg);
-        mask-image: linear-gradient(150deg, transparent 8%, #000 38%, #000 75%, transparent 96%);
-      }
-      #catalog > div:first-child::before {
-        width: 390px;
-        height: 260px;
-        top: -100px;
-        right: 130px;
-        transform: rotate(15deg);
-        opacity: .24;
-        mask-image: linear-gradient(90deg, transparent, #000 45%, #000 78%, transparent);
-      }
-      #process::before {
-        left: -185px;
-        bottom: -100px;
-        transform: rotate(28deg);
-        opacity: .3;
-        mask-image: linear-gradient(90deg, #000 20%, transparent 82%);
-      }
-      @media (max-width: 760px) {
+      @media (max-width: 767px) {
+        #top > main > section:first-child {
+          row-gap: 16px;
+        }
+        #top > main > section:first-child > div {
+          grid-row: 1;
+        }
+        #top > main > section:first-child > figure {
+          grid-row: 3;
+        }
         #top > main > section:first-child::before {
-          width: 300px;
+          position: relative;
+          grid-row: 2;
+          width: min(300px, 100%);
           height: 200px;
-          top: 5px;
-          right: -115px;
-          opacity: .38;
+          left: auto;
+          bottom: auto;
+          margin: -42px auto;
+          transform: rotate(24deg);
+          opacity: .36;
         }
-        #catalog > div:first-child::before {
-          width: 230px;
-          height: 154px;
-          top: -55px;
-          right: -95px;
-          opacity: .25;
-        }
-        #process::before { display: none; }
       }
     </style>
   </head>
