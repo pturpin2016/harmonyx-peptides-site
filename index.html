@@ -154,10 +154,59 @@
         width: 2.25rem; height: 2.25rem; border: 0; border-radius: 999px;
         background: rgba(247,243,236,.92); color: #1A1814; cursor: pointer; font-size: 1.2rem;
       }
+
+      /* Full photographic molecular environment, not an isolated chain. */
+      .hx-molecular-shell {
+        min-height: 100vh;
+      }
+      #top > main {
+        overflow: clip;
+      }
+      #top > main > section:first-child {
+        position: relative;
+        isolation: isolate;
+        clip-path: inset(0 -100vw);
+      }
+      #top > main > section:first-child > * {
+        position: relative;
+        z-index: 1;
+      }
+      #top > main > section:first-child::before {
+        content: "";
+        position: absolute;
+        z-index: 0;
+        pointer-events: none;
+        user-select: none;
+        inset: 0;
+        left: calc(50% - 50vw);
+        width: 100vw;
+        background:
+          linear-gradient(90deg, rgba(247,243,236,.96) 0%, rgba(247,243,236,.86) 30%, rgba(247,243,236,.40) 62%, rgba(247,243,236,.18) 100%),
+          url("/assets/molecular-studio-backdrop.webp") center 57% / cover no-repeat;
+        mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 88%, transparent);
+      }
+      #top > main > section:first-child > figure {
+        background: transparent;
+        box-shadow: none;
+        overflow: visible;
+      }
+      #top > main > section:first-child > figure > img {
+        content: url("/assets/hero-vial-cutout.webp?v=3");
+        filter: drop-shadow(14px 20px 16px rgba(76,58,32,.13));
+      }
+      @media (max-width: 767px) {
+        #top > main > section:first-child::before {
+          background:
+            linear-gradient(to bottom, rgba(247,243,236,.97) 0%, rgba(247,243,236,.88) 24%, rgba(247,243,236,.54) 48%, rgba(247,243,236,.22) 75%, rgba(247,243,236,.5) 100%),
+            url("/assets/molecular-studio-backdrop.webp") 62% center / auto 100% no-repeat;
+        }
+      }
     </style>
   </head>
   <body class="antialiased">
-    <div id="root"></div>
+    <main class="hx-molecular-shell">
+      <div id="root"></div>
+    </main>
     <div id="hxOffer" role="dialog" aria-modal="true" aria-labelledby="hxOfferTitle">
       <div class="card">
         <button class="x" type="button" aria-label="Close offer flyer" id="hxOfferClose">×</button>
