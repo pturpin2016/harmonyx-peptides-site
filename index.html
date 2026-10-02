@@ -160,34 +160,37 @@
         position: relative;
         isolation: isolate;
         min-height: 100vh;
-        overflow: hidden;
+        background: #F7F3EC;
       }
       .hx-molecular-shell::before {
         content: "";
         position: fixed;
-        z-index: -1;
+        z-index: 0;
         top: 0;
         right: 0;
-        width: min(74vw, 980px);
+        width: min(100vw, 1400px);
         height: 100vh;
         pointer-events: none;
         user-select: none;
         background: url("/assets/molecular-hero-background.svg") right center / contain no-repeat;
-        opacity: .42;
-        transform: translateX(11%);
+        opacity: .85;
+      }
+      .hx-molecular-shell > #root {
+        position: relative;
+        z-index: 1;
+      }
+      /* Only the catalog canvas is transparent; cards and gates stay opaque. */
+      .hx-molecular-shell > #root > #top {
+        background-color: transparent;
       }
       @media (max-width: 760px) {
         .hx-molecular-shell::before {
-          width: 118vw;
-          height: 62vh;
-          top: 8rem;
-          right: -33vw;
-          opacity: .18;
-          transform: none;
+          width: 100vw;
+          height: 620px;
+          top: 4rem;
+          right: 0;
+          opacity: .6;
         }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .hx-molecular-shell::before { transform: none; }
       }
     </style>
   </head>
