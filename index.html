@@ -203,6 +203,10 @@
       }
       #hxCatalogSale strong { color: #E4C27A; letter-spacing: .04em; }
 
+      .hx-was { color: #6B6458; text-decoration: line-through; font-weight: 400; margin-right: .4rem; }
+      .hx-now { color: #8A6A2E; font-weight: 600; }
+      .hx-code { display: block; margin-top: .15rem; font-size: .65rem; letter-spacing: .12em; color: #B08A3E; font-weight: 600; }
+
       /* Full photographic molecular environment, not an isolated chain. */
       .hx-molecular-shell {
         min-height: 100vh;
@@ -344,6 +348,34 @@
         }
         pinCatalog();
         new MutationObserver(pinCatalog).observe(document.getElementById("root") || document.body, { childList: true, subtree: true });
+      })();
+    </script>
+
+    <script>
+      (function () {
+        var RATE = 0.8;
+        function money(n) {
+          return "$" + n.toFixed(2);
+        }
+        function sale(n) {
+          return Math.round(n * RATE * 100) / 100;
+        }
+        function paint(el) {
+          if (!el || el.getAttribute("data-hx-sale") === "1") return;
+          if (el.closest && el.closest("#hxOffer, #hxSaleBar, #hxCatalogSale")) return;
+          var raw = (el.textContent || "").trim();
+          var m = raw.match(/^\$(\d{1,4}(?:,\d{3})*\.\d{2})$/);
+          if (!m) return;
+          var amount = parseFloat(m[1].replace(/,/g, ""));
+          if (!isFinite(amount) || amount <= 0) return;
+          el.setAttribute("data-hx-sale", "1");
+          el.innerHTML = '<s class="hx-was">' + raw + '</s><span class="hx-now">' + money(sale(amount)) + '</span><span class="hx-code">VIP20</span>';
+        }
+        function scan() {
+          document.querySelectorAll("p.text-sm.tabular-nums").forEach(paint);
+        }
+        scan();
+        new MutationObserver(scan).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
       })();
     </script>
   </body>
