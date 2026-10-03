@@ -154,6 +154,55 @@
         width: 2.25rem; height: 2.25rem; border: 0; border-radius: 999px;
         background: rgba(247,243,236,.92); color: #1A1814; cursor: pointer; font-size: 1.2rem;
       }
+      #hxOffer .pct {
+        margin: .45rem 0 0;
+        font-family: "Instrument Serif", Georgia, serif;
+        font-size: 4.4rem; line-height: .85; letter-spacing: -.03em; color: #1A1814;
+      }
+      #hxOffer .pct span { color: #B08A3E; }
+      #hxOffer .when { margin: .35rem 0 0; font-size: .95rem; color: #6B6458; }
+
+      #hxSaleBar {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 70;
+        display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+        gap: .45rem .75rem; min-height: 46px; padding: .45rem .9rem;
+        background: #1A1814; color: #F7F3EC;
+        border-bottom: 2px solid #B08A3E;
+        font-family: Inter, system-ui, sans-serif; font-size: .84rem;
+      }
+      body.hx-sale-on { padding-top: 46px; }
+      #hxSaleBar .tag {
+        font-size: .68rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+        color: #1A1814; background: #E4C27A; border-radius: 999px; padding: .2rem .55rem;
+      }
+      #hxSaleBar strong { color: #E4C27A; letter-spacing: .06em; font-size: .95rem; }
+      #hxSaleBar .code {
+        font-family: ui-monospace, Menlo, monospace; letter-spacing: .08em; color: #E4C27A;
+      }
+      #hxSaleBar a {
+        color: #F7F3EC; text-decoration: none; border-bottom: 1px solid #B08A3E;
+      }
+      #hxSaleBar a:hover { color: #E4C27A; }
+
+      #top > main > section:first-child > figure { position: relative; }
+      #top > main > section:first-child > figure::after {
+        content: "FALL SALE\A20% OFF";
+        white-space: pre;
+        position: absolute; top: 14px; left: 14px; z-index: 3;
+        background: #1A1814; color: #F7F3EC;
+        border: 1px solid #B08A3E; border-radius: 12px;
+        padding: .5rem .65rem; text-align: center;
+        font-family: Inter, system-ui, sans-serif;
+        font-size: .68rem; font-weight: 600; letter-spacing: .14em; line-height: 1.3;
+        box-shadow: 0 10px 24px rgba(26,24,20,.18);
+      }
+      #hxCatalogSale {
+        margin: 0 auto 1rem; max-width: 72rem; padding: .75rem 1rem;
+        background: #1A1814; color: #F7F3EC; border-radius: 10px;
+        border: 1px solid #B08A3E; text-align: center;
+        font-family: Inter, system-ui, sans-serif; font-size: .92rem;
+      }
+      #hxCatalogSale strong { color: #E4C27A; letter-spacing: .04em; }
 
       /* Full photographic molecular environment, not an isolated chain. */
       .hx-molecular-shell {
@@ -219,30 +268,38 @@
     <main class="hx-molecular-shell">
       <div id="root"></div>
     </main>
+    <div id="hxSaleBar" role="region" aria-label="October Fall Sale">
+      <span class="tag">Fall Sale</span>
+      <span>through October 31 · <strong>20% OFF</strong></span>
+      <span class="code">VIP20</span>
+      <a href="#catalog">Shop the catalog</a>
+    </div>
     <div id="hxOffer" role="dialog" aria-modal="true" aria-labelledby="hxOfferTitle">
       <div class="card">
         <button class="x" type="button" aria-label="Close offer flyer" id="hxOfferClose">×</button>
         <div class="hero">
-          <p class="kicker">This month</p>
-          <h2 id="hxOfferTitle">20% off all orders.</h2>
-          <p class="lede">Use code VIP20 on your request. Paul and Thabby apply it on the invoice.</p>
+          <p class="kicker">Fall Sale · through October 31</p>
+          <p class="pct">20% <span>OFF</span></p>
+          <h2 id="hxOfferTitle">Every research request this month.</h2>
+          <p class="when">No minimum. Paul and Thabby apply code VIP20 on the invoice.</p>
         </div>
         <div class="offers">
           <div class="offer">
-            <strong>20% off every order</strong>
+            <strong>Fall Sale — 20% off</strong>
             <span>VIP20</span>
-            <p>No minimum. One code for the next month, on any research request.</p>
+            <p>One code through October 31, on any request. Local pickup stays free.</p>
           </div>
         </div>
         <div class="actions">
-          <a class="shop" id="hxOfferShop" href="#catalog">Shop the catalog</a>
-          <p class="fine">Research use only. Local pickup stays free. USPS is $15, or free at $400+.</p>
+          <a class="shop" id="hxOfferShop" href="#catalog">Shop the Fall Sale</a>
+          <p class="fine">Research use only. USPS is $15, or free at $400+ before the discount.</p>
         </div>
       </div>
     </div>
     <script>
       (function () {
-        var KEY = "hx_offers_vip20_oct26";
+        document.body.classList.add("hx-sale-on");
+        var KEY = "hx_offers_fall20_oct26";
         var el = document.getElementById("hxOffer");
         if (!el) return;
         function dismissed() {
@@ -274,6 +331,21 @@
             if (n > 120) clearInterval(t);
           }, 500);
         }
+        function pinCatalog() {
+          if (document.getElementById("hxCatalogSale")) return;
+          var heads = document.querySelectorAll("h2, h1");
+          for (var i = 0; i < heads.length; i++) {
+            if (/every vial we stand behind/i.test(heads[i].textContent || "")) {
+              var note = document.createElement("div");
+              note.id = "hxCatalogSale";
+              note.innerHTML = "Fall Sale through October 31 · <strong>20% OFF</strong> with code VIP20";
+              heads[i].parentElement.insertBefore(note, heads[i]);
+              return;
+            }
+          }
+        }
+        pinCatalog();
+        new MutationObserver(pinCatalog).observe(document.getElementById("root") || document.body, { childList: true, subtree: true });
       })();
     </script>
   </body>
