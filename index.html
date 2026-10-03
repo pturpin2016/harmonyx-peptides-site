@@ -188,15 +188,23 @@
       #top > main > section:first-child > figure {
         background: transparent;
         box-shadow: none;
-        overflow: visible;
+        overflow: hidden;
       }
       #top > main > section:first-child > figure > img {
-        content: url("/assets/hero-vial-plinth.webp?v=6");
+        content: url("/assets/hero-vial-plinth.webp?v=7");
         object-fit: contain !important;
-        object-position: center bottom !important;
+        object-position: center 60% !important;
         height: auto !important;
         max-height: none !important;
         filter: drop-shadow(14px 20px 16px rgba(76,58,32,.13));
+        /* Enlarge the vial on the marble plinth without rebuilding the asset. */
+        transform: scale(1.36);
+        transform-origin: 50% 66%;
+      }
+      @media (min-width: 768px) {
+        #top > main > section:first-child > .mx-auto {
+          grid-template-columns: 0.9fr 1.1fr !important;
+        }
       }
       @media (max-width: 767px) {
         #top > main > section:first-child::before {
