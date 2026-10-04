@@ -169,15 +169,14 @@
       #hxOffer .pct { font-size: 3.35rem; }
       #hxOffer h2 { font-size: 1.62rem; }
       #hxOffer .leaves {
-        position: relative; flex: 0 0 108px; width: 108px; height: 156px;
-        margin: 0 0 .1rem -6px; pointer-events: none;
+        position: relative; flex: 0 0 132px; width: 132px; height: 168px;
+        margin: 0 0 0 -4px; pointer-events: none; align-self: center;
       }
       #hxOffer .leaf {
-        position: absolute; display: block; height: auto;
-        filter: drop-shadow(2px 5px 4px rgba(76,58,32,.22));
+        position: absolute; display: block; width: 148px; height: 176px;
+        left: -8px; top: -6px; object-fit: contain;
+        filter: drop-shadow(2px 6px 5px rgba(76,58,32,.2));
       }
-      #hxOffer .leaf.back { width: 92px; left: 4px; top: 28px; transform: rotate(-16deg); }
-      #hxOffer .leaf.front { width: 104px; left: 10px; top: 2px; transform: rotate(11deg); }
 
       #hxSaleBar {
         position: fixed; top: 0; left: 0; right: 0; z-index: 70;
@@ -280,8 +279,7 @@
             <h2 id="hxOfferTitle">Every research request this month.</h2>
           </div>
           <div class="leaves" aria-hidden="true">
-            <img class="leaf back" src="/assets/fall-leaf-gold.webp" alt="">
-            <img class="leaf front" src="/assets/fall-leaf-russet.webp" alt="">
+            <img class="leaf" src="/assets/fall-leaf-cluster.webp" alt="">
           </div>
         </div>
         <div class="offers">
