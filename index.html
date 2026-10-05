@@ -97,6 +97,64 @@
         });
       } catch (e) {}
     </script>
+    <script>
+      (function () {
+        var EMAIL = "research@harmony-x.com";
+        function mailHref(name) {
+          var subject = name ? "Product information: " + name : "Product information request";
+          var body = name
+            ? "Hello HarmonyX,\n\nI would like more detailed information on " + name + ".\n\n"
+            : "Hello HarmonyX,\n\nI would like more detailed information on a catalog product.\n\n";
+          return "mailto:" + EMAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+        }
+        function productName(node) {
+          var root = node.closest("[role='dialog'], article, section, li") || document;
+          var heading = root.querySelector("h2, h3");
+          var text = heading && heading.textContent ? heading.textContent.trim() : "";
+          if (!text || text.length > 80) return "";
+          return text;
+        }
+        function addCatalogNote() {
+          if (document.getElementById("hxEmailCatalogNote")) return;
+          var heads = document.querySelectorAll("h2");
+          for (var i = 0; i < heads.length; i++) {
+            if ((heads[i].textContent || "").indexOf("Every vial we stand behind") === -1) continue;
+            var para = heads[i].parentElement && heads[i].parentElement.querySelector("p");
+            if (!para) return;
+            var note = document.createElement("p");
+            note.id = "hxEmailCatalogNote";
+            note.style.cssText = "margin:.7rem 0 0;max-width:36rem;color:#6B6458;font-size:.875rem;line-height:1.55;";
+            note.innerHTML = "Need more detail on a product? Email <a href=\"" + mailHref("") + "\" style=\"color:#8A6A32;text-decoration:underline;\">" + EMAIL + "</a> and we will send what we have on file.";
+            para.insertAdjacentElement("afterend", note);
+            return;
+          }
+        }
+        function addProductLinks() {
+          var links = document.querySelectorAll("a");
+          for (var i = 0; i < links.length; i++) {
+            var a = links[i];
+            if ((a.textContent || "").trim() !== "Request COA") continue;
+            var wrap = a.parentElement;
+            if (!wrap || wrap.querySelector(".hx-email-details")) continue;
+            var name = productName(a);
+            var extra = document.createElement("a");
+            extra.className = "hx-email-details";
+            extra.href = mailHref(name);
+            extra.textContent = "Email for details";
+            extra.style.cssText = "display:inline-flex;align-items:center;border:1px solid rgba(26,24,20,.16);border-radius:6px;padding:.35rem .7rem;font-size:.8rem;color:#1A1814;text-decoration:none;background:#fff;";
+            wrap.appendChild(extra);
+          }
+        }
+        function scan() {
+          addCatalogNote();
+          addProductLinks();
+        }
+        new MutationObserver(scan).observe(document.documentElement, { childList: true, subtree: true });
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", scan);
+        else scan();
+      })();
+    </script>
+
     <script type="module" crossorigin src="/assets/index-hx-20261004.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-XAOMhhJ0.css">
     <style>
