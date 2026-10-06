@@ -422,5 +422,104 @@
         new MutationObserver(scan).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
       })();
     </script>
+
+    <section id="hxPromoSignup" aria-label="Catalog updates">
+      <div class="card">
+        <p class="kicker">Catalog updates</p>
+        <h2>Get the next promotion.</h2>
+        <p class="lede">Leave your email and HarmonyX will send catalog updates and sale notices. No account needed.</p>
+        <form id="hxPromoForm">
+          <input id="hxPromoEmail" type="email" name="email" required autocomplete="email" placeholder="Email address" aria-label="Email address">
+          <label class="check"><input id="hxPromoOk" type="checkbox" required> Send me HarmonyX catalog updates and promotions.</label>
+          <div id="hxPromoTurnstile"></div>
+          <button type="submit">Join the list</button>
+          <p id="hxPromoMsg" class="msg" role="status"></p>
+        </form>
+      </div>
+    </section>
+    <style>
+      #hxPromoSignup {
+        position: relative; z-index: 5;
+        padding: 1.5rem 1rem 2rem;
+        font-family: Inter, system-ui, sans-serif;
+        color: #1A1814;
+      }
+      #hxPromoSignup .card {
+        max-width: 36rem; margin: 0 auto;
+        background: #FFFCF7; border: 1px solid rgba(26,24,20,.12);
+        border-radius: 14px; padding: 1.25rem 1.25rem 1.1rem;
+      }
+      #hxPromoSignup .kicker {
+        margin: 0; font-size: .7rem; font-weight: 600; letter-spacing: .16em;
+        text-transform: uppercase; color: #B08A3E;
+      }
+      #hxPromoSignup h2 {
+        margin: .3rem 0 0; font-family: "Instrument Serif", Georgia, serif;
+        font-size: 1.8rem; font-weight: 400;
+      }
+      #hxPromoSignup .lede { margin: .45rem 0 0; color: #6B6458; font-size: .9rem; line-height: 1.5; }
+      #hxPromoSignup form { display: grid; gap: .7rem; margin-top: .9rem; }
+      #hxPromoSignup input[type="email"] {
+        width: 100%; box-sizing: border-box; border: 1px solid rgba(26,24,20,.16);
+        border-radius: 8px; padding: .75rem .8rem; font-size: 1rem; background: #fff;
+      }
+      #hxPromoSignup .check { display: flex; gap: .55rem; align-items: flex-start; color: #6B6458; font-size: .82rem; line-height: 1.4; }
+      #hxPromoSignup button {
+        border: 0; border-radius: 8px; background: #1A1814; color: #F7F3EC;
+        padding: .8rem 1rem; font-size: .95rem; cursor: pointer;
+      }
+      #hxPromoSignup button:disabled { opacity: .6; cursor: default; }
+      #hxPromoSignup .msg { margin: 0; min-height: 1.2em; font-size: .85rem; color: #6B6458; }
+    </style>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script>
+      (function () {
+        var ENDPOINT = "https://harmonyx-proxy.pturpin2016.workers.dev/api/order";
+        var SITEKEY = "0x4AAAAAAEPLL-DfcGg0HyYD";
+        var form = document.getElementById("hxPromoForm");
+        var msg = document.getElementById("hxPromoMsg");
+        var widgetId = null;
+        function say(text) { msg.textContent = text; }
+        function mount() {
+          if (!window.turnstile || widgetId !== null) return;
+          widgetId = window.turnstile.render("#hxPromoTurnstile", { sitekey: SITEKEY, theme: "light" });
+        }
+        var wait = setInterval(function () {
+          if (window.turnstile) { clearInterval(wait); mount(); }
+        }, 300);
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var email = document.getElementById("hxPromoEmail").value.trim();
+          var ok = document.getElementById("hxPromoOk").checked;
+          var token = widgetId !== null && window.turnstile ? window.turnstile.getResponse(widgetId) : "";
+          if (!ok) { say("Check the box so we know you want updates."); return; }
+          if (!token) { say("Complete the verification check, then try again."); return; }
+          var button = form.querySelector("button");
+          button.disabled = true;
+          say("Saving your email…");
+          fetch(ENDPOINT, {
+            method: "POST",
+            headers: { "Accept": "application/json", "Content-Type": "application/json" },
+            body: JSON.stringify({
+              type: "contact",
+              name: "Promotion list signup",
+              email: email,
+              message: "Add this address to the HarmonyX promotion list. They asked to receive catalog updates and promotions.",
+              turnstileToken: token
+            })
+          }).then(function (res) {
+            return res.json().catch(function () { return null; }).then(function (data) {
+              if (!res.ok || !data || data.success === false) throw new Error((data && (data.message || data.error)) || "Could not save that email.");
+              say("You're on the list. We'll email catalog updates to " + email + ".");
+              form.reset();
+              if (window.turnstile && widgetId !== null) window.turnstile.reset(widgetId);
+            });
+          }).catch(function (err) {
+            say(err.message || "Could not save that email. Write research@harmony-x.com and we'll add you.");
+          }).finally(function () { button.disabled = false; });
+        });
+      })();
+    </script>
+
   </body>
 </html>
