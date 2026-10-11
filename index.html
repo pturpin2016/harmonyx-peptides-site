@@ -155,6 +155,38 @@
       })();
     </script>
 
+    <script>
+      (function () {
+        var orig = window.fetch;
+        if (!orig) return;
+        window.fetch = function (input, init) {
+          var url = "";
+          try { url = typeof input === "string" ? input : (input && input.url) || ""; } catch (e) {}
+          var pending = orig.call(this, input, init);
+          if (url.indexOf("/api/catalog") === -1 && url.indexOf("catalog-fallback.json") === -1) return pending;
+          return pending.then(function (res) {
+            return res.clone().json().then(function (data) {
+              var products = data && data.products;
+              if (!products) return res;
+              var changed = false;
+              for (var i = 0; i < products.length; i++) {
+                var item = products[i];
+                if (!item || !item.name) continue;
+                if (/epithalon/i.test(item.name) && /10\s*mg/i.test(item.name)) {
+                  products[i] = Object.assign({}, item, { name: "Epithalon 50mg", retailPrice: 125.99 });
+                  changed = true;
+                }
+              }
+              if (!changed) return res;
+              var headers = new Headers(res.headers);
+              headers.delete("content-length");
+              return new Response(JSON.stringify(data), { status: res.status, statusText: res.statusText, headers: headers });
+            }).catch(function () { return res; });
+          });
+        };
+      })();
+    </script>
+
     <script type="module" crossorigin src="/assets/index-hx-20261004.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-XAOMhhJ0.css">
     <style>
