@@ -168,12 +168,67 @@
             else if (input && input.url) input = new Request(busted, input);
             url = busted;
           }
+          var method = "GET";
+          try { method = (init && init.method) || (input && input.method) || "GET"; } catch (e) {}
+          if (String(method).toUpperCase() === "POST" && url.indexOf("/api/order") !== -1 && init && typeof init.body === "string" && !window.__hxOxyNasalOnServer) {
+            try {
+              var payload = JSON.parse(init.body);
+              if (payload && Array.isArray(payload.items)) {
+                var kept = [];
+                var nasalQty = 0;
+                for (var n = 0; n < payload.items.length; n++) {
+                  var it = payload.items[n];
+                  var nm = (it && it.productName) || "";
+                  if (/oxytocin/i.test(nm) && /nasal/i.test(nm)) nasalQty += Number(it.vialQuantity) || 0;
+                  else kept.push(it);
+                }
+                if (nasalQty > 0) {
+                  var lineTotal = Math.round(nasalQty * 75.99 * 100) / 100;
+                  var addNote = "ADD TO INVOICE: Oxytocin Nasal Spray 5mg x " + nasalQty + " @ $75.99 = $" + lineTotal.toFixed(2) + ". This item is not on the Master Catalog sheet yet, so price this line by hand. If a promo code is on the order, apply that same percent to this line.";
+                  if (kept.length) {
+                    payload.items = kept;
+                    payload.customer = payload.customer || {};
+                    payload.customer.notes = payload.customer.notes ? (payload.customer.notes + "\n" + addNote) : addNote;
+                    init = Object.assign({}, init, { body: JSON.stringify(payload) });
+                  } else {
+                    var c = payload.customer || {};
+                    var ship = c.shippingAddress || {};
+                    var addr = [ship.address1, ship.address2, ship.city, ship.state, ship.postalCode, ship.country].filter(Boolean).join(", ");
+                    var f = payload.fulfillment || {};
+                    var promo = payload.promo || {};
+                    var msg = [
+                      "ORDER REQUEST",
+                      addNote,
+                      "Name: " + (c.name || ""),
+                      "Email: " + (c.email || ""),
+                      "Phone: " + (c.phone || ""),
+                      "Fulfillment: " + (f.label || f.method || ""),
+                      "Shipping fee: $" + Number(f.shippingFee || 0).toFixed(2),
+                      addr ? ("Address: " + addr) : "",
+                      c.notes ? ("Customer notes: " + c.notes) : "",
+                      promo.code ? ("Promo code entered: " + promo.code) : ""
+                    ].filter(Boolean).join("\n");
+                    init = Object.assign({}, init, {
+                      body: JSON.stringify({
+                        type: "contact",
+                        name: c.name || "HarmonyX customer",
+                        email: c.email || "",
+                        message: msg,
+                        turnstileToken: payload.turnstileToken || ""
+                      })
+                    });
+                  }
+                }
+              }
+            } catch (err) {}
+          }
           var pending = orig.call(this, input, init);
           if (url.indexOf("/api/catalog") === -1 && url.indexOf("catalog-fallback.json") === -1) return pending;
           return pending.then(function (res) {
             return res.clone().json().then(function (data) {
               var products = data && data.products;
               if (!products) return res;
+              var liveCatalog = url.indexOf("/api/catalog") !== -1;
               var changed = false;
               var hasOxyNasal = false;
               for (var i = 0; i < products.length; i++) {
@@ -191,6 +246,7 @@
                   products[i] = Object.assign({}, item, { retailPrice: 75.99, localStock: true });
                   changed = true;
                   hasOxyNasal = true;
+                  if (liveCatalog) window.__hxOxyNasalOnServer = true;
                 }
               }
               if (!hasOxyNasal) {
@@ -208,6 +264,7 @@
                   localStock: true
                 });
                 changed = true;
+                if (liveCatalog) window.__hxOxyNasalOnServer = false;
               }
               if (!changed) return res;
               var headers = new Headers(res.headers);
