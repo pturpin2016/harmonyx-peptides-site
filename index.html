@@ -175,6 +175,7 @@
               var products = data && data.products;
               if (!products) return res;
               var changed = false;
+              var hasOxyNasal = false;
               for (var i = 0; i < products.length; i++) {
                 var item = products[i];
                 if (!item || !item.name) continue;
@@ -186,6 +187,27 @@
                   products[i] = Object.assign({}, item, { retailPrice: 94.99, localStock: true });
                   changed = true;
                 }
+                if (/oxytocin/i.test(item.name) && /nasal/i.test(item.name)) {
+                  products[i] = Object.assign({}, item, { retailPrice: 75.99, localStock: true });
+                  changed = true;
+                  hasOxyNasal = true;
+                }
+              }
+              if (!hasOxyNasal) {
+                products.push({
+                  id: "oxytocin-nasal-spray-5mg-53",
+                  name: "Oxytocin Nasal Spray 5mg",
+                  category: "Neuroendocrine Signaling Research",
+                  description: "Intranasal oxytocin research preparation, 5 mg per bottle, studied in neuroendocrine and social-signaling pathway research.",
+                  productDetails: "Oxytocin is a neuropeptide studied in the literature for social-behavior and stress-modulation signaling research. This listing is a 5 mg nasal spray research preparation. For laboratory and research use only; not evaluated for human or veterinary use.",
+                  highlights: "Nasal Spray | Neuroendocrine Signaling | 5 mg",
+                  researchGuideUrl: "https://harmonyxpeptides.com/PDF%20Peptides%20One%20Pager/OXYTOCIN%20One%20Pager.pdf",
+                  featured: false,
+                  popularRank: null,
+                  retailPrice: 75.99,
+                  localStock: true
+                });
+                changed = true;
               }
               if (!changed) return res;
               var headers = new Headers(res.headers);
@@ -194,6 +216,37 @@
             }).catch(function () { return res; });
           });
         };
+      })();
+    </script>
+    <script>
+      (function () {
+        var PHOTO = "/vials/oxytocin-nasal-spray-5mg.jpg?v=1";
+        function isOxy(img) {
+          var root = img.closest("article, [role='dialog']");
+          if (!root) return false;
+          var text = root.textContent || "";
+          return /oxytocin/i.test(text) && /nasal/i.test(text);
+        }
+        function swap(img) {
+          if (!img || img.tagName !== "IMG") return;
+          var src = img.getAttribute("src") || "";
+          if (src.indexOf("oxytocin-nasal-spray-5mg") !== -1) return;
+          if (src.indexOf("Nasal-Spray") === -1 && src.indexOf("nasal") === -1) return;
+          if (!isOxy(img)) return;
+          img.src = PHOTO;
+          img.alt = "Oxytocin Nasal Spray 5mg";
+        }
+        function scan() {
+          document.querySelectorAll("img").forEach(swap);
+        }
+        new MutationObserver(scan).observe(document.documentElement, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ["src"]
+        });
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", scan);
+        else scan();
       })();
     </script>
 
