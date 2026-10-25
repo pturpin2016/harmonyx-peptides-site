@@ -159,6 +159,18 @@
       (function () {
         var orig = window.fetch;
         if (!orig) return;
+        try {
+          var rawCart = localStorage.getItem("hx_cart_v1");
+          if (rawCart) {
+            var lines = JSON.parse(rawCart);
+            if (Array.isArray(lines)) {
+              var next = lines.filter(function (line) {
+                return !/snap[\s-]*8/i.test((line && line.productName) || "");
+              });
+              if (next.length !== lines.length) localStorage.setItem("hx_cart_v1", JSON.stringify(next));
+            }
+          }
+        } catch (e) {}
         window.fetch = function (input, init) {
           var url = "";
           try { url = typeof input === "string" ? input : (input && input.url) || ""; } catch (e) {}
@@ -170,7 +182,7 @@
           }
           var method = "GET";
           try { method = (init && init.method) || (input && input.method) || "GET"; } catch (e) {}
-          if (String(method).toUpperCase() === "POST" && url.indexOf("/api/order") !== -1 && init && typeof init.body === "string" && !window.__hxOxyNasalOnServer) {
+          if (String(method).toUpperCase() === "POST" && url.indexOf("/api/order") !== -1 && init && typeof init.body === "string") {
             try {
               var payload = JSON.parse(init.body);
               if (payload && Array.isArray(payload.items)) {
@@ -179,8 +191,8 @@
                 for (var n = 0; n < payload.items.length; n++) {
                   var it = payload.items[n];
                   var nm = (it && it.productName) || "";
-                  if (/oxytocin/i.test(nm) && /nasal/i.test(nm)) nasalQty += Number(it.vialQuantity) || 0;
-                  else kept.push(it);
+                  if (/oxytocin/i.test(nm) && /nasal/i.test(nm) && !window.__hxOxyNasalOnServer) nasalQty += Number(it.vialQuantity) || 0;
+                  else if (!/snap[\s-]*8/i.test(nm)) kept.push(it);
                 }
                 if (nasalQty > 0) {
                   var lineTotal = Math.round(nasalQty * 75.99 * 100) / 100;
@@ -218,6 +230,9 @@
                       })
                     });
                   }
+                } else if (kept.length !== payload.items.length) {
+                  payload.items = kept;
+                  init = Object.assign({}, init, { body: JSON.stringify(payload) });
                 }
               }
             } catch (err) {}
@@ -247,6 +262,13 @@
                   changed = true;
                   hasOxyNasal = true;
                   if (liveCatalog) window.__hxOxyNasalOnServer = true;
+                }
+              }
+              for (var j = products.length - 1; j >= 0; j--) {
+                var snapName = (products[j] && products[j].name) || "";
+                if (/snap[\s-]*8/i.test(snapName)) {
+                  products.splice(j, 1);
+                  changed = true;
                 }
               }
               if (!hasOxyNasal) {
