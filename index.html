@@ -420,7 +420,6 @@
         border-bottom: 2px solid #B08A3E;
         font-family: Inter, system-ui, sans-serif; font-size: .84rem;
       }
-      body.hx-sale-on { padding-top: 46px; }
       .hx-was { color: #6B6458; text-decoration: line-through; font-weight: 400; margin-right: .4rem; }
       .hx-now { color: #B08A3E !important; font-weight: 600; }
       .hx-code { display: block; margin-top: .15rem; font-size: .65rem; letter-spacing: .12em; color: #B08A3E; font-weight: 600; }
@@ -436,6 +435,83 @@
         color: #F7F3EC; text-decoration: none; border-bottom: 1px solid #B08A3E;
       }
       #hxSaleBar a:hover { color: #E4C27A; }
+      #hxSaleBar { min-height: 72px; overflow: visible; }
+      body.hx-sale-on { padding-top: 72px; }
+      #hxSaleBar .stamp, #hxOffer .datestamp {
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+      }
+      #hxSaleBar .stamp { margin: 0 1.55rem 0 .28rem; }
+      #hxSaleBar .stamp s, #hxOffer .datestamp s {
+        text-decoration-thickness: 1.5px;
+      }
+      #hxSaleBar .stamp s { color: rgba(247,243,236,.7); text-decoration-color: #E4C27A; }
+      #hxOffer .datestamp { margin: 0 .15rem 0 .15rem; }
+      #hxOffer .datestamp s { color: #8A8175; }
+      .hx-burst {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 74px;
+        height: 74px;
+        margin: -37px 0 0 -37px;
+        pointer-events: none;
+        z-index: 5;
+        transform: rotate(-9deg);
+        filter: drop-shadow(0 2px 2px rgba(0,0,0,.4));
+      }
+      .hx-burst svg { display: block; width: 100%; height: 100%; overflow: visible; }
+      .hx-burst .copy {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #1A1814;
+        text-align: center;
+        line-height: .92;
+      }
+      .hx-burst .copy b {
+        font-family: Inter, system-ui, sans-serif;
+        font-weight: 800;
+        font-size: .82rem;
+        letter-spacing: -.03em;
+      }
+      .hx-burst .copy i {
+        font-style: normal;
+        font-weight: 700;
+        font-size: .46rem;
+        letter-spacing: .11em;
+        text-transform: uppercase;
+        margin-top: 2px;
+      }
+      #hxOffer .stamp-row {
+        display: flex;
+        align-items: center;
+        gap: .4rem;
+        min-height: 92px;
+        margin: .2rem 0 .05rem;
+        color: #8A8175;
+        font-size: .8rem;
+        letter-spacing: .04em;
+      }
+      #hxOffer .stamp-row .was { text-transform: uppercase; letter-spacing: .14em; font-size: .68rem; font-weight: 600; }
+      #hxOffer .datestamp { margin-right: 1.6rem; }
+      #hxOffer .datestamp s { font-size: .95rem; letter-spacing: 0; color: #6B6458; }
+      #hxOffer .datestamp .hx-burst {
+        width: 88px;
+        height: 88px;
+        margin: -44px 0 0 -44px;
+        left: 58%;
+        transform: rotate(-8deg);
+        filter: drop-shadow(0 6px 7px rgba(76,58,32,.28));
+      }
+      #hxOffer .datestamp .hx-burst .copy b { font-size: .98rem; }
+      #hxOffer .datestamp .hx-burst .copy i { font-size: .5rem; letter-spacing: .12em; }
+      #hxOffer .pct, #hxOffer h2 { position: relative; z-index: 2; }
+      #hxOffer .stamp-row { margin-bottom: .15rem; }
 
       #top > main {
         overflow: clip;
@@ -497,9 +573,9 @@
     <main class="hx-molecular-shell">
       <div id="root"></div>
     </main>
-    <div id="hxSaleBar" role="region" aria-label="October Fall Sale">
-      <span class="tag">Fall Sale</span>
-      <span>through October 31 · <strong>20% OFF</strong></span>
+    <div id="hxSaleBar" role="region" aria-label="Fall Sale extended. VIP20 is 20% off through Sunday, November 8. The October 31 end date has been extended one week.">
+      <span class="tag">Extended</span>
+      <span>through <span class="stamp"><s>October 31</s><span class="hx-burst" aria-hidden="true"><svg viewBox="0 0 100 100" focusable="false"><polygon fill="#E4C27A" stroke="#1A1814" stroke-width="2.4" stroke-linejoin="round" points="50.00,3.00 61.40,16.20 78.50,10.50 79.20,28.40 96.20,33.80 86.40,48.60 97.40,63.20 80.80,69.40 79.60,87.40 61.80,83.20 50.00,97.20 38.20,83.20 20.40,87.40 19.20,69.40 2.60,63.20 13.60,48.60 3.80,33.80 20.80,28.40 21.50,10.50 38.60,16.20"/></svg><span class="copy"><b>NOV 8</b><i>extended</i></span></span></span> · <strong>20% OFF</strong></span>
       <span class="code">VIP20</span>
       <a href="#catalog">Shop the catalog</a>
     </div>
@@ -508,9 +584,10 @@
         <button class="x" type="button" aria-label="Close offer flyer" id="hxOfferClose">×</button>
         <div class="hero">
           <div class="hero-copy">
-            <p class="kicker">Fall Sale · through October 31</p>
+            <p class="kicker">Fall Sale · extended</p>
+            <p class="stamp-row"><span class="was">was</span> <span class="datestamp"><s>October 31</s><span class="hx-burst" aria-hidden="true"><svg viewBox="0 0 100 100" focusable="false"><polygon fill="#E4C27A" stroke="#1A1814" stroke-width="2.4" stroke-linejoin="round" points="50.00,3.00 61.40,16.20 78.50,10.50 79.20,28.40 96.20,33.80 86.40,48.60 97.40,63.20 80.80,69.40 79.60,87.40 61.80,83.20 50.00,97.20 38.20,83.20 20.40,87.40 19.20,69.40 2.60,63.20 13.60,48.60 3.80,33.80 20.80,28.40 21.50,10.50 38.60,16.20"/></svg><span class="copy"><b>NOV 8</b><i>extended</i></span></span></span></p>
             <p class="pct">20% <span>OFF</span></p>
-            <h2 id="hxOfferTitle">Every research request this month.</h2>
+            <h2 id="hxOfferTitle">One more week.</h2>
           </div>
           <div class="leaves" aria-hidden="true">
             <img class="leaf a" src="/assets/maple-leaf.webp" alt="">
@@ -522,7 +599,7 @@
           <div class="offer">
             <strong>Fall Sale — 20% off</strong>
             <span>VIP20</span>
-            <p>One code through October 31, on any request. Local pickup stays free.</p>
+            <p>Same code through Sunday, November 8 — one week past October 31. Local pickup stays free.</p>
           </div>
         </div>
         <div class="actions">
@@ -534,7 +611,7 @@
     <script>
       (function () {
         document.body.classList.add("hx-sale-on");
-        var KEY = "hx_offers_fall20_oct26";
+        var KEY = "hx_offers_fall20_nov8";
         var el = document.getElementById("hxOffer");
         if (!el) return;
         function dismissed() {
