@@ -442,7 +442,7 @@
         display: inline-block;
         vertical-align: middle;
       }
-      #hxSaleBar .stamp { margin: 0 1.55rem 0 .28rem; }
+      #hxSaleBar .stamp { margin: 0 .35rem; }
       #hxSaleBar .stamp s, #hxOffer .datestamp s {
         text-decoration-thickness: 1.5px;
       }
@@ -453,13 +453,13 @@
         position: absolute;
         left: 50%;
         top: 50%;
-        width: 100px;
-        height: 100px;
-        margin: -50px 0 0 -50px;
+        width: 96px;
+        height: 96px;
+        margin: -48px 0 0 -48px;
         pointer-events: none;
         z-index: 5;
-        transform: rotate(-8deg);
-        filter: drop-shadow(0 3px 4px rgba(0,0,0,.45));
+        transform: rotate(-4deg);
+        filter: drop-shadow(0 3px 4px rgba(26,24,20,.28));
       }
       .hx-burst svg { display: block; width: 100%; height: 100%; overflow: visible; }
       .hx-burst .copy {
@@ -491,23 +491,23 @@
         display: flex;
         align-items: center;
         gap: .4rem;
-        min-height: 132px;
+        min-height: 124px;
         margin: .2rem 0 .05rem;
         color: #8A8175;
         font-size: .8rem;
         letter-spacing: .04em;
       }
       #hxOffer .stamp-row .was { text-transform: uppercase; letter-spacing: .14em; font-size: .68rem; font-weight: 600; }
-      #hxOffer .datestamp { margin-right: 1.6rem; }
+      #hxOffer .datestamp { margin: 0 8px; }
       #hxOffer .datestamp s { font-size: .95rem; letter-spacing: 0; color: #6B6458; }
       #hxOffer .datestamp .hx-burst {
-        width: 116px;
-        height: 116px;
-        margin: -78px 0 0 -58px;
-        left: 56%;
-        top: 18%;
-        transform: rotate(-8deg);
-        filter: drop-shadow(0 5px 6px rgba(26,24,20,.28));
+        width: 108px;
+        height: 108px;
+        margin: -54px 0 0 -54px;
+        left: 50%;
+        top: 50%;
+        transform: rotate(-4deg);
+        filter: drop-shadow(0 4px 5px rgba(26,24,20,.22));
       }
       #hxOffer .datestamp .hx-burst .copy b { font-size: .98rem; }
       #hxOffer .datestamp .hx-burst .copy i { font-size: .5rem; letter-spacing: .12em; }
@@ -576,7 +576,7 @@
     </main>
     <div id="hxSaleBar" role="region" aria-label="Fall Sale extended. VIP20 is 20% off through Sunday, November 8. The October 31 end date has been extended one week.">
       <span class="tag">Extended</span>
-      <span>through <span class="stamp"><s>October 31</s><span class="hx-burst" aria-hidden="true"><svg viewBox="0 0 200 200" focusable="false"><polygon points="100.00,3.00 114.24,37.60 142.09,12.61 139.90,49.96 175.84,39.52 157.66,72.23 194.57,78.42 164.00,100.00 194.57,121.58 157.66,127.77 175.84,160.48 139.90,150.04 142.09,187.39 114.24,162.40 100.00,197.00 85.76,162.40 57.91,187.39 60.10,150.04 24.16,160.48 42.34,127.77 5.43,121.58 36.00,100.00 5.43,78.42 42.34,72.23 24.16,39.52 60.10,49.96 57.91,12.61 85.76,37.60" fill="#1A1814" stroke="#E4C27A" stroke-width="5" stroke-linejoin="round"/><polygon points="100.00,22.00 111.57,49.30 133.84,29.72 132.42,59.34 160.98,51.37 146.85,77.44 176.04,82.64 152.00,100.00 176.04,117.36 146.85,122.56 160.98,148.63 132.42,140.66 133.84,170.28 111.57,150.70 100.00,178.00 88.43,150.70 66.16,170.28 67.58,140.66 39.02,148.63 53.15,122.56 23.96,117.36 48.00,100.00 23.96,82.64 53.15,77.44 39.02,51.37 67.58,59.34 66.16,29.72 88.43,49.30" fill="none" stroke="#E4C27A" stroke-width="1.2"/><text x="100" y="94" text-anchor="middle" font-family="Instrument Serif, Georgia, serif" font-size="32" fill="#F3E2B0">Nov 8</text><text x="100" y="116" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="2.2" fill="#E4C27A">EXTENDED</text></svg></span></span> · <strong>20% OFF</strong></span>
+      <span>through <span class="stamp"><s>October 31</s><span class="hx-burst" aria-hidden="true"><svg viewBox="0 0 200 200" focusable="false"><polygon points="100.00,6.00 128.32,31.63 166.47,33.53 168.37,71.68 194.00,100.00 168.37,128.32 166.47,166.47 128.32,168.37 100.00,194.00 71.68,168.37 33.53,166.47 31.63,128.32 6.00,100.00 31.63,71.68 33.53,33.53 71.68,31.63" fill="#E4C27A" stroke="#8C6A32" stroke-width="2.4" stroke-linejoin="round"/><circle cx="100" cy="100" r="62" fill="#FFFCF7" stroke="#C4A15A" stroke-width="2.2"/><text x="100" y="96" text-anchor="middle" font-family="Instrument Serif, Georgia, serif" font-size="32" fill="#1A1814">Nov 8</text><text x="100" y="116" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="700" letter-spacing="2.1" fill="#8A6A32">EXTENDED</text></svg></span></span> · <strong>20% OFF</strong></span>
       <span class="code">VIP20</span>
       <a href="#catalog">Shop the catalog</a>
     </div>
@@ -586,7 +586,7 @@
         <div class="hero">
           <div class="hero-copy">
             <p class="kicker">Fall Sale · extended</p>
-            <p class="stamp-row"><span class="was">was</span> <span class="datestamp"><s>October 31</s><span class="hx-burst" aria-hidden="true"><svg viewBox="0 0 200 200" focusable="false"><polygon points="100.00,3.00 114.24,37.60 142.09,12.61 139.90,49.96 175.84,39.52 157.66,72.23 194.57,78.42 164.00,100.00 194.57,121.58 157.66,127.77 175.84,160.48 139.90,150.04 142.09,187.39 114.24,162.40 100.00,197.00 85.76,162.40 57.91,187.39 60.10,150.04 24.16,160.48 42.34,127.77 5.43,121.58 36.00,100.00 5.43,78.42 42.34,72.23 24.16,39.52 60.10,49.96 57.91,12.61 85.76,37.60" fill="#1A1814" stroke="#E4C27A" stroke-width="5" stroke-linejoin="round"/><polygon points="100.00,22.00 111.57,49.30 133.84,29.72 132.42,59.34 160.98,51.37 146.85,77.44 176.04,82.64 152.00,100.00 176.04,117.36 146.85,122.56 160.98,148.63 132.42,140.66 133.84,170.28 111.57,150.70 100.00,178.00 88.43,150.70 66.16,170.28 67.58,140.66 39.02,148.63 53.15,122.56 23.96,117.36 48.00,100.00 23.96,82.64 53.15,77.44 39.02,51.37 67.58,59.34 66.16,29.72 88.43,49.30" fill="none" stroke="#E4C27A" stroke-width="1.2"/><text x="100" y="94" text-anchor="middle" font-family="Instrument Serif, Georgia, serif" font-size="32" fill="#F3E2B0">Nov 8</text><text x="100" y="116" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="2.2" fill="#E4C27A">EXTENDED</text></svg></span></span></p>
+            <p class="stamp-row"><span class="was">was</span> <span class="datestamp"><s>October 31</s><span class="hx-burst" aria-hidden="true"><svg viewBox="0 0 200 200" focusable="false"><polygon points="100.00,6.00 128.32,31.63 166.47,33.53 168.37,71.68 194.00,100.00 168.37,128.32 166.47,166.47 128.32,168.37 100.00,194.00 71.68,168.37 33.53,166.47 31.63,128.32 6.00,100.00 31.63,71.68 33.53,33.53 71.68,31.63" fill="#E4C27A" stroke="#8C6A32" stroke-width="2.4" stroke-linejoin="round"/><circle cx="100" cy="100" r="62" fill="#FFFCF7" stroke="#C4A15A" stroke-width="2.2"/><text x="100" y="96" text-anchor="middle" font-family="Instrument Serif, Georgia, serif" font-size="32" fill="#1A1814">Nov 8</text><text x="100" y="116" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="700" letter-spacing="2.1" fill="#8A6A32">EXTENDED</text></svg></span></span></p>
             <p class="pct">20% <span>OFF</span></p>
             <h2 id="hxOfferTitle">One more week.</h2>
           </div>
