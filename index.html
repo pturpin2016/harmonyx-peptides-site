@@ -490,9 +490,9 @@
       #hxOffer .stamp-row {
         display: flex;
         align-items: center;
-        gap: .4rem;
-        min-height: 124px;
-        margin: .2rem 0 .05rem;
+        gap: .55rem;
+        min-height: 112px;
+        margin: .35rem 0 .55rem;
         color: #8A8175;
         font-size: .8rem;
         letter-spacing: .04em;
@@ -500,13 +500,22 @@
       #hxOffer .stamp-row .was { text-transform: uppercase; letter-spacing: .14em; font-size: .68rem; font-weight: 600; }
       #hxOffer .datestamp { margin: 0 8px; }
       #hxOffer .datestamp s { font-size: .95rem; letter-spacing: 0; color: #6B6458; }
-      #hxOffer .datestamp .hx-burst {
-        width: 108px;
-        height: 108px;
-        margin: -54px 0 0 -54px;
-        left: 50%;
-        top: 50%;
-        transform: rotate(-4deg);
+      #hxOffer .stamp-row .olddate {
+        color: #6B6458;
+        font-size: 1rem;
+        letter-spacing: 0;
+        text-decoration-thickness: 2px;
+        text-decoration-color: #8A6A32;
+      }
+      #hxOffer .stamp-row .hx-burst {
+        position: relative;
+        left: auto;
+        top: auto;
+        width: 104px;
+        height: 104px;
+        margin: 0 0 0 .15rem;
+        transform: rotate(-6deg);
+        flex: 0 0 auto;
         filter: drop-shadow(0 4px 5px rgba(26,24,20,.22));
       }
       #hxOffer .datestamp .hx-burst .copy b { font-size: .98rem; }
@@ -586,7 +595,7 @@
         <div class="hero">
           <div class="hero-copy">
             <p class="kicker">Fall Sale · extended</p>
-            <p class="stamp-row"><span class="was">was</span> <span class="datestamp"><s>October 31</s><span class="hx-burst" aria-hidden="true"><svg viewBox="0 0 200 200" focusable="false"><polygon points="100.00,4.00 121.63,33.43 156.43,22.33 156.63,58.86 191.30,70.33 170.00,100.00 191.30,129.67 156.63,141.14 156.43,177.67 121.63,166.57 100.00,196.00 78.37,166.57 43.57,177.67 43.37,141.14 8.70,129.67 30.00,100.00 8.70,70.33 43.37,58.86 43.57,22.33 78.37,33.43" fill="#B08A3E" stroke="#7A5E28" stroke-width="2.2" stroke-linejoin="round"/><circle cx="100" cy="100" r="58" fill="#FFFCF7" stroke="#B08A3E" stroke-width="2.4"/><text x="100" y="96" text-anchor="middle" font-family="Instrument Serif, Georgia, serif" font-size="32" fill="#1A1814">Nov 8</text><text x="100" y="116" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="700" letter-spacing="2.1" fill="#B08A3E">EXTENDED</text></svg></span></span></p>
+            <p class="stamp-row"><span class="was">was</span> <s class="olddate">October 31</s> <span class="hx-burst" aria-hidden="true"><svg viewBox="0 0 200 200" focusable="false"><polygon points="100.00,4.00 121.63,33.43 156.43,22.33 156.63,58.86 191.30,70.33 170.00,100.00 191.30,129.67 156.63,141.14 156.43,177.67 121.63,166.57 100.00,196.00 78.37,166.57 43.57,177.67 43.37,141.14 8.70,129.67 30.00,100.00 8.70,70.33 43.37,58.86 43.57,22.33 78.37,33.43" fill="#B08A3E" stroke="#7A5E28" stroke-width="2.2" stroke-linejoin="round"/><circle cx="100" cy="100" r="58" fill="#FFFCF7" stroke="#B08A3E" stroke-width="2.4"/><text x="100" y="96" text-anchor="middle" font-family="Instrument Serif, Georgia, serif" font-size="32" fill="#1A1814">Nov 8</text><text x="100" y="116" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="700" letter-spacing="2.1" fill="#B08A3E">EXTENDED</text></svg></span></p>
             <p class="pct">20% <span>OFF</span></p>
             <h2 id="hxOfferTitle">One more week.</h2>
           </div>
