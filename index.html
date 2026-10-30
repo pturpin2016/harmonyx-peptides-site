@@ -435,8 +435,8 @@
         color: #F7F3EC; text-decoration: none; border-bottom: 1px solid #B08A3E;
       }
       #hxSaleBar a:hover { color: #E4C27A; }
-      #hxSaleBar { min-height: 72px; overflow: visible; }
-      body.hx-sale-on { padding-top: 72px; }
+      #hxSaleBar { min-height: 86px; overflow: visible; }
+      body.hx-sale-on { padding-top: 86px; }
       #hxSaleBar .stamp, #hxOffer .datestamp {
         position: relative;
         display: inline-block;
@@ -453,13 +453,13 @@
         position: absolute;
         left: 50%;
         top: 50%;
-        width: 74px;
-        height: 74px;
-        margin: -37px 0 0 -37px;
+        width: 82px;
+        height: 82px;
+        margin: -41px 0 0 -41px;
         pointer-events: none;
         z-index: 5;
-        transform: rotate(-9deg);
-        filter: drop-shadow(0 2px 2px rgba(0,0,0,.4));
+        transform: rotate(-8deg);
+        filter: drop-shadow(0 3px 4px rgba(26,24,20,.32));
       }
       .hx-burst svg { display: block; width: 100%; height: 100%; overflow: visible; }
       .hx-burst .copy {
@@ -491,7 +491,7 @@
         display: flex;
         align-items: center;
         gap: .4rem;
-        min-height: 92px;
+        min-height: 118px;
         margin: .2rem 0 .05rem;
         color: #8A8175;
         font-size: .8rem;
@@ -501,17 +501,18 @@
       #hxOffer .datestamp { margin-right: 1.6rem; }
       #hxOffer .datestamp s { font-size: .95rem; letter-spacing: 0; color: #6B6458; }
       #hxOffer .datestamp .hx-burst {
-        width: 88px;
-        height: 88px;
-        margin: -44px 0 0 -44px;
+        width: 108px;
+        height: 108px;
+        margin: -62px 0 0 -54px;
         left: 58%;
-        transform: rotate(-8deg);
-        filter: drop-shadow(0 6px 7px rgba(76,58,32,.28));
+        top: 42%;
+        transform: rotate(-4deg);
+        filter: drop-shadow(0 7px 8px rgba(76,58,32,.2));
       }
       #hxOffer .datestamp .hx-burst .copy b { font-size: .98rem; }
       #hxOffer .datestamp .hx-burst .copy i { font-size: .5rem; letter-spacing: .12em; }
       #hxOffer .pct, #hxOffer h2 { position: relative; z-index: 2; }
-      #hxOffer .stamp-row { margin-bottom: .15rem; }
+      #hxOffer .stamp-row { margin-bottom: .85rem; }
 
       #top > main {
         overflow: clip;
@@ -573,9 +574,69 @@
     <main class="hx-molecular-shell">
       <div id="root"></div>
     </main>
+    <svg class="hx-seal-defs" aria-hidden="true" width="0" height="0" focusable="false">
+  <defs>
+    <radialGradient id="hxDisc" cx="38%" cy="32%" r="72%">
+      <stop offset="0%" stop-color="#FFFDF8"/>
+      <stop offset="55%" stop-color="#F7F1E4"/>
+      <stop offset="100%" stop-color="#E6D3A8"/>
+    </radialGradient>
+    <linearGradient id="hxRim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8E7B6"/>
+      <stop offset="45%" stop-color="#C6A15A"/>
+      <stop offset="100%" stop-color="#7C5E2C"/>
+    </linearGradient>
+    <radialGradient id="hxSheen" cx="32%" cy="28%" r="55%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.7"/>
+      <stop offset="42%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="hxDiscClip"><circle cx="100" cy="100" r="61"/></clipPath>
+  </defs>
+</svg>
     <div id="hxSaleBar" role="region" aria-label="Fall Sale extended. VIP20 is 20% off through Sunday, November 8. The October 31 end date has been extended one week.">
       <span class="tag">Extended</span>
-      <span>through <span class="stamp"><s>October 31</s><span class="hx-burst" aria-hidden="true"><svg viewBox="0 0 100 100" focusable="false"><polygon fill="#E4C27A" stroke="#1A1814" stroke-width="2.4" stroke-linejoin="round" points="50.00,3.00 61.40,16.20 78.50,10.50 79.20,28.40 96.20,33.80 86.40,48.60 97.40,63.20 80.80,69.40 79.60,87.40 61.80,83.20 50.00,97.20 38.20,83.20 20.40,87.40 19.20,69.40 2.60,63.20 13.60,48.60 3.80,33.80 20.80,28.40 21.50,10.50 38.60,16.20"/></svg><span class="copy"><b>NOV 8</b><i>extended</i></span></span></span> · <strong>20% OFF</strong></span>
+      <span>through <span class="stamp"><s>October 31</s><span class="hx-burst" aria-hidden="true"><svg viewBox="0 0 200 200" focusable="false">
+  <g><polygon points="99.23,36.00 109.02,2.42 112.49,37.23" fill="#F6E4B2"/>
+<polygon points="111.73,37.08 127.88,6.05 124.49,40.87" fill="#C6A25A"/>
+<polygon points="123.78,40.58 145.68,13.30 135.56,46.79" fill="#F6E4B2"/>
+<polygon points="134.92,46.36 161.71,23.87 145.25,54.75" fill="#C6A25A"/>
+<polygon points="144.71,54.21 175.38,37.38 153.21,64.44" fill="#F6E4B2"/>
+<polygon points="152.78,63.81 186.15,53.29 159.13,75.51" fill="#C6A25A"/>
+<polygon points="158.83,74.80 193.61,70.99 162.77,87.51" fill="#F6E4B2"/>
+<polygon points="162.62,86.76 197.47,89.81 164.00,100.00" fill="#C6A25A"/>
+<polygon points="164.00,99.23 197.58,109.02 162.77,112.49" fill="#F6E4B2"/>
+<polygon points="162.92,111.73 193.95,127.88 159.13,124.49" fill="#C6A25A"/>
+<polygon points="159.42,123.78 186.70,145.68 153.21,135.56" fill="#F6E4B2"/>
+<polygon points="153.64,134.92 176.13,161.71 145.25,145.25" fill="#C6A25A"/>
+<polygon points="145.79,144.71 162.62,175.38 135.56,153.21" fill="#F6E4B2"/>
+<polygon points="136.19,152.78 146.71,186.15 124.49,159.13" fill="#C6A25A"/>
+<polygon points="125.20,158.83 129.01,193.61 112.49,162.77" fill="#F6E4B2"/>
+<polygon points="113.24,162.62 110.19,197.47 100.00,164.00" fill="#C6A25A"/>
+<polygon points="100.77,164.00 90.98,197.58 87.51,162.77" fill="#F6E4B2"/>
+<polygon points="88.27,162.92 72.12,193.95 75.51,159.13" fill="#C6A25A"/>
+<polygon points="76.22,159.42 54.32,186.70 64.44,153.21" fill="#F6E4B2"/>
+<polygon points="65.08,153.64 38.29,176.13 54.75,145.25" fill="#C6A25A"/>
+<polygon points="55.29,145.79 24.62,162.62 46.79,135.56" fill="#F6E4B2"/>
+<polygon points="47.22,136.19 13.85,146.71 40.87,124.49" fill="#C6A25A"/>
+<polygon points="41.17,125.20 6.39,129.01 37.23,112.49" fill="#F6E4B2"/>
+<polygon points="37.38,113.24 2.53,110.19 36.00,100.00" fill="#C6A25A"/>
+<polygon points="36.00,100.77 2.42,90.98 37.23,87.51" fill="#F6E4B2"/>
+<polygon points="37.08,88.27 6.05,72.12 40.87,75.51" fill="#C6A25A"/>
+<polygon points="40.58,76.22 13.30,54.32 46.79,64.44" fill="#F6E4B2"/>
+<polygon points="46.36,65.08 23.87,38.29 54.75,54.75" fill="#C6A25A"/>
+<polygon points="54.21,55.29 37.38,24.62 64.44,46.79" fill="#F6E4B2"/>
+<polygon points="63.81,47.22 53.29,13.85 75.51,40.87" fill="#C6A25A"/>
+<polygon points="74.80,41.17 70.99,6.39 87.51,37.23" fill="#F6E4B2"/>
+<polygon points="86.76,37.38 89.81,2.53 100.00,36.00" fill="#C6A25A"/></g>
+  <circle cx="100" cy="100" r="66.5" fill="url(#hxRim)"/>
+  <circle cx="100" cy="100" r="61.5" fill="url(#hxDisc)"/>
+  <circle cx="100" cy="100" r="61.5" fill="url(#hxSheen)" clip-path="url(#hxDiscClip)"/>
+  <circle cx="100" cy="100" r="57.2" fill="none" stroke="#B8954E" stroke-width="0.7"/>
+  <circle cx="100" cy="100" r="54.6" fill="none" stroke="#E7D3A2" stroke-width="0.45"/>
+  <text x="100" y="96" text-anchor="middle" font-family="Instrument Serif, Georgia, serif" font-size="30" fill="#1A1814">Nov 8</text>
+  <line x1="72" y1="106" x2="128" y2="106" stroke="#C4A15A" stroke-width="0.6"/>
+  <text x="100" y="118" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" font-weight="600" letter-spacing="2.8" fill="#8A6A32">EXTENDED</text>
+</svg></span></span> · <strong>20% OFF</strong></span>
       <span class="code">VIP20</span>
       <a href="#catalog">Shop the catalog</a>
     </div>
@@ -585,7 +646,48 @@
         <div class="hero">
           <div class="hero-copy">
             <p class="kicker">Fall Sale · extended</p>
-            <p class="stamp-row"><span class="was">was</span> <span class="datestamp"><s>October 31</s><span class="hx-burst" aria-hidden="true"><svg viewBox="0 0 100 100" focusable="false"><polygon fill="#E4C27A" stroke="#1A1814" stroke-width="2.4" stroke-linejoin="round" points="50.00,3.00 61.40,16.20 78.50,10.50 79.20,28.40 96.20,33.80 86.40,48.60 97.40,63.20 80.80,69.40 79.60,87.40 61.80,83.20 50.00,97.20 38.20,83.20 20.40,87.40 19.20,69.40 2.60,63.20 13.60,48.60 3.80,33.80 20.80,28.40 21.50,10.50 38.60,16.20"/></svg><span class="copy"><b>NOV 8</b><i>extended</i></span></span></span></p>
+            <p class="stamp-row"><span class="was">was</span> <span class="datestamp"><s>October 31</s><span class="hx-burst" aria-hidden="true"><svg viewBox="0 0 200 200" focusable="false">
+  <g><polygon points="99.23,36.00 109.02,2.42 112.49,37.23" fill="#F6E4B2"/>
+<polygon points="111.73,37.08 127.88,6.05 124.49,40.87" fill="#C6A25A"/>
+<polygon points="123.78,40.58 145.68,13.30 135.56,46.79" fill="#F6E4B2"/>
+<polygon points="134.92,46.36 161.71,23.87 145.25,54.75" fill="#C6A25A"/>
+<polygon points="144.71,54.21 175.38,37.38 153.21,64.44" fill="#F6E4B2"/>
+<polygon points="152.78,63.81 186.15,53.29 159.13,75.51" fill="#C6A25A"/>
+<polygon points="158.83,74.80 193.61,70.99 162.77,87.51" fill="#F6E4B2"/>
+<polygon points="162.62,86.76 197.47,89.81 164.00,100.00" fill="#C6A25A"/>
+<polygon points="164.00,99.23 197.58,109.02 162.77,112.49" fill="#F6E4B2"/>
+<polygon points="162.92,111.73 193.95,127.88 159.13,124.49" fill="#C6A25A"/>
+<polygon points="159.42,123.78 186.70,145.68 153.21,135.56" fill="#F6E4B2"/>
+<polygon points="153.64,134.92 176.13,161.71 145.25,145.25" fill="#C6A25A"/>
+<polygon points="145.79,144.71 162.62,175.38 135.56,153.21" fill="#F6E4B2"/>
+<polygon points="136.19,152.78 146.71,186.15 124.49,159.13" fill="#C6A25A"/>
+<polygon points="125.20,158.83 129.01,193.61 112.49,162.77" fill="#F6E4B2"/>
+<polygon points="113.24,162.62 110.19,197.47 100.00,164.00" fill="#C6A25A"/>
+<polygon points="100.77,164.00 90.98,197.58 87.51,162.77" fill="#F6E4B2"/>
+<polygon points="88.27,162.92 72.12,193.95 75.51,159.13" fill="#C6A25A"/>
+<polygon points="76.22,159.42 54.32,186.70 64.44,153.21" fill="#F6E4B2"/>
+<polygon points="65.08,153.64 38.29,176.13 54.75,145.25" fill="#C6A25A"/>
+<polygon points="55.29,145.79 24.62,162.62 46.79,135.56" fill="#F6E4B2"/>
+<polygon points="47.22,136.19 13.85,146.71 40.87,124.49" fill="#C6A25A"/>
+<polygon points="41.17,125.20 6.39,129.01 37.23,112.49" fill="#F6E4B2"/>
+<polygon points="37.38,113.24 2.53,110.19 36.00,100.00" fill="#C6A25A"/>
+<polygon points="36.00,100.77 2.42,90.98 37.23,87.51" fill="#F6E4B2"/>
+<polygon points="37.08,88.27 6.05,72.12 40.87,75.51" fill="#C6A25A"/>
+<polygon points="40.58,76.22 13.30,54.32 46.79,64.44" fill="#F6E4B2"/>
+<polygon points="46.36,65.08 23.87,38.29 54.75,54.75" fill="#C6A25A"/>
+<polygon points="54.21,55.29 37.38,24.62 64.44,46.79" fill="#F6E4B2"/>
+<polygon points="63.81,47.22 53.29,13.85 75.51,40.87" fill="#C6A25A"/>
+<polygon points="74.80,41.17 70.99,6.39 87.51,37.23" fill="#F6E4B2"/>
+<polygon points="86.76,37.38 89.81,2.53 100.00,36.00" fill="#C6A25A"/></g>
+  <circle cx="100" cy="100" r="66.5" fill="url(#hxRim)"/>
+  <circle cx="100" cy="100" r="61.5" fill="url(#hxDisc)"/>
+  <circle cx="100" cy="100" r="61.5" fill="url(#hxSheen)" clip-path="url(#hxDiscClip)"/>
+  <circle cx="100" cy="100" r="57.2" fill="none" stroke="#B8954E" stroke-width="0.7"/>
+  <circle cx="100" cy="100" r="54.6" fill="none" stroke="#E7D3A2" stroke-width="0.45"/>
+  <text x="100" y="96" text-anchor="middle" font-family="Instrument Serif, Georgia, serif" font-size="30" fill="#1A1814">Nov 8</text>
+  <line x1="72" y1="106" x2="128" y2="106" stroke="#C4A15A" stroke-width="0.6"/>
+  <text x="100" y="118" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" font-weight="600" letter-spacing="2.8" fill="#8A6A32">EXTENDED</text>
+</svg></span></span></p>
             <p class="pct">20% <span>OFF</span></p>
             <h2 id="hxOfferTitle">One more week.</h2>
           </div>
@@ -772,5 +874,6 @@
       })();
     </script>
 
-  </body>
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"2b6da0a410d544b4b84743cdf36f0d7f","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
 </html>
