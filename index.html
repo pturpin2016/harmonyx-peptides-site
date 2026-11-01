@@ -187,16 +187,21 @@
               var payload = JSON.parse(init.body);
               if (payload && Array.isArray(payload.items)) {
                 var kept = [];
-                var nasalQty = 0;
+                var invoiceNotes = [];
                 for (var n = 0; n < payload.items.length; n++) {
                   var it = payload.items[n];
                   var nm = (it && it.productName) || "";
-                  if (/oxytocin/i.test(nm) && /nasal/i.test(nm) && !window.__hxOxyNasalOnServer) nasalQty += Number(it.vialQuantity) || 0;
-                  else if (!/snap[\s-]*8/i.test(nm)) kept.push(it);
+                  var qty = Number(it && it.vialQuantity) || 0;
+                  if (/oxytocin/i.test(nm) && /nasal/i.test(nm) && !window.__hxOxyNasalOnServer) {
+                    var oxyTotal = Math.round(qty * 75.99 * 100) / 100;
+                    invoiceNotes.push("ADD TO INVOICE: Oxytocin Nasal Spray 5mg x " + qty + " @ $75.99 = $" + oxyTotal.toFixed(2) + ". This item is not on the Master Catalog sheet yet, so price this line by hand. If a promo code is on the order, apply that same percent to this line.");
+                  } else if (/dihexa/i.test(nm) && !window.__hxBlendNasalOnServer) {
+                    var blendTotal = Math.round(qty * 130 * 100) / 100;
+                    invoiceNotes.push("ADD TO INVOICE: Semax/Selank/Dihexa Nasal Spray 15mg x " + qty + " @ $130.00 = $" + blendTotal.toFixed(2) + ". This item is not on the Master Catalog sheet yet, so price this line by hand. If a promo code is on the order, apply that same percent to this line.");
+                  } else if (!/snap[\s-]*8/i.test(nm)) kept.push(it);
                 }
-                if (nasalQty > 0) {
-                  var lineTotal = Math.round(nasalQty * 75.99 * 100) / 100;
-                  var addNote = "ADD TO INVOICE: Oxytocin Nasal Spray 5mg x " + nasalQty + " @ $75.99 = $" + lineTotal.toFixed(2) + ". This item is not on the Master Catalog sheet yet, so price this line by hand. If a promo code is on the order, apply that same percent to this line.";
+                if (invoiceNotes.length) {
+                  var addNote = invoiceNotes.join("\n");
                   if (kept.length) {
                     payload.items = kept;
                     payload.customer = payload.customer || {};
@@ -246,6 +251,7 @@
               var liveCatalog = url.indexOf("/api/catalog") !== -1;
               var changed = false;
               var hasOxyNasal = false;
+              var hasBlendNasal = false;
               for (var i = 0; i < products.length; i++) {
                 var item = products[i];
                 if (!item || !item.name) continue;
@@ -258,10 +264,23 @@
                   changed = true;
                 }
                 if (/oxytocin/i.test(item.name) && /nasal/i.test(item.name)) {
-                  products[i] = Object.assign({}, item, { retailPrice: 75.99, localStock: true });
+                  products[i] = Object.assign({}, item, { retailPrice: 75.99, localStock: true, category: "Nasal" });
                   changed = true;
                   hasOxyNasal = true;
                   if (liveCatalog) window.__hxOxyNasalOnServer = true;
+                }
+                if (/dihexa/i.test(item.name) || (/semax/i.test(item.name) && /selank/i.test(item.name) && /nasal|spray/i.test(item.name))) {
+                  products[i] = Object.assign({}, item, {
+                    name: "Semax/Selank/Dihexa Nasal Spray 15mg",
+                    category: "Nasal",
+                    retailPrice: 130,
+                    localStock: true,
+                    description: "Intranasal research blend of Semax, Selank, and Dihexa, 15 mg per bottle, studied in neurocognitive pathway research.",
+                    highlights: "Nasal Spray | Semax | Selank | Dihexa | 15 mg"
+                  });
+                  changed = true;
+                  hasBlendNasal = true;
+                  if (liveCatalog) window.__hxBlendNasalOnServer = true;
                 }
               }
               var oosKeys = ["dsip 5 mg","tesamorelin 10 mg","5 amino 1mq 10 mg","glp 2x 10 mg","glp 3x 20 mg","mots c 10 mg","ss 31 10 mg","glutathione 500 mg","glutathione 600 mg","wolverine 10 mg"];
@@ -297,7 +316,7 @@
                 products.push({
                   id: "oxytocin-nasal-spray-5mg-53",
                   name: "Oxytocin Nasal Spray 5mg",
-                  category: "Neuroendocrine Signaling Research",
+                  category: "Nasal",
                   description: "Intranasal oxytocin research preparation, 5 mg per bottle, studied in neuroendocrine and social-signaling pathway research.",
                   productDetails: "Oxytocin is a neuropeptide studied in the literature for social-behavior and stress-modulation signaling research. This listing is a 5 mg nasal spray research preparation. For laboratory and research use only; not evaluated for human or veterinary use.",
                   highlights: "Nasal Spray | Neuroendocrine Signaling | 5 mg",
@@ -310,6 +329,23 @@
                 changed = true;
                 if (liveCatalog) window.__hxOxyNasalOnServer = false;
               }
+              if (!hasBlendNasal) {
+                products.push({
+                  id: "semax-selank-dihexa-nasal-15mg-54",
+                  name: "Semax/Selank/Dihexa Nasal Spray 15mg",
+                  category: "Nasal",
+                  description: "Intranasal research blend of Semax, Selank, and Dihexa, 15 mg per bottle, studied in neurocognitive pathway research.",
+                  productDetails: "This 15 mg nasal spray pairs Semax, Selank, and Dihexa for neurocognitive pathway research. For laboratory and research use only; not evaluated for human or veterinary use.",
+                  highlights: "Nasal Spray | Semax | Selank | Dihexa | 15 mg",
+                  researchGuideUrl: "https://harmonyxpeptides.com/coas/Semax-Selank-Dihexa-15mg-COA3970.html",
+                  featured: false,
+                  popularRank: null,
+                  retailPrice: 130,
+                  localStock: true
+                });
+                changed = true;
+                if (liveCatalog) window.__hxBlendNasalOnServer = false;
+              }
               if (!changed) return res;
               var headers = new Headers(res.headers);
               headers.delete("content-length");
@@ -321,21 +357,26 @@
     </script>
     <script>
       (function () {
-        var PHOTO = "/vials/oxytocin-nasal-spray-5mg.jpg?v=5";
-        function isOxy(img) {
+        function cardText(img) {
           var root = img.closest("article, [role='dialog']");
-          if (!root) return false;
-          var text = root.textContent || "";
-          return /oxytocin/i.test(text) && /nasal/i.test(text);
+          return root ? (root.textContent || "") : "";
         }
         function swap(img) {
           if (!img || img.tagName !== "IMG") return;
           var src = img.getAttribute("src") || "";
-          if (src.indexOf("oxytocin-nasal-spray-5mg") !== -1) return;
-          if (src.indexOf("Nasal-Spray") === -1 && src.indexOf("nasal") === -1) return;
-          if (!isOxy(img)) return;
-          img.src = PHOTO;
-          img.alt = "Oxytocin Nasal Spray 5mg";
+          var text = cardText(img);
+          if (/oxytocin/i.test(text) && /nasal/i.test(text)) {
+            if (src.indexOf("oxytocin-nasal-spray-5mg") !== -1) return;
+            if (src.indexOf("Nasal-Spray") === -1 && src.indexOf("nasal") === -1) return;
+            img.src = "/vials/oxytocin-nasal-spray-5mg.jpg?v=5";
+            img.alt = "Oxytocin Nasal Spray 5mg";
+            return;
+          }
+          if (/dihexa/i.test(text)) {
+            if (src.indexOf("semax-selank-dihexa-nasal-15mg") !== -1) return;
+            img.src = "/vials/semax-selank-dihexa-nasal-15mg.jpg?v=1";
+            img.alt = "Semax/Selank/Dihexa Nasal Spray 15mg";
+          }
         }
         function scan() {
           document.querySelectorAll("img").forEach(swap);
@@ -351,7 +392,7 @@
       })();
     </script>
 
-    <script type="module" crossorigin src="/assets/index-hx-20261101b.js?v=pop1"></script>
+    <script type="module" crossorigin src="/assets/index-hx-20261101c.js?v=nasal1"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-XAOMhhJ0.css">
     <style>
       #hxOffer {
