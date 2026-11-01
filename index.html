@@ -264,6 +264,28 @@
                   if (liveCatalog) window.__hxOxyNasalOnServer = true;
                 }
               }
+              var oosKeys = ["dsip 5 mg","tesamorelin 10 mg","5 amino 1mq 10 mg","glp 2x 10 mg","glp 3x 20 mg","mots c 10 mg","ss 31 10 mg","glutathione 500 mg","glutathione 600 mg","wolverine 10 mg"];
+              function hxNormName(name) {
+                return String(name || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").replace(/(\d+)\s*mg/g, "$1 mg").replace(/\s+/g, " ").trim();
+              }
+              for (var o = 0; o < products.length; o++) {
+                var stockItem = products[o];
+                if (!stockItem || !stockItem.name) continue;
+                var normalized = hxNormName(stockItem.name);
+                if (normalized.indexOf("nasal") !== -1) continue;
+                var out = false;
+                for (var k = 0; k < oosKeys.length; k++) {
+                  if (normalized.indexOf(oosKeys[k]) !== -1) { out = true; break; }
+                }
+                if (!out) continue;
+                products[o] = Object.assign({}, stockItem, {
+                  category: "Currently Out of Stock",
+                  localStock: false,
+                  featured: false,
+                  popularRank: null
+                });
+                changed = true;
+              }
               for (var j = products.length - 1; j >= 0; j--) {
                 var snapName = (products[j] && products[j].name) || "";
                 if (/snap[\s-]*8/i.test(snapName)) {
@@ -329,7 +351,7 @@
       })();
     </script>
 
-    <script type="module" crossorigin src="/assets/index-hx-20261004.js?v=mix50"></script>
+    <script type="module" crossorigin src="/assets/index-hx-20261101.js?v=oos1"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-XAOMhhJ0.css">
     <style>
       #hxOffer {
