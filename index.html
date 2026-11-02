@@ -893,10 +893,31 @@
         background: linear-gradient(135deg, #FFFCF7 0%, #F7F3EC 100%);
         border: 1px solid rgba(176, 138, 62, 0.35);
         border-radius: 16px;
-        padding: 1.4rem 1.6rem 1.5rem;
+        padding: 1.25rem;
         box-shadow: 0 8px 28px rgba(26, 24, 20, 0.06);
         font-family: Inter, system-ui, sans-serif;
         color: #1A1814;
+        display: flex;
+        align-items: center;
+        gap: 1.4rem;
+      }
+      #hxComingSoon .vial-wrap {
+        flex: 0 0 140px;
+        aspect-ratio: 1;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #ede6d8;
+      }
+      #hxComingSoon .vial-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      #hxComingSoon .copy { flex: 1; min-width: 0; }
+      @media (max-width: 640px) {
+        #hxComingSoon .card { flex-direction: column; text-align: center; }
+        #hxComingSoon .vial-wrap { flex-basis: 180px; margin: 0 auto; }
       }
       #hxComingSoon .kicker {
         display: inline-flex;
@@ -958,10 +979,15 @@
           section.id = "hxComingSoon";
           section.innerHTML =
             '<div class="card">' +
-              '<p class="kicker">Coming Soon</p>' +
-              '<h2>NM5 Endure-X Blend</h2>' +
-              '<p class="lede">A new research blend is on the way. Product should be here soon — watch the catalog for the full listing.</p>' +
-              '<span class="badge">Arriving soon</span>' +
+              '<div class="vial-wrap">' +
+                '<img src="/vials/nm5-endure-x.jpg" alt="NM5 Endure-X Blend research vial" />' +
+              '</div>' +
+              '<div class="copy">' +
+                '<p class="kicker">Coming Soon</p>' +
+                '<h2>NM5 Endure-X Blend</h2>' +
+                '<p class="lede">A new research blend is on the way. Product should be here soon — watch the catalog for the full listing.</p>' +
+                '<span class="badge">Arriving soon</span>' +
+              '</div>' +
             '</div>';
           // Insert before the catalog heading's parent block
           var parent = target.parentElement;
