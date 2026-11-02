@@ -886,23 +886,23 @@
     <style>
       #hxComingSoon {
         max-width: 72rem;
-        margin: 1.5rem auto 0.5rem;
+        margin: 1.25rem auto 1.25rem;
         padding: 0 1rem;
       }
       #hxComingSoon .card {
         background: linear-gradient(135deg, #FFFCF7 0%, #F7F3EC 100%);
         border: 1px solid rgba(176, 138, 62, 0.35);
         border-radius: 16px;
-        padding: 1.25rem;
+        padding: 1.5rem 1.75rem;
         box-shadow: 0 8px 28px rgba(26, 24, 20, 0.06);
         font-family: Inter, system-ui, sans-serif;
         color: #1A1814;
         display: flex;
         align-items: center;
-        gap: 1.4rem;
+        gap: 1.75rem;
       }
       #hxComingSoon .vial-wrap {
-        flex: 0 0 160px;
+        flex: 0 0 220px;
         aspect-ratio: 1;
         border-radius: 12px;
         overflow: hidden;
@@ -916,9 +916,17 @@
         display: block;
       }
       #hxComingSoon .copy { flex: 1; min-width: 0; }
+      #hxComingSoon h2 { font-size: 2.1rem; }
       @media (max-width: 640px) {
-        #hxComingSoon .card { flex-direction: column; text-align: center; }
-        #hxComingSoon .vial-wrap { flex-basis: 200px; margin: 0 auto; }
+        #hxComingSoon .card { flex-direction: column; text-align: center; gap: 1rem; }
+        #hxComingSoon .vial-wrap { flex-basis: 240px; margin: 0 auto; }
+      }
+      /* Move search bar under the filters */
+      .hx-search-moved {
+        order: 10;
+        width: 100%;
+        max-width: none !important;
+        margin-top: 0.75rem;
       }
       #hxComingSoon .kicker {
         display: inline-flex;
@@ -998,9 +1006,27 @@
             parent.insertBefore(section, target);
           }
         }
-        new MutationObserver(injectComingSoon).observe(document.documentElement, { childList: true, subtree: true });
-        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", injectComingSoon);
-        else injectComingSoon();
+        function moveSearch() {
+          var search = document.querySelector('input[placeholder="Search peptides"]');
+          if (!search) return;
+          var wrap = search.closest(".relative") || search.parentElement;
+          if (!wrap || wrap.classList.contains("hx-search-moved")) return;
+          // Find the filter row (the flex container of category buttons)
+          var filters = document.querySelector('[class*="flex"][class*="flex-wrap"]');
+          if (!filters) return;
+          wrap.classList.add("hx-search-moved");
+          // Place search after the filter buttons container
+          if (filters.parentElement) {
+            filters.parentElement.insertBefore(wrap, filters.nextSibling);
+          }
+        }
+        function scan() {
+          injectComingSoon();
+          moveSearch();
+        }
+        new MutationObserver(scan).observe(document.documentElement, { childList: true, subtree: true });
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", scan);
+        else scan();
       })();
     </script>
 
