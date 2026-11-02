@@ -882,6 +882,101 @@
       })();
     </script>
 
+
+    <style>
+      #hxComingSoon {
+        max-width: 72rem;
+        margin: 1.5rem auto 0.5rem;
+        padding: 0 1rem;
+      }
+      #hxComingSoon .card {
+        background: linear-gradient(135deg, #FFFCF7 0%, #F7F3EC 100%);
+        border: 1px solid rgba(176, 138, 62, 0.35);
+        border-radius: 16px;
+        padding: 1.4rem 1.6rem 1.5rem;
+        box-shadow: 0 8px 28px rgba(26, 24, 20, 0.06);
+        font-family: Inter, system-ui, sans-serif;
+        color: #1A1814;
+      }
+      #hxComingSoon .kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        margin: 0 0 0.5rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #B08A3E;
+      }
+      #hxComingSoon .kicker::before {
+        content: "✦";
+        font-size: 0.85em;
+      }
+      #hxComingSoon h2 {
+        margin: 0;
+        font-family: "Instrument Serif", Georgia, serif;
+        font-size: 1.85rem;
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+      }
+      #hxComingSoon .lede {
+        margin: 0.55rem 0 0;
+        color: #6B6458;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        max-width: 38rem;
+      }
+      #hxComingSoon .badge {
+        display: inline-block;
+        margin-top: 0.9rem;
+        padding: 0.35rem 0.75rem;
+        border-radius: 999px;
+        background: #1A1814;
+        color: #F7F3EC;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+    </style>
+    <script>
+      (function () {
+        function injectComingSoon() {
+          if (document.getElementById("hxComingSoon")) return;
+          var heads = document.querySelectorAll("h2");
+          var target = null;
+          for (var i = 0; i < heads.length; i++) {
+            if ((heads[i].textContent || "").indexOf("Every vial we stand behind") !== -1) {
+              target = heads[i];
+              break;
+            }
+          }
+          if (!target) return;
+          var section = document.createElement("section");
+          section.id = "hxComingSoon";
+          section.innerHTML =
+            '<div class="card">' +
+              '<p class="kicker">Coming Soon</p>' +
+              '<h2>NM5 Endure-X Blend</h2>' +
+              '<p class="lede">A new research blend is on the way. Product should be here soon — watch the catalog for the full listing.</p>' +
+              '<span class="badge">Arriving soon</span>' +
+            '</div>';
+          // Insert before the catalog heading's parent block
+          var parent = target.parentElement;
+          if (parent && parent.parentElement) {
+            parent.parentElement.insertBefore(section, parent);
+          } else if (parent) {
+            parent.insertBefore(section, target);
+          }
+        }
+        new MutationObserver(injectComingSoon).observe(document.documentElement, { childList: true, subtree: true });
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", injectComingSoon);
+        else injectComingSoon();
+      })();
+    </script>
+
 </body>
 </html>
 
