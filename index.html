@@ -29,6 +29,38 @@
           img.setAttribute("data-hx-bac", "1");
           img.src = next;
         }
+        
+        function injectGridComingSoon() {
+          if (document.getElementById("hxComingSoonGrid")) return;
+          var cards = Array.from(document.querySelectorAll("article"));
+          var lastMP = null;
+          for (var i = 0; i < cards.length; i++) {
+            var t = cards[i].textContent || "";
+            if (t.indexOf("5-Amino-1MQ 50mg") !== -1 && t.indexOf("Most Popular") !== -1) {
+              lastMP = cards[i];
+              break;
+            }
+          }
+          if (!lastMP) return;
+          var li = lastMP.parentElement;
+          if (!li || li.tagName !== "LI") return;
+          var newLi = document.createElement("li");
+          newLi.id = "hxComingSoonGrid";
+          newLi.innerHTML =
+            '<div class="card">' +
+              '<div class="vial"><img src="/vials/nm5-endure-x.jpg?v=3" alt="NM5 Endure-X Blend" /></div>' +
+              '<p class="kicker">New Blend Coming Soon</p>' +
+              '<h3>NM5 Endure-X Blend</h3>' +
+              '<p class="blend">NAD+ 100 mg · MOTS-c 10 mg · 5-Amino-1MQ 10 mg</p>' +
+              '<span class="badge">Arriving soon</span>' +
+            '</div>';
+          if (li.nextSibling) {
+            li.parentElement.insertBefore(newLi, li.nextSibling);
+          } else {
+            li.parentElement.appendChild(newLi);
+          }
+        }
+
         function scan() {
           document.querySelectorAll("img").forEach(swap);
         }
@@ -145,6 +177,38 @@
             wrap.appendChild(extra);
           }
         }
+        
+        function injectGridComingSoon() {
+          if (document.getElementById("hxComingSoonGrid")) return;
+          var cards = Array.from(document.querySelectorAll("article"));
+          var lastMP = null;
+          for (var i = 0; i < cards.length; i++) {
+            var t = cards[i].textContent || "";
+            if (t.indexOf("5-Amino-1MQ 50mg") !== -1 && t.indexOf("Most Popular") !== -1) {
+              lastMP = cards[i];
+              break;
+            }
+          }
+          if (!lastMP) return;
+          var li = lastMP.parentElement;
+          if (!li || li.tagName !== "LI") return;
+          var newLi = document.createElement("li");
+          newLi.id = "hxComingSoonGrid";
+          newLi.innerHTML =
+            '<div class="card">' +
+              '<div class="vial"><img src="/vials/nm5-endure-x.jpg?v=3" alt="NM5 Endure-X Blend" /></div>' +
+              '<p class="kicker">New Blend Coming Soon</p>' +
+              '<h3>NM5 Endure-X Blend</h3>' +
+              '<p class="blend">NAD+ 100 mg · MOTS-c 10 mg · 5-Amino-1MQ 10 mg</p>' +
+              '<span class="badge">Arriving soon</span>' +
+            '</div>';
+          if (li.nextSibling) {
+            li.parentElement.insertBefore(newLi, li.nextSibling);
+          } else {
+            li.parentElement.appendChild(newLi);
+          }
+        }
+
         function scan() {
           addCatalogNote();
           addProductLinks();
@@ -378,6 +442,38 @@
             img.alt = "Semax/Selank/Dihexa Nasal Spray 15mg";
           }
         }
+        
+        function injectGridComingSoon() {
+          if (document.getElementById("hxComingSoonGrid")) return;
+          var cards = Array.from(document.querySelectorAll("article"));
+          var lastMP = null;
+          for (var i = 0; i < cards.length; i++) {
+            var t = cards[i].textContent || "";
+            if (t.indexOf("5-Amino-1MQ 50mg") !== -1 && t.indexOf("Most Popular") !== -1) {
+              lastMP = cards[i];
+              break;
+            }
+          }
+          if (!lastMP) return;
+          var li = lastMP.parentElement;
+          if (!li || li.tagName !== "LI") return;
+          var newLi = document.createElement("li");
+          newLi.id = "hxComingSoonGrid";
+          newLi.innerHTML =
+            '<div class="card">' +
+              '<div class="vial"><img src="/vials/nm5-endure-x.jpg?v=3" alt="NM5 Endure-X Blend" /></div>' +
+              '<p class="kicker">New Blend Coming Soon</p>' +
+              '<h3>NM5 Endure-X Blend</h3>' +
+              '<p class="blend">NAD+ 100 mg · MOTS-c 10 mg · 5-Amino-1MQ 10 mg</p>' +
+              '<span class="badge">Arriving soon</span>' +
+            '</div>';
+          if (li.nextSibling) {
+            li.parentElement.insertBefore(newLi, li.nextSibling);
+          } else {
+            li.parentElement.appendChild(newLi);
+          }
+        }
+
         function scan() {
           document.querySelectorAll("img").forEach(swap);
         }
@@ -739,6 +835,38 @@
           el.setAttribute("data-hx-sale", "1");
           el.innerHTML = '<s class="hx-was">' + raw + '</s><span class="hx-now">' + money(sale(amount)) + '</span><span class="hx-code">VIP20</span>';
         }
+        
+        function injectGridComingSoon() {
+          if (document.getElementById("hxComingSoonGrid")) return;
+          var cards = Array.from(document.querySelectorAll("article"));
+          var lastMP = null;
+          for (var i = 0; i < cards.length; i++) {
+            var t = cards[i].textContent || "";
+            if (t.indexOf("5-Amino-1MQ 50mg") !== -1 && t.indexOf("Most Popular") !== -1) {
+              lastMP = cards[i];
+              break;
+            }
+          }
+          if (!lastMP) return;
+          var li = lastMP.parentElement;
+          if (!li || li.tagName !== "LI") return;
+          var newLi = document.createElement("li");
+          newLi.id = "hxComingSoonGrid";
+          newLi.innerHTML =
+            '<div class="card">' +
+              '<div class="vial"><img src="/vials/nm5-endure-x.jpg?v=3" alt="NM5 Endure-X Blend" /></div>' +
+              '<p class="kicker">New Blend Coming Soon</p>' +
+              '<h3>NM5 Endure-X Blend</h3>' +
+              '<p class="blend">NAD+ 100 mg · MOTS-c 10 mg · 5-Amino-1MQ 10 mg</p>' +
+              '<span class="badge">Arriving soon</span>' +
+            '</div>';
+          if (li.nextSibling) {
+            li.parentElement.insertBefore(newLi, li.nextSibling);
+          } else {
+            li.parentElement.appendChild(newLi);
+          }
+        }
+
         function scan() {
           document.querySelectorAll("p.text-sm.tabular-nums").forEach(paint);
         }
@@ -989,7 +1117,67 @@
         letter-spacing: 0.12em;
         text-transform: uppercase;
       }
-    </style>
+    
+      /* Secondary Coming Soon card in the product grid */
+      #hxComingSoonGrid .card {
+        background: linear-gradient(135deg, #FFFCF7 0%, #F7F3EC 100%);
+        border: 1px solid rgba(176, 138, 62, 0.35);
+        border-radius: 12px;
+        padding: 0.75rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        font-family: Inter, system-ui, sans-serif;
+        color: #1A1814;
+      }
+      #hxComingSoonGrid .vial {
+        aspect-ratio: 1;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #ede6d8;
+        margin-bottom: 0.75rem;
+      }
+      #hxComingSoonGrid .vial img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+      }
+      #hxComingSoonGrid .kicker {
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #B08A3E;
+        margin: 0 0 0.35rem;
+      }
+      #hxComingSoonGrid h3 {
+        margin: 0;
+        font-family: "Instrument Serif", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 400;
+        line-height: 1.2;
+      }
+      #hxComingSoonGrid .blend {
+        margin: 0.35rem 0 0;
+        font-size: 0.78rem;
+        color: #6B6458;
+        line-height: 1.4;
+      }
+      #hxComingSoonGrid .badge {
+        display: inline-block;
+        margin-top: auto;
+        padding: 0.3rem 0.65rem;
+        border-radius: 999px;
+        background: #1A1814;
+        color: #F7F3EC;
+        font-size: 0.65rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        align-self: flex-start;
+      }
+</style>
     <script>
       (function () {
         function injectComingSoon() {
@@ -1042,8 +1230,41 @@
             filters.parentElement.insertBefore(wrap, filters.nextSibling);
           }
         }
+        
+        function injectGridComingSoon() {
+          if (document.getElementById("hxComingSoonGrid")) return;
+          var cards = Array.from(document.querySelectorAll("article"));
+          var lastMP = null;
+          for (var i = 0; i < cards.length; i++) {
+            var t = cards[i].textContent || "";
+            if (t.indexOf("5-Amino-1MQ 50mg") !== -1 && t.indexOf("Most Popular") !== -1) {
+              lastMP = cards[i];
+              break;
+            }
+          }
+          if (!lastMP) return;
+          var li = lastMP.parentElement;
+          if (!li || li.tagName !== "LI") return;
+          var newLi = document.createElement("li");
+          newLi.id = "hxComingSoonGrid";
+          newLi.innerHTML =
+            '<div class="card">' +
+              '<div class="vial"><img src="/vials/nm5-endure-x.jpg?v=3" alt="NM5 Endure-X Blend" /></div>' +
+              '<p class="kicker">New Blend Coming Soon</p>' +
+              '<h3>NM5 Endure-X Blend</h3>' +
+              '<p class="blend">NAD+ 100 mg · MOTS-c 10 mg · 5-Amino-1MQ 10 mg</p>' +
+              '<span class="badge">Arriving soon</span>' +
+            '</div>';
+          if (li.nextSibling) {
+            li.parentElement.insertBefore(newLi, li.nextSibling);
+          } else {
+            li.parentElement.appendChild(newLi);
+          }
+        }
+
         function scan() {
           injectComingSoon();
+          injectGridComingSoon();
           moveSearch();
         }
         new MutationObserver(scan).observe(document.documentElement, { childList: true, subtree: true });
