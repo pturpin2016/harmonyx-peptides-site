@@ -1011,11 +1011,14 @@
           if (!search) return;
           var wrap = search.closest(".relative") || search.parentElement;
           if (!wrap || wrap.classList.contains("hx-search-moved")) return;
-          // Find the filter row (the flex container of category buttons)
-          var filters = document.querySelector('[class*="flex"][class*="flex-wrap"]');
+          // Filter row is the container of the "All" button
+          var allBtn = Array.from(document.querySelectorAll("button")).find(function (b) {
+            return (b.textContent || "").trim() === "All";
+          });
+          if (!allBtn) return;
+          var filters = allBtn.parentElement;
           if (!filters) return;
           wrap.classList.add("hx-search-moved");
-          // Place search after the filter buttons container
           if (filters.parentElement) {
             filters.parentElement.insertBefore(wrap, filters.nextSibling);
           }
