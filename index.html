@@ -1,1 +1,502 @@
-PLACEHOLDER
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HarmonyX — Private Research Catalog</title>
+    <meta name="theme-color" content="#F7F3EC" />
+    <meta name="description" content="HarmonyX private research catalog — precision peptides for qualified research purchasers." />
+    <link rel="canonical" href="https://harmonyxpeptides.com/" />
+    <meta property="og:title" content="HarmonyX — Private Research Catalog" />
+    <meta property="og:image" content="https://harmonyxpeptides.com/og.jpg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script>
+      (function () {
+        var PHOTO_3 = "/vials/G258A.jpg?v=20";
+        var PHOTO_10 = "/vials/FN2Ku.jpg?v=20";
+        function pick(img) {
+          var s = ((img.getAttribute("src") || "") + " " + (img.getAttribute("alt") || "")).toLowerCase();
+          if (s.indexOf("30ml") >= 0 || s.indexOf("30 ml") >= 0) return "";
+          if (/bacteriostatic-water-3ml|\b3ml\b|3 ml/.test(s) && /bacteriostatic|bac water|g258a|wyrll|rs4gu/.test(s)) return PHOTO_3;
+          if (/bacteriostatic-water-10ml|\b10ml\b|10 ml/.test(s) && /bacteriostatic|bac water|fn2ku|kedd6|s7ciu/.test(s)) return PHOTO_10;
+          return "";
+        }
+        function swap(img) {
+          if (img.getAttribute("data-hx-bac")) return;
+          var next = pick(img);
+          if (!next) return;
+          img.setAttribute("data-hx-bac", "1");
+          img.src = next;
+        }
+        function scan() {
+          document.querySelectorAll("img").forEach(swap);
+        }
+        new MutationObserver(scan).observe(document.documentElement, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ["src"]
+        });
+        document.addEventListener("error", function (e) {
+          var t = e.target;
+          if (t && t.tagName === "IMG") {
+            t.removeAttribute("data-hx-bac");
+            swap(t);
+          }
+        }, true);
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", scan);
+        else scan();
+      })();
+    </script>
+    <script>
+      (function () {
+        function goCoas() {
+          window.location.replace("https://harmonyxpeptides.com/coas/");
+        }
+        var path = (location.pathname || "").replace(/\/+$/, "") || "/";
+        if (path === "/coas") {
+          goCoas();
+          return;
+        }
+        var push = history.pushState.bind(history);
+        var replace = history.replaceState.bind(history);
+        function trapped(url) {
+          if (!url) return false;
+          var u = String(url);
+          try {
+            u = new URL(u, location.origin).pathname;
+          } catch (err) {}
+          u = u.replace(/\/+$/, "") || "/";
+          return u === "/coas";
+        }
+        history.pushState = function (state, title, url) {
+          if (trapped(url)) { goCoas(); return; }
+          return push(state, title, url);
+        };
+        history.replaceState = function (state, title, url) {
+          if (trapped(url)) { goCoas(); return; }
+          return replace(state, title, url);
+        };
+        document.addEventListener("click", function (e) {
+          var a = e.target && e.target.closest ? e.target.closest("a") : null;
+          if (!a) return;
+          var href = a.getAttribute("href") || "";
+          if (href === "/coas" || href === "/coas/" || href.indexOf("/coas/") === 0) {
+            e.preventDefault();
+            if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+            goCoas();
+          }
+        }, true);
+      })();
+    </script>
+    <script>
+      try {
+        navigator.serviceWorker.getRegistrations().then(function (regs) {
+          regs.forEach(function (reg) { reg.unregister(); });
+        });
+      } catch (e) {}
+    </script>
+    <script>
+      (function () {
+        var EMAIL = "research@harmony-x.com";
+        function mailHref(name) {
+          var subject = name ? "Product information: " + name : "Product information request";
+          var body = name
+            ? "Hello HarmonyX,\n\nI would like more detailed information on " + name + ".\n\n"
+            : "Hello HarmonyX,\n\nI would like more detailed information on a catalog product.\n\n";
+          return "mailto:" + EMAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+        }
+        function productName(node) {
+          var root = node.closest("[role='dialog'], article, section, li") || document;
+          var heading = root.querySelector("h2, h3");
+          var text = heading && heading.textContent ? heading.textContent.trim() : "";
+          if (!text || text.length > 80) return "";
+          return text;
+        }
+        function addCatalogNote() {
+          if (document.getElementById("hxEmailCatalogNote")) return;
+          var heads = document.querySelectorAll("h2");
+          for (var i = 0; i < heads.length; i++) {
+            if ((heads[i].textContent || "").indexOf("Every vial we stand behind") === -1) continue;
+            var para = heads[i].parentElement && heads[i].parentElement.querySelector("p");
+            if (!para) return;
+            var note = document.createElement("p");
+            note.id = "hxEmailCatalogNote";
+            note.style.cssText = "margin:.7rem 0 0;max-width:36rem;color:#6B6458;font-size:.875rem;line-height:1.55;";
+            note.innerHTML = "Need more detail on a product? Email <a href=\"" + mailHref("") + "\" style=\"color:#8A6A32;text-decoration:underline;\">" + EMAIL + "</a> and we will send what we have on file.";
+            para.insertAdjacentElement("afterend", note);
+            return;
+          }
+        }
+        function addProductLinks() {
+          var links = document.querySelectorAll("a");
+          for (var i = 0; i < links.length; i++) {
+            var a = links[i];
+            if ((a.textContent || "").trim() !== "Request COA") continue;
+            var wrap = a.parentElement;
+            if (!wrap || wrap.querySelector(".hx-email-details")) continue;
+            var name = productName(a);
+            var extra = document.createElement("a");
+            extra.className = "hx-email-details";
+            extra.href = mailHref(name);
+            extra.textContent = "Email for details";
+            extra.style.cssText = "display:inline-flex;align-items:center;border:1px solid rgba(26,24,20,.16);border-radius:6px;padding:.35rem .7rem;font-size:.8rem;color:#1A1814;text-decoration:none;background:#fff;";
+            wrap.appendChild(extra);
+          }
+        }
+        function scan() {
+          addCatalogNote();
+          addProductLinks();
+        }
+        new MutationObserver(scan).observe(document.documentElement, { childList: true, subtree: true });
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", scan);
+        else scan();
+      })();
+    </script>
+
+    <script>
+      (function () {
+        var orig = window.fetch;
+        if (!orig) return;
+        try {
+          var rawCart = localStorage.getItem("hx_cart_v1");
+          if (rawCart) {
+            var lines = JSON.parse(rawCart);
+            if (Array.isArray(lines)) {
+              var next = lines.filter(function (line) {
+                return !/snap[\s-]*8/i.test((line && line.productName) || "");
+              });
+              if (next.length !== lines.length) localStorage.setItem("hx_cart_v1", JSON.stringify(next));
+            }
+          }
+        } catch (e) {}
+        window.fetch = function (input, init) {
+          var url = "";
+          try { url = typeof input === "string" ? input : (input && input.url) || ""; } catch (e) {}
+          if (url.indexOf("/api/catalog") !== -1 && url.indexOf("hx=glp2x94") === -1) {
+            var busted = url + (url.indexOf("?") === -1 ? "?" : "&") + "hx=glp2x94";
+            if (typeof input === "string") input = busted;
+            else if (input && input.url) input = new Request(busted, input);
+            url = busted;
+          }
+          var method = "GET";
+          try { method = (init && init.method) || (input && input.method) || "GET"; } catch (e) {}
+          if (String(method).toUpperCase() === "POST" && url.indexOf("/api/order") !== -1 && init && typeof init.body === "string") {
+            try {
+              var payload = JSON.parse(init.body);
+              if (payload && Array.isArray(payload.items)) {
+                var kept = [];
+                var invoiceNotes = [];
+                for (var n = 0; n < payload.items.length; n++) {
+                  var it = payload.items[n];
+                  var nm = (it && it.productName) || "";
+                  var qty = Number(it && it.vialQuantity) || 0;
+                  if (/oxytocin/i.test(nm) && /nasal/i.test(nm) && !window.__hxOxyNasalOnServer) {
+                    var oxyTotal = Math.round(qty * 75.99 * 100) / 100;
+                    invoiceNotes.push("ADD TO INVOICE: Oxytocin Nasal Spray 5mg x " + qty + " @ $75.99 = $" + oxyTotal.toFixed(2) + ". This item is not on the Master Catalog sheet yet, so price this line by hand. If a promo code is on the order, apply that same percent to this line.");
+                  } else if (/dihexa/i.test(nm) && !window.__hxBlendNasalOnServer) {
+                    var blendTotal = Math.round(qty * 130 * 100) / 100;
+                    invoiceNotes.push("ADD TO INVOICE: Semax/Selank/Dihexa Nasal Spray 15mg x " + qty + " @ $130.00 = $" + blendTotal.toFixed(2) + ". This item is not on the Master Catalog sheet yet, so price this line by hand. If a promo code is on the order, apply that same percent to this line.");
+                  } else if (!/snap[\s-]*8/i.test(nm)) kept.push(it);
+                }
+                if (invoiceNotes.length) {
+                  var addNote = invoiceNotes.join("\n");
+                  if (kept.length) {
+                    payload.items = kept;
+                    payload.customer = payload.customer || {};
+                    payload.customer.notes = payload.customer.notes ? (payload.customer.notes + "\n" + addNote) : addNote;
+                    init = Object.assign({}, init, { body: JSON.stringify(payload) });
+                  } else {
+                    var c = payload.customer || {};
+                    var ship = c.shippingAddress || {};
+                    var addr = [ship.address1, ship.address2, ship.city, ship.state, ship.postalCode, ship.country].filter(Boolean).join(", ");
+                    var f = payload.fulfillment || {};
+                    var promo = payload.promo || {};
+                    var msg = [
+                      "ORDER REQUEST",
+                      addNote,
+                      "Name: " + (c.name || ""),
+                      "Email: " + (c.email || ""),
+                      "Phone: " + (c.phone || ""),
+                      "Fulfillment: " + (f.label || f.method || ""),
+                      "Shipping fee: $" + Number(f.shippingFee || 0).toFixed(2),
+                      addr ? ("Address: " + addr) : "",
+                      c.notes ? ("Customer notes: " + c.notes) : "",
+                      promo.code ? ("Promo code entered: " + promo.code) : ""
+                    ].filter(Boolean).join("\n");
+                    init = Object.assign({}, init, {
+                      body: JSON.stringify({
+                        type: "contact",
+                        name: c.name || "HarmonyX customer",
+                        email: c.email || "",
+                        message: msg,
+                        turnstileToken: payload.turnstileToken || ""
+                      })
+                    });
+                  }
+                } else if (kept.length !== payload.items.length) {
+                  payload.items = kept;
+                  init = Object.assign({}, init, { body: JSON.stringify(payload) });
+                }
+              }
+            } catch (err) {}
+          }
+          var pending = orig.call(this, input, init);
+          if (url.indexOf("/api/catalog") === -1 && url.indexOf("catalog-fallback.json") === -1) return pending;
+          return pending.then(function (res) {
+            return res.clone().json().then(function (data) {
+              var products = data && data.products;
+              if (!products) return res;
+              var liveCatalog = url.indexOf("/api/catalog") !== -1;
+              var changed = false;
+              var hasOxyNasal = false;
+              var hasBlendNasal = false;
+              for (var i = 0; i < products.length; i++) {
+                var item = products[i];
+                if (!item || !item.name) continue;
+                if (/epithalon/i.test(item.name) && /10\s*mg/i.test(item.name)) {
+                  products[i] = Object.assign({}, item, { name: "Epithalon 50mg", retailPrice: 125.99 });
+                  changed = true;
+                }
+                if (/glp-2x/i.test(item.name) && /15\s*mg/i.test(item.name)) {
+                  products[i] = Object.assign({}, item, { retailPrice: 94.99, localStock: true });
+                  changed = true;
+                }
+                if (/oxytocin/i.test(item.name) && /nasal/i.test(item.name)) {
+                  products[i] = Object.assign({}, item, { retailPrice: 75.99, localStock: true, category: "Nasal" });
+                  changed = true;
+                  hasOxyNasal = true;
+                  if (liveCatalog) window.__hxOxyNasalOnServer = true;
+                }
+                if (/dihexa/i.test(item.name) || (/semax/i.test(item.name) && /selank/i.test(item.name) && /nasal|spray/i.test(item.name))) {
+                  products[i] = Object.assign({}, item, {
+                    name: "Semax/Selank/Dihexa Nasal Spray 15mg",
+                    category: "Nasal",
+                    retailPrice: 130,
+                    localStock: true,
+                    description: "Intranasal research blend of Semax, Selank, and Dihexa, 15 mg per bottle, studied in neurocognitive pathway research.",
+                    highlights: "Nasal Spray | Semax | Selank | Dihexa | 15 mg"
+                  });
+                  changed = true;
+                  hasBlendNasal = true;
+                  if (liveCatalog) window.__hxBlendNasalOnServer = true;
+                }
+              }
+              var oosKeys = ["dsip 5 mg","tesamorelin 10 mg","5 amino 1mq 10 mg","glp 2x 10 mg","glp 3x 20 mg","mots c 10 mg","ss 31 10 mg","glutathione 500 mg","glutathione 600 mg","wolverine 10 mg"];
+              function hxNormName(name) {
+                return String(name || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").replace(/(\d+)\s*mg/g, "$1 mg").replace(/\s+/g, " ").trim();
+              }
+              for (var o = 0; o < products.length; o++) {
+                var stockItem = products[o];
+                if (!stockItem || !stockItem.name) continue;
+                var normalized = hxNormName(stockItem.name);
+                if (normalized.indexOf("nasal") !== -1) continue;
+                var out = false;
+                for (var k = 0; k < oosKeys.length; k++) {
+                  if (normalized.indexOf(oosKeys[k]) !== -1) { out = true; break; }
+                }
+                if (!out) continue;
+                products[o] = Object.assign({}, stockItem, {
+                  category: "Currently Out of Stock",
+                  localStock: false,
+                  featured: false,
+                  popularRank: null
+                });
+                changed = true;
+              }
+              for (var j = products.length - 1; j >= 0; j--) {
+                var snapName = (products[j] && products[j].name) || "";
+                if (/snap[\s-]*8/i.test(snapName)) {
+                  products.splice(j, 1);
+                  changed = true;
+                }
+              }
+              if (!hasOxyNasal) {
+                products.push({
+                  id: "oxytocin-nasal-spray-5mg-53",
+                  name: "Oxytocin Nasal Spray 5mg",
+                  category: "Nasal",
+                  description: "Intranasal oxytocin research preparation, 5 mg per bottle, studied in neuroendocrine and social-signaling pathway research.",
+                  productDetails: "Oxytocin is a neuropeptide studied in the literature for social-behavior and stress-modulation signaling research. This listing is a 5 mg nasal spray research preparation. For laboratory and research use only; not evaluated for human or veterinary use.",
+                  highlights: "Nasal Spray | Neuroendocrine Signaling | 5 mg",
+                  researchGuideUrl: "https://harmonyxpeptides.com/PDF%20Peptides%20One%20Pager/OXYTOCIN%20One%20Pager.pdf",
+                  featured: false,
+                  popularRank: null,
+                  retailPrice: 75.99,
+                  localStock: true
+                });
+                changed = true;
+                if (liveCatalog) window.__hxOxyNasalOnServer = false;
+              }
+              if (!hasBlendNasal) {
+                products.push({
+                  id: "semax-selank-dihexa-nasal-15mg-54",
+                  name: "Semax/Selank/Dihexa Nasal Spray 15mg",
+                  category: "Nasal",
+                  description: "Intranasal research blend of Semax, Selank, and Dihexa, 15 mg per bottle, studied in neurocognitive pathway research.",
+                  productDetails: "This 15 mg nasal spray pairs Semax, Selank, and Dihexa for neurocognitive pathway research. For laboratory and research use only; not evaluated for human or veterinary use.",
+                  highlights: "Nasal Spray | Semax | Selank | Dihexa | 15 mg",
+                  researchGuideUrl: "https://harmonyxpeptides.com/coas/Semax-Selank-Dihexa-15mg-COA3970.html",
+                  featured: false,
+                  popularRank: null,
+                  retailPrice: 130,
+                  localStock: true
+                });
+                changed = true;
+                if (liveCatalog) window.__hxBlendNasalOnServer = false;
+              }
+              if (changed) {
+                return new Response(JSON.stringify(data), {
+                  status: res.status,
+                  statusText: res.statusText,
+                  headers: res.headers
+                });
+              }
+              return res;
+            }).catch(function () { return res; });
+          });
+        };
+      })();
+    </script>
+
+    <script>
+      (function () {
+        var EMAIL = "research@harmony-x.com";
+        function mailHref(name) {
+          var subject = name ? "Product information: " + name : "Product information request";
+          var body = name
+            ? "Hello HarmonyX,\n\nI would like more detailed information on " + name + ".\n\n"
+            : "Hello HarmonyX,\n\nI would like more detailed information on a catalog product.\n\n";
+          return "mailto:" + EMAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+        }
+        function productName(node) {
+          var root = node.closest("[role='dialog'], article, section, li") || document;
+          var heading = root.querySelector("h2, h3");
+          var text = heading && heading.textContent ? heading.textContent.trim() : "";
+          if (!text || text.length > 80) return "";
+          return text;
+        }
+        function addCatalogNote() {
+          if (document.getElementById("hxEmailCatalogNote")) return;
+          var heads = document.querySelectorAll("h2");
+          for (var i = 0; i < heads.length; i++) {
+            if ((heads[i].textContent || "").indexOf("Every vial we stand behind") === -1) continue;
+            var para = heads[i].parentElement && heads[i].parentElement.querySelector("p");
+            if (!para) return;
+            var note = document.createElement("p");
+            note.id = "hxEmailCatalogNote";
+            note.style.cssText = "margin:.7rem 0 0;max-width:36rem;color:#6B6458;font-size:.875rem;line-height:1.55;";
+            note.innerHTML = "Need more detail on a product? Email <a href=\"" + mailHref("") + "\" style=\"color:#8A6A32;text-decoration:underline;\">" + EMAIL + "</a> and we will send what we have on file.";
+            para.insertAdjacentElement("afterend", note);
+            return;
+          }
+        }
+        function addProductLinks() {
+          var links = document.querySelectorAll("a");
+          for (var i = 0; i < links.length; i++) {
+            var a = links[i];
+            if ((a.textContent || "").trim() !== "Request COA") continue;
+            var wrap = a.parentElement;
+            if (!wrap || wrap.querySelector(".hx-email-details")) continue;
+            var name = productName(a);
+            var extra = document.createElement("a");
+            extra.className = "hx-email-details";
+            extra.href = mailHref(name);
+            extra.textContent = "Email for details";
+            extra.style.cssText = "display:inline-flex;align-items:center;border:1px solid rgba(26,24,20,.16);border-radius:6px;padding:.35rem .7rem;font-size:.8rem;color:#1A1814;text-decoration:none;background:#fff;";
+            wrap.appendChild(extra);
+          }
+        }
+        function scan() {
+          addCatalogNote();
+          addProductLinks();
+        }
+        new MutationObserver(scan).observe(document.documentElement, { childList: true, subtree: true });
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", scan);
+        else scan();
+      })();
+    </script>
+
+    <style>
+      /* Cream-filled outlined Most Popular button */
+      .hx-most-popular-cream {
+        background-color: #F7F3EC !important;
+        border: 2px solid #B08A3E !important;
+        color: #1A1814 !important;
+        box-shadow: 0 4px 0 0 #C4A574 !important;
+      }
+    </style>
+    <script>
+      (function () {
+        function restyle() {
+          document.querySelectorAll("span").forEach(function (el) {
+            var t = (el.textContent || "").trim().toLowerCase();
+            if (t === "most popular" || t === "most popular ") {
+              el.classList.add("hx-most-popular-cream");
+            }
+          });
+        }
+        new MutationObserver(restyle).observe(document.documentElement, { childList: true, subtree: true });
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", restyle);
+        else restyle();
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/assets/index-hx-20261101d.js"></script>
+    <script>
+      (function () {
+        var form = document.getElementById("promo-form");
+        if (!form) return;
+        var input = form.querySelector("input[type='email']");
+        var button = form.querySelector("button");
+        var status = document.getElementById("promo-status");
+        var widgetId = null;
+        function say(msg) {
+          if (status) status.textContent = msg;
+        }
+        function getToken() {
+          if (!window.turnstile) return "";
+          if (widgetId === null) {
+            var el = document.getElementById("turnstile-widget");
+            if (!el) return "";
+            widgetId = window.turnstile.render(el, { sitekey: el.dataset.sitekey, size: "invisible" });
+          }
+          return window.turnstile.getResponse(widgetId) || "";
+        }
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var email = (input && input.value || "").trim();
+          if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            say("Please enter a valid email.");
+            return;
+          }
+          button.disabled = true;
+          say("Saving…");
+          var token = getToken();
+          fetch("/api/subscribe", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: email,
+              turnstileToken: token
+            })
+          }).then(function (res) {
+            return res.json().catch(function () { return null; }).then(function (data) {
+              if (!res.ok || !data || data.success === false) throw new Error((data && (data.message || data.error)) || "Could not save that email.");
+              say("You're on the list. We'll email catalog updates to " + email + ".");
+              form.reset();
+              if (window.turnstile && widgetId !== null) window.turnstile.reset(widgetId);
+            });
+          }).catch(function (err) {
+            say(err.message || "Could not save that email. Write research@harmony-x.com and we'll add you.");
+          }).finally(function () { button.disabled = false; });
+        });
+      })();
+    </script>
+
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"2b6da0a410d544b4b84743cdf36f0d7f","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>
