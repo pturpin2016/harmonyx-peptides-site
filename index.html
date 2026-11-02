@@ -928,6 +928,25 @@
         max-width: none !important;
         margin-top: 0.75rem;
       }
+      /* Highlight the search bar so it is easy to find */
+      input[placeholder="Search peptides"] {
+        border: 1.5px solid #B08A3E !important;
+        background: #FFFCF7 !important;
+        box-shadow: 0 0 0 3px rgba(176, 138, 62, 0.12), 0 2px 6px rgba(26, 24, 20, 0.06) !important;
+        border-radius: 10px !important;
+        padding-left: 2.5rem !important;
+        font-size: 0.95rem !important;
+        color: #1A1814 !important;
+      }
+      input[placeholder="Search peptides"]:focus {
+        border-color: #1A1814 !important;
+        box-shadow: 0 0 0 3px rgba(176, 138, 62, 0.25), 0 2px 8px rgba(26, 24, 20, 0.08) !important;
+        outline: none !important;
+      }
+      input[placeholder="Search peptides"]::placeholder {
+        color: #8A8175 !important;
+        font-weight: 500 !important;
+      }
       #hxComingSoon .kicker {
         display: inline-flex;
         align-items: center;
