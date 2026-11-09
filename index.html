@@ -31,6 +31,7 @@
         }
         
         function injectGridComingSoon() {
+          return;
           if (document.getElementById("hxComingSoonGrid")) return;
           var cards = Array.from(document.querySelectorAll("article"));
           var lastMP = null;
@@ -179,6 +180,7 @@
         }
         
         function injectGridComingSoon() {
+          return;
           if (document.getElementById("hxComingSoonGrid")) return;
           var cards = Array.from(document.querySelectorAll("article"));
           var lastMP = null;
@@ -262,8 +264,46 @@
                   } else if (/dihexa/i.test(nm) && !window.__hxBlendNasalOnServer) {
                     var blendTotal = Math.round(qty * 130 * 100) / 100;
                     invoiceNotes.push("ADD TO INVOICE: Semax/Selank/Dihexa Nasal Spray 15mg x " + qty + " @ $130.00 = $" + blendTotal.toFixed(2) + ". This item is not on the Master Catalog sheet yet, so price this line by hand. If a promo code is on the order, apply that same percent to this line.");
+                  } else if (/nm5|endure-x|endure x/i.test(nm) && !window.__hxNm5OnServer) {
+                    var nm5Total = Math.round(qty * 99.99 * 100) / 100;
+                    invoiceNotes.push("ADD TO INVOICE: NM5 Endure-X Blend x " + qty + " @ $99.99 = $" + nm5Total.toFixed(2) + ". In stock. Not on the Master Catalog sheet yet, so price this line by hand, then apply the Holiday Sale 25% to this line.");
                   } else if (!/snap[\s-]*8/i.test(nm)) kept.push(it);
                 }
+
+                (function () {
+                  payload.customer = payload.customer || {};
+                  payload.fulfillment = payload.fulfillment || {};
+                  payload.promo = payload.promo || {};
+                  var holidayBits = [];
+                  holidayBits.push("Holiday gift: one free 10 mL bacteriostatic water bottle is included with this order.");
+                  var paidVials = 0;
+                  var scanItems = kept.length ? kept : (payload.items || []);
+                  for (var hv = 0; hv < scanItems.length; hv++) {
+                    var hn = String((scanItems[hv] && scanItems[hv].productName) || "").toLowerCase();
+                    if (/bacteriostatic|syringe|alcohol|holder|\bpad\b/.test(hn)) continue;
+                    paidVials += Number(scanItems[hv].vialQuantity) || 0;
+                  }
+                  var shipMethod = String(payload.fulfillment.method || "");
+                  if (shipMethod === "ship" || shipMethod === "shipping") {
+                    if (paidVials >= 4) {
+                      payload.fulfillment.shippingFee = 0;
+                      payload.fulfillment.label = "USPS Priority — free (4+ vials)";
+                      holidayBits.push("Holiday shipping: USPS is free on this order (" + paidVials + " paid vials).");
+                    }
+                  }
+                  var sentCode = String(payload.promo.code || "").toUpperCase();
+                  var keepHigher = sentCode === "PLATINUM30" || sentCode === "LABORDAY30" || sentCode === "MIX50";
+                  if (!keepHigher) {
+                    payload.promo = {
+                      code: "ELITE25",
+                      percent: 25,
+                      label: "Holiday Sale — 25% off",
+                      discount: payload.promo.discount || 0
+                    };
+                  }
+                  invoiceNotes = invoiceNotes.concat(holidayBits);
+                })();
+
                 if (invoiceNotes.length) {
                   var addNote = invoiceNotes.join("\n");
                   if (kept.length) {
@@ -316,6 +356,7 @@
               var changed = false;
               var hasOxyNasal = false;
               var hasBlendNasal = false;
+              var hasNm5 = false;
               for (var i = 0; i < products.length; i++) {
                 var item = products[i];
                 if (!item || !item.name) continue;
@@ -345,6 +386,21 @@
                   changed = true;
                   hasBlendNasal = true;
                   if (liveCatalog) window.__hxBlendNasalOnServer = true;
+                }
+
+                if (/nm5|endure-x|endure x/i.test(item.name)) {
+                  products[i] = Object.assign({}, item, {
+                    name: "NM5 Endure-X Blend",
+                    category: "Mitochondrial & Metabolic Pathway Research",
+                    retailPrice: 99.99,
+                    localStock: true,
+                    featured: true,
+                    description: "Endurance and cellular energy research blend: NAD+ 100 mg, MOTS-c 10 mg, and 5-Amino-1MQ 10 mg.",
+                    highlights: "NAD+ 100 mg | MOTS-c 10 mg | 5-Amino-1MQ 10 mg"
+                  });
+                  changed = true;
+                  hasNm5 = true;
+                  if (liveCatalog) window.__hxNm5OnServer = true;
                 }
               }
               var oosKeys = ["dsip 5 mg","tesamorelin 10 mg","5 amino 1mq 10 mg","glp 2x 10 mg","glp 3x 20 mg","mots c 10 mg","ss 31 10 mg","glutathione 500 mg","glutathione 600 mg","wolverine 10 mg"];
@@ -410,6 +466,25 @@
                 changed = true;
                 if (liveCatalog) window.__hxBlendNasalOnServer = false;
               }
+
+              if (!hasNm5) {
+                products.push({
+                  id: "nm5-endure-x-blend",
+                  name: "NM5 Endure-X Blend",
+                  category: "Mitochondrial & Metabolic Pathway Research",
+                  description: "Endurance and cellular energy research blend: NAD+ 100 mg, MOTS-c 10 mg, and 5-Amino-1MQ 10 mg.",
+                  productDetails: "NM5 Endure-X pairs NAD+ 100 mg, MOTS-c 10 mg, and 5-Amino-1MQ 10 mg for endurance and cellular energy pathway research. For laboratory and research use only; not evaluated for human or veterinary use.",
+                  highlights: "NAD+ 100 mg | MOTS-c 10 mg | 5-Amino-1MQ 10 mg",
+                  researchGuideUrl: "",
+                  featured: true,
+                  popularRank: 3,
+                  retailPrice: 99.99,
+                  localStock: true
+                });
+                changed = true;
+                if (liveCatalog) window.__hxNm5OnServer = false;
+              }
+
               if (!changed) return res;
               var headers = new Headers(res.headers);
               headers.delete("content-length");
@@ -441,9 +516,15 @@
             img.src = "/vials/semax-selank-dihexa-nasal-15mg.jpg?v=3";
             img.alt = "Semax/Selank/Dihexa Nasal Spray 15mg";
           }
+          if (/nm5|endure-x|endure x/i.test(text)) {
+            if (src.indexOf("nm5-endure-x") !== -1) return;
+            img.src = "/vials/nm5-endure-x.jpg?v=4";
+            img.alt = "NM5 Endure-X Blend";
+          }
         }
         
         function injectGridComingSoon() {
+          return;
           if (document.getElementById("hxComingSoonGrid")) return;
           var cards = Array.from(document.querySelectorAll("article"));
           var lastMP = null;
@@ -488,7 +569,7 @@
       })();
     </script>
 
-    <script type="module" crossorigin src="/assets/index-hx-20261101d.js?v=pop2"></script>
+    <script type="module" crossorigin src="/assets/index-hx-20261109.js?v=holiday1"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-XAOMhhJ0.css">
     <style>
       #hxOffer {
@@ -594,8 +675,40 @@
         color: #F7F3EC; text-decoration: none; border-bottom: 1px solid #B08A3E;
       }
       #hxSaleBar a:hover { color: #E4C27A; }
-      #hxSaleBar { min-height: 104px; overflow: visible; }
-      body.hx-sale-on { padding-top: 104px; }
+      #hxSaleBar { min-height: 0; overflow: visible; }
+      body.hx-sale-on { padding-top: 76px; }
+      #hxSaleBar .perks { color: rgba(247,243,236,.84); font-size: .78rem; }
+      #hxOffer .x { z-index: 3; }
+      #hxOffer .photo {
+        display: block; width: 100%; height: 176px; object-fit: cover; object-position: center 70%;
+      }
+      #hxOffer .sheet { padding: 1.15rem 1.35rem 1.25rem; text-align: center; }
+      #hxOffer .brand {
+        margin: 0; letter-spacing: .28em; font-size: .72rem; font-weight: 600; color: #B08A3E;
+      }
+      #hxOffer .sheet h2 { font-size: 2.35rem; margin-top: .35rem; }
+      #hxOffer .sheet h2 em { font-style: italic; color: #B08A3E; font-weight: 400; }
+      #hxOffer .sheet .lede {
+        margin: .2rem 0 .85rem;
+        font-family: "Instrument Serif", Georgia, serif;
+        font-style: italic; color: #3c3832; font-size: 1rem;
+      }
+      #hxOffer .sheet .offers { padding: 0; gap: 0; }
+      #hxOffer .sheet .offer {
+        background: transparent; border: 0; border-radius: 0;
+        border-top: 1px solid rgba(176,138,62,.4);
+        padding: .8rem .25rem .2rem; text-align: center;
+      }
+      #hxOffer .sheet .offer strong {
+        font-family: "Instrument Serif", Georgia, serif;
+        font-size: 1.65rem; font-weight: 400;
+      }
+      #hxOffer .sheet .actions { padding: 1rem 0 0; }
+      @media (max-width: 640px) {
+        body.hx-sale-on { padding-top: 104px; }
+        #hxSaleBar { padding-top: .6rem; padding-bottom: .6rem; }
+      }
+
       #hxSaleBar .stamp, #hxOffer .datestamp {
         position: relative;
         display: inline-block;
@@ -742,45 +855,45 @@
     <main class="hx-molecular-shell">
       <div id="root"></div>
     </main>
-    <div id="hxSaleBar" role="region" aria-label="Fall Sale extended. VIP20 is 20% off through Sunday, November 8. The October 31 end date has been extended one week.">
-      <span class="tag">Extended</span>
-      <span>through <span class="stamp"><s>October 31</s><span class="hx-burst" aria-hidden="true"><svg viewBox="0 0 200 200" focusable="false"><polygon points="100.00,4.00 121.63,33.43 156.43,22.33 156.63,58.86 191.30,70.33 170.00,100.00 191.30,129.67 156.63,141.14 156.43,177.67 121.63,166.57 100.00,196.00 78.37,166.57 43.57,177.67 43.37,141.14 8.70,129.67 30.00,100.00 8.70,70.33 43.37,58.86 43.57,22.33 78.37,33.43" fill="#E4C27A" transform="translate(100 100) scale(1.085) translate(-100 -100)"/><polygon points="100.00,4.00 121.63,33.43 156.43,22.33 156.63,58.86 191.30,70.33 170.00,100.00 191.30,129.67 156.63,141.14 156.43,177.67 121.63,166.57 100.00,196.00 78.37,166.57 43.57,177.67 43.37,141.14 8.70,129.67 30.00,100.00 8.70,70.33 43.37,58.86 43.57,22.33 78.37,33.43" fill="#B08A3E"/><circle cx="100" cy="100" r="58" fill="#FFFCF7" stroke="#B08A3E" stroke-width="2.4"/><text x="100" y="96" text-anchor="middle" font-family="Instrument Serif, Georgia, serif" font-size="32" fill="#1A1814">Nov 8</text><text x="100" y="116" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="700" letter-spacing="2.1" fill="#B08A3E">EXTENDED</text></svg></span></span> · <strong>20% OFF</strong></span>
-      <span class="code">VIP20</span>
+    <div id="hxSaleBar" role="region" aria-label="Holiday Sale. 25% off sitewide. Free shipping on 4 or more paid vials. A free 10 mL bac water bottle with every order.">
+      <span class="tag">Holiday Sale</span>
+      <span><strong>25% OFF</strong> sitewide</span>
+      <span class="perks">Free shipping on 4+ vials · Free 10 mL bac water</span>
       <a href="#catalog">Shop the catalog</a>
     </div>
     <div id="hxOffer" role="dialog" aria-modal="true" aria-labelledby="hxOfferTitle">
       <div class="card">
         <button class="x" type="button" aria-label="Close offer flyer" id="hxOfferClose">×</button>
-        <div class="hero">
-          <div class="hero-copy">
-            <p class="kicker">Fall Sale · extended</p>
-            <p class="stamp-row"><span class="was">was</span> <s class="olddate">October 31</s> <span class="hx-burst" aria-hidden="true"><svg viewBox="0 0 200 200" focusable="false"><polygon points="100.00,4.00 121.63,33.43 156.43,22.33 156.63,58.86 191.30,70.33 170.00,100.00 191.30,129.67 156.63,141.14 156.43,177.67 121.63,166.57 100.00,196.00 78.37,166.57 43.57,177.67 43.37,141.14 8.70,129.67 30.00,100.00 8.70,70.33 43.37,58.86 43.57,22.33 78.37,33.43" fill="#E4C27A" transform="translate(100 100) scale(1.085) translate(-100 -100)"/><polygon points="100.00,4.00 121.63,33.43 156.43,22.33 156.63,58.86 191.30,70.33 170.00,100.00 191.30,129.67 156.63,141.14 156.43,177.67 121.63,166.57 100.00,196.00 78.37,166.57 43.57,177.67 43.37,141.14 8.70,129.67 30.00,100.00 8.70,70.33 43.37,58.86 43.57,22.33 78.37,33.43" fill="#B08A3E"/><circle cx="100" cy="100" r="58" fill="#FFFCF7" stroke="#B08A3E" stroke-width="2.4"/><text x="100" y="96" text-anchor="middle" font-family="Instrument Serif, Georgia, serif" font-size="32" fill="#1A1814">Nov 8</text><text x="100" y="116" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="700" letter-spacing="2.1" fill="#B08A3E">EXTENDED</text></svg></span></p>
-            <p class="pct">20% <span>OFF</span></p>
-            <h2 id="hxOfferTitle">One more week.</h2>
+        <img class="photo" src="/assets/holiday-beach.jpg" alt="Palm tree wrapped in holiday lights on a sunset beach">
+        <div class="sheet">
+          <p class="brand">HARMONYX</p>
+          <h2 id="hxOfferTitle">Holiday <em>Sale</em></h2>
+          <p class="lede">Three gifts on the research catalog.</p>
+          <div class="offers">
+            <div class="offer">
+              <strong>25% off</strong>
+              <p>Sitewide, on every listed item.</p>
+            </div>
+            <div class="offer">
+              <strong>Free shipping</strong>
+              <p>On 4 or more paid vials.</p>
+            </div>
+            <div class="offer">
+              <strong>Free bac water</strong>
+              <p>A 10 mL bottle with every order.</p>
+            </div>
           </div>
-          <div class="leaves" aria-hidden="true">
-            <img class="leaf a" src="/assets/maple-leaf.webp" alt="">
-            <img class="leaf b" src="/assets/maple-leaf.webp" alt="">
-            <img class="leaf c" src="/assets/maple-leaf.webp" alt="">
+          <div class="actions">
+            <a class="shop" id="hxOfferShop" href="#catalog">Shop the Holiday Sale</a>
+            <p class="fine">For qualified research purchasers. Not for human or veterinary use.</p>
           </div>
-        </div>
-        <div class="offers">
-          <div class="offer">
-            <strong>Fall Sale — 20% off</strong>
-            <span>VIP20</span>
-            <p>Same code through Sunday, November 8 — one week past October 31. Local pickup stays free.</p>
-          </div>
-        </div>
-        <div class="actions">
-          <a class="shop" id="hxOfferShop" href="#catalog">Shop the Fall Sale</a>
-          <p class="fine">Research use only. USPS is $15, or free at $400+ before the discount.</p>
         </div>
       </div>
     </div>
     <script>
       (function () {
         document.body.classList.add("hx-sale-on");
-        var KEY = "hx_offers_fall20_nov8";
+        var KEY = "hx_offers_holiday25";
         var el = document.getElementById("hxOffer");
         if (!el) return;
         function dismissed() {
@@ -817,7 +930,7 @@
 
     <script>
       (function () {
-        var RATE = 0.8;
+        var RATE = 0.75;
         function money(n) {
           return "$" + n.toFixed(2);
         }
@@ -833,10 +946,11 @@
           var amount = parseFloat(m[1].replace(/,/g, ""));
           if (!isFinite(amount) || amount <= 0) return;
           el.setAttribute("data-hx-sale", "1");
-          el.innerHTML = '<s class="hx-was">' + raw + '</s><span class="hx-now">' + money(sale(amount)) + '</span><span class="hx-code">VIP20</span>';
+          el.innerHTML = '<s class="hx-was">' + raw + '</s><span class="hx-now">' + money(sale(amount)) + '</span><span class="hx-code">25% OFF</span>';
         }
         
         function injectGridComingSoon() {
+          return;
           if (document.getElementById("hxComingSoonGrid")) return;
           var cards = Array.from(document.querySelectorAll("article"));
           var lastMP = null;
@@ -1181,6 +1295,7 @@
     <script>
       (function () {
         function injectComingSoon() {
+          return;
           if (document.getElementById("hxComingSoon")) return;
           var heads = document.querySelectorAll("h2");
           var target = null;
@@ -1232,6 +1347,7 @@
         }
         
         function injectGridComingSoon() {
+          return;
           if (document.getElementById("hxComingSoonGrid")) return;
           var cards = Array.from(document.querySelectorAll("article"));
           var lastMP = null;

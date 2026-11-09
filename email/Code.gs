@@ -1,4 +1,4 @@
-// Harmony-X Backend v5.7 - Daylight emails, contact form, Excel export auth
+// Harmony-X Backend v5.8 - Holiday Sale 25%, free shipping on 4+ vials, free bac water
 /**
  * Google Apps Script backend for the Harmony-X Cloudflare Pages site.
  * Customer-facing catalog data is read from the "Master Catalog" sheet.
@@ -63,6 +63,7 @@ const PROMO_CODES = Object.freeze({
   WELCOME10: Object.freeze({ percent: 10, label: '10% off' }),
   HARMONY15: Object.freeze({ percent: 15, label: '15% off' }),
   VIP20: Object.freeze({ percent: 20, label: '20% off' }),
+  HOLIDAY25: Object.freeze({ percent: 25, label: 'Holiday Sale — 25% off' }),
   ELITE25: Object.freeze({ percent: 25, label: 'Elite — 25% off' }),
   PLATINUM30: Object.freeze({ percent: 30, label: 'Platinum — 30% off' }),
   LABORDAY30: Object.freeze({ percent: 30, label: 'Labor Day — 30% off' }),
@@ -279,6 +280,23 @@ function submitOrder(payload) {
       );
 
       if (!product) {
+        if (/^nm5 endure-x blend$/i.test(String(item.productName || '').trim())) {
+          const nm5Price = 99.99;
+          const nm5Line = roundMoney_(nm5Price * item.vialQuantity);
+          return {
+            productName: 'NM5 Endure-X Blend',
+            category: 'Mitochondrial & Metabolic Pathway Research',
+            vialQuantity: item.vialQuantity,
+            pricePerVial: nm5Price,
+            lineTotal: nm5Line,
+            pricePending: false,
+            localStock: true,
+            estimatedUnitCost: null,
+            estimatedLineCost: null,
+            estimatedGrossProfit: null
+          };
+        }
+
         throw new Error(
           'A selected product is no longer available: ' +
           item.productName
@@ -321,6 +339,27 @@ function submitOrder(payload) {
       };
     });
 
+    const paidVials = holidayPaidVials_(verifiedItems);
+    if (fulfillment.method === 'shipping') {
+      fulfillment.shippingFee = paidVials >= 4 ? 0 : 15;
+      fulfillment.label = fulfillment.shippingFee === 0
+        ? 'USPS Priority shipping — free (4+ vials)'
+        : 'USPS Priority shipping';
+    }
+
+    verifiedItems.push({
+      productName: 'Bacteriostatic Water 10mL (holiday gift)',
+      category: 'Laboratory Supplies',
+      vialQuantity: 1,
+      pricePerVial: 0,
+      lineTotal: 0,
+      pricePending: false,
+      localStock: true,
+      estimatedUnitCost: null,
+      estimatedLineCost: null,
+      estimatedGrossProfit: null
+    });
+
     const subtotal = roundMoney_(
       verifiedItems.reduce(
         (sum, item) =>
@@ -333,7 +372,10 @@ function submitOrder(payload) {
       verifiedItems.some(item => item.pricePending);
 
     const totalVials = verifiedItems.reduce(
-      (sum, item) => sum + item.vialQuantity,
+      (sum, item) =>
+        /holiday gift/i.test(item.productName)
+          ? sum
+          : sum + item.vialQuantity,
       0
     );
 
@@ -350,6 +392,9 @@ function submitOrder(payload) {
           : 'Special-order products';
 
     const promo = resolvePromoCode_(payload && payload.promo, subtotal);
+    if (promo.code === 'ELITE25' || promo.code === 'HOLIDAY25') {
+      promo.label = 'Holiday Sale — 25% off';
+    }
 
     const estimatedTotal = roundMoney_(
       subtotal - promo.discount + fulfillment.shippingFee
@@ -2855,6 +2900,17 @@ function validateCustomer_(customer, fulfillment) {
     shippingAddress,
     fulfillmentMethod: fulfillment.method
   };
+}
+
+
+function holidayPaidVials_(items) {
+  return items.reduce((sum, item) => {
+    const name = String(item.productName || '');
+    if (/bacteriostatic|syringe|alcohol|holder|\bpad\b/i.test(name)) {
+      return sum;
+    }
+    return sum + (Number(item.vialQuantity) || 0);
+  }, 0);
 }
 
 
