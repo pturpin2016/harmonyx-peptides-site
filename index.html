@@ -681,58 +681,25 @@
         inset: 0;
         z-index: 30;
         pointer-events: none;
-        --hx-r: radial-gradient(circle at 7px 7px, #fff 0 1px, #D64545 1.5px 4px, transparent 4.5px);
-        --hx-g: radial-gradient(circle at 25px 7px, #fff 0 1px, #2F8A45 1.5px 4px, transparent 4.5px);
-        --hx-y: radial-gradient(circle at 43px 7px, #fff 0 1px, #E4C27A 1.5px 4px, transparent 4.5px);
-        --hx-b: radial-gradient(circle at 61px 7px, #fff 0 1px, #3E74C4 1.5px 4px, transparent 4.5px);
-        --hx-rv: radial-gradient(circle at 7px 7px, #fff 0 1px, #3E74C4 1.5px 4px, transparent 4.5px);
-        --hx-gv: radial-gradient(circle at 7px 25px, #fff 0 1px, #E4C27A 1.5px 4px, transparent 4.5px);
-        --hx-yv: radial-gradient(circle at 7px 43px, #fff 0 1px, #2F8A45 1.5px 4px, transparent 4.5px);
-        --hx-bv: radial-gradient(circle at 7px 61px, #fff 0 1px, #D64545 1.5px 4px, transparent 4.5px);
-        background-image:
-          var(--hx-r), var(--hx-g), var(--hx-y), var(--hx-b),
-          var(--hx-r), var(--hx-g), var(--hx-y), var(--hx-b),
-          var(--hx-rv), var(--hx-gv), var(--hx-yv), var(--hx-bv),
-          var(--hx-rv), var(--hx-gv), var(--hx-yv), var(--hx-bv),
-          linear-gradient(#6d5a32, #6d5a32),
-          linear-gradient(#6d5a32, #6d5a32),
-          linear-gradient(#6d5a32, #6d5a32),
-          linear-gradient(#6d5a32, #6d5a32);
-        background-size:
-          72px 14px, 72px 14px, 72px 14px, 72px 14px,
-          72px 14px, 72px 14px, 72px 14px, 72px 14px,
-          14px 72px, 14px 72px, 14px 72px, 14px 72px,
-          14px 72px, 14px 72px, 14px 72px, 14px 72px,
-          100% 1px, 100% 1px, 1px 100%, 1px 100%;
-        background-position:
-          left top, left top, left top, left top,
-          left bottom, left bottom, left bottom, left bottom,
-          left top, left top, left top, left top,
-          right top, right top, right top, right top,
-          left 6px, left bottom 6px, 6px top, right 6px top;
-        background-repeat:
-          repeat-x, repeat-x, repeat-x, repeat-x,
-          repeat-x, repeat-x, repeat-x, repeat-x,
-          repeat-y, repeat-y, repeat-y, repeat-y,
-          repeat-y, repeat-y, repeat-y, repeat-y,
-          no-repeat, no-repeat, no-repeat, no-repeat;
+        --hx-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='22' viewBox='0 0 88 22'%3E%3Crect y='1' width='88' height='1.3' fill='%236d5a32'/%3E%3Cg%3E%3Crect x='8.7' y='2' width='4.6' height='2.6' rx='.4' fill='%234a433c'/%3E%3Crect x='9.1' y='2.8' width='3.8' height='.55' fill='%2390867c'/%3E%3Cellipse cx='11' cy='12.6' rx='4.7' ry='6' fill='%23E24B4B'/%3E%3Cellipse cx='11' cy='12.6' rx='4.7' ry='6' fill='none' stroke='%23a33232' stroke-width='.55'/%3E%3Cellipse cx='9.3' cy='10.2' rx='1.45' ry='2.1' fill='%23fff' opacity='.75'/%3E%3C/g%3E%3Cg transform='translate(22)'%3E%3Crect x='8.7' y='2' width='4.6' height='2.6' rx='.4' fill='%234a433c'/%3E%3Crect x='9.1' y='2.8' width='3.8' height='.55' fill='%2390867c'/%3E%3Cellipse cx='11' cy='12.6' rx='4.7' ry='6' fill='%232E9A4A'/%3E%3Cellipse cx='11' cy='12.6' rx='4.7' ry='6' fill='none' stroke='%231d6d34' stroke-width='.55'/%3E%3Cellipse cx='9.3' cy='10.2' rx='1.45' ry='2.1' fill='%23fff' opacity='.75'/%3E%3C/g%3E%3Cg transform='translate(44)'%3E%3Crect x='8.7' y='2' width='4.6' height='2.6' rx='.4' fill='%234a433c'/%3E%3Crect x='9.1' y='2.8' width='3.8' height='.55' fill='%2390867c'/%3E%3Cellipse cx='11' cy='12.6' rx='4.7' ry='6' fill='%23E4C27A'/%3E%3Cellipse cx='11' cy='12.6' rx='4.7' ry='6' fill='none' stroke='%23a4843e' stroke-width='.55'/%3E%3Cellipse cx='9.3' cy='10.2' rx='1.45' ry='2.1' fill='%23fff' opacity='.8'/%3E%3C/g%3E%3Cg transform='translate(66)'%3E%3Crect x='8.7' y='2' width='4.6' height='2.6' rx='.4' fill='%234a433c'/%3E%3Crect x='9.1' y='2.8' width='3.8' height='.55' fill='%2390867c'/%3E%3Cellipse cx='11' cy='12.6' rx='4.7' ry='6' fill='%233E7AD0'/%3E%3Cellipse cx='11' cy='12.6' rx='4.7' ry='6' fill='none' stroke='%232a5696' stroke-width='.55'/%3E%3Cellipse cx='9.3' cy='10.2' rx='1.45' ry='2.1' fill='%23fff' opacity='.75'/%3E%3C/g%3E%3C/svg%3E");
+        --hx-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='22' viewBox='0 0 88 22'%3E%3Crect y='19.7' width='88' height='1.3' fill='%236d5a32'/%3E%3Cg%3E%3Crect x='8.7' y='17.4' width='4.6' height='2.6' rx='.4' fill='%234a433c'/%3E%3Crect x='9.1' y='18.1' width='3.8' height='.55' fill='%2390867c'/%3E%3Cellipse cx='11' cy='9.4' rx='4.7' ry='6' fill='%23E24B4B'/%3E%3Cellipse cx='11' cy='9.4' rx='4.7' ry='6' fill='none' stroke='%23a33232' stroke-width='.55'/%3E%3Cellipse cx='9.3' cy='7' rx='1.45' ry='2.1' fill='%23fff' opacity='.75'/%3E%3C/g%3E%3Cg transform='translate(22)'%3E%3Crect x='8.7' y='17.4' width='4.6' height='2.6' rx='.4' fill='%234a433c'/%3E%3Crect x='9.1' y='18.1' width='3.8' height='.55' fill='%2390867c'/%3E%3Cellipse cx='11' cy='9.4' rx='4.7' ry='6' fill='%232E9A4A'/%3E%3Cellipse cx='11' cy='9.4' rx='4.7' ry='6' fill='none' stroke='%231d6d34' stroke-width='.55'/%3E%3Cellipse cx='9.3' cy='7' rx='1.45' ry='2.1' fill='%23fff' opacity='.75'/%3E%3C/g%3E%3Cg transform='translate(44)'%3E%3Crect x='8.7' y='17.4' width='4.6' height='2.6' rx='.4' fill='%234a433c'/%3E%3Crect x='9.1' y='18.1' width='3.8' height='.55' fill='%2390867c'/%3E%3Cellipse cx='11' cy='9.4' rx='4.7' ry='6' fill='%23E4C27A'/%3E%3Cellipse cx='11' cy='9.4' rx='4.7' ry='6' fill='none' stroke='%23a4843e' stroke-width='.55'/%3E%3Cellipse cx='9.3' cy='7' rx='1.45' ry='2.1' fill='%23fff' opacity='.8'/%3E%3C/g%3E%3Cg transform='translate(66)'%3E%3Crect x='8.7' y='17.4' width='4.6' height='2.6' rx='.4' fill='%234a433c'/%3E%3Crect x='9.1' y='18.1' width='3.8' height='.55' fill='%2390867c'/%3E%3Cellipse cx='11' cy='9.4' rx='4.7' ry='6' fill='%233E7AD0'/%3E%3Cellipse cx='11' cy='9.4' rx='4.7' ry='6' fill='none' stroke='%232a5696' stroke-width='.55'/%3E%3Cellipse cx='9.3' cy='7' rx='1.45' ry='2.1' fill='%23fff' opacity='.75'/%3E%3C/g%3E%3C/svg%3E");
+        --hx-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='88' viewBox='0 0 22 88'%3E%3Crect x='1' width='1.3' height='88' fill='%236d5a32'/%3E%3Cg%3E%3Crect x='2' y='8.7' width='2.6' height='4.6' rx='.4' fill='%234a433c'/%3E%3Cellipse cx='12.6' cy='11' rx='6' ry='4.7' fill='%23E24B4B'/%3E%3Cellipse cx='12.6' cy='11' rx='6' ry='4.7' fill='none' stroke='%23a33232' stroke-width='.55'/%3E%3Cellipse cx='10.2' cy='9.3' rx='2.1' ry='1.45' fill='%23fff' opacity='.75'/%3E%3C/g%3E%3Cg transform='translate(0 22)'%3E%3Crect x='2' y='8.7' width='2.6' height='4.6' rx='.4' fill='%234a433c'/%3E%3Cellipse cx='12.6' cy='11' rx='6' ry='4.7' fill='%232E9A4A'/%3E%3Cellipse cx='12.6' cy='11' rx='6' ry='4.7' fill='none' stroke='%231d6d34' stroke-width='.55'/%3E%3Cellipse cx='10.2' cy='9.3' rx='2.1' ry='1.45' fill='%23fff' opacity='.75'/%3E%3C/g%3E%3Cg transform='translate(0 44)'%3E%3Crect x='2' y='8.7' width='2.6' height='4.6' rx='.4' fill='%234a433c'/%3E%3Cellipse cx='12.6' cy='11' rx='6' ry='4.7' fill='%23E4C27A'/%3E%3Cellipse cx='12.6' cy='11' rx='6' ry='4.7' fill='none' stroke='%23a4843e' stroke-width='.55'/%3E%3Cellipse cx='10.2' cy='9.3' rx='2.1' ry='1.45' fill='%23fff' opacity='.8'/%3E%3C/g%3E%3Cg transform='translate(0 66)'%3E%3Crect x='2' y='8.7' width='2.6' height='4.6' rx='.4' fill='%234a433c'/%3E%3Cellipse cx='12.6' cy='11' rx='6' ry='4.7' fill='%233E7AD0'/%3E%3Cellipse cx='12.6' cy='11' rx='6' ry='4.7' fill='none' stroke='%232a5696' stroke-width='.55'/%3E%3Cellipse cx='10.2' cy='9.3' rx='2.1' ry='1.45' fill='%23fff' opacity='.75'/%3E%3C/g%3E%3C/svg%3E");
+        --hx-left: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='88' viewBox='0 0 22 88'%3E%3Crect x='19.7' width='1.3' height='88' fill='%236d5a32'/%3E%3Cg%3E%3Crect x='17.4' y='8.7' width='2.6' height='4.6' rx='.4' fill='%234a433c'/%3E%3Cellipse cx='9.4' cy='11' rx='6' ry='4.7' fill='%23E24B4B'/%3E%3Cellipse cx='9.4' cy='11' rx='6' ry='4.7' fill='none' stroke='%23a33232' stroke-width='.55'/%3E%3Cellipse cx='7' cy='9.3' rx='2.1' ry='1.45' fill='%23fff' opacity='.75'/%3E%3C/g%3E%3Cg transform='translate(0 22)'%3E%3Crect x='17.4' y='8.7' width='2.6' height='4.6' rx='.4' fill='%234a433c'/%3E%3Cellipse cx='9.4' cy='11' rx='6' ry='4.7' fill='%232E9A4A'/%3E%3Cellipse cx='9.4' cy='11' rx='6' ry='4.7' fill='none' stroke='%231d6d34' stroke-width='.55'/%3E%3Cellipse cx='7' cy='9.3' rx='2.1' ry='1.45' fill='%23fff' opacity='.75'/%3E%3C/g%3E%3Cg transform='translate(0 44)'%3E%3Crect x='17.4' y='8.7' width='2.6' height='4.6' rx='.4' fill='%234a433c'/%3E%3Cellipse cx='9.4' cy='11' rx='6' ry='4.7' fill='%23E4C27A'/%3E%3Cellipse cx='9.4' cy='11' rx='6' ry='4.7' fill='none' stroke='%23a4843e' stroke-width='.55'/%3E%3Cellipse cx='7' cy='9.3' rx='2.1' ry='1.45' fill='%23fff' opacity='.8'/%3E%3C/g%3E%3Cg transform='translate(0 66)'%3E%3Crect x='17.4' y='8.7' width='2.6' height='4.6' rx='.4' fill='%234a433c'/%3E%3Cellipse cx='9.4' cy='11' rx='6' ry='4.7' fill='%233E7AD0'/%3E%3Cellipse cx='9.4' cy='11' rx='6' ry='4.7' fill='none' stroke='%232a5696' stroke-width='.55'/%3E%3Cellipse cx='7' cy='9.3' rx='2.1' ry='1.45' fill='%23fff' opacity='.75'/%3E%3C/g%3E%3C/svg%3E");
+        background-image: var(--hx-down), var(--hx-up), var(--hx-right), var(--hx-left);
+        background-size: 88px 22px, 88px 22px, 22px 88px, 22px 88px;
+        background-position: left top, left bottom, left top, right top;
+        background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
       }
       #hxSaleBar::after {
         content: "";
         position: absolute;
-        left: 0; right: 0; bottom: -9px;
-        height: 16px;
+        left: 0; right: 0; bottom: -16px;
+        height: 22px;
         pointer-events: none;
-        background-image:
-          radial-gradient(circle at 7px 5px, #fff 0 1px, #D64545 1.5px 4px, transparent 4.5px),
-          radial-gradient(circle at 25px 5px, #fff 0 1px, #2F8A45 1.5px 4px, transparent 4.5px),
-          radial-gradient(circle at 43px 5px, #fff 0 1px, #E4C27A 1.5px 4px, transparent 4.5px),
-          radial-gradient(circle at 61px 5px, #fff 0 1px, #3E74C4 1.5px 4px, transparent 4.5px),
-          linear-gradient(#6d5a32, #6d5a32);
-        background-size: 72px 16px, 72px 16px, 72px 16px, 72px 16px, 72px 1px;
-        background-position: 0 0, 0 0, 0 0, 0 0, 0 5px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='22' viewBox='0 0 88 22'%3E%3Crect y='1' width='88' height='1.3' fill='%236d5a32'/%3E%3Cg%3E%3Crect x='8.7' y='2' width='4.6' height='2.6' rx='.4' fill='%234a433c'/%3E%3Crect x='9.1' y='2.8' width='3.8' height='.55' fill='%2390867c'/%3E%3Cellipse cx='11' cy='12.6' rx='4.7' ry='6' fill='%23E24B4B'/%3E%3Cellipse cx='11' cy='12.6' rx='4.7' ry='6' fill='none' stroke='%23a33232' stroke-width='.55'/%3E%3Cellipse cx='9.3' cy='10.2' rx='1.45' ry='2.1' fill='%23fff' opacity='.75'/%3E%3C/g%3E%3Cg transform='translate(22)'%3E%3Crect x='8.7' y='2' width='4.6' height='2.6' rx='.4' fill='%234a433c'/%3E%3Crect x='9.1' y='2.8' width='3.8' height='.55' fill='%2390867c'/%3E%3Cellipse cx='11' cy='12.6' rx='4.7' ry='6' fill='%232E9A4A'/%3E%3Cellipse cx='11' cy='12.6' rx='4.7' ry='6' fill='none' stroke='%231d6d34' stroke-width='.55'/%3E%3Cellipse cx='9.3' cy='10.2' rx='1.45' ry='2.1' fill='%23fff' opacity='.75'/%3E%3C/g%3E%3Cg transform='translate(44)'%3E%3Crect x='8.7' y='2' width='4.6' height='2.6' rx='.4' fill='%234a433c'/%3E%3Crect x='9.1' y='2.8' width='3.8' height='.55' fill='%2390867c'/%3E%3Cellipse cx='11' cy='12.6' rx='4.7' ry='6' fill='%23E4C27A'/%3E%3Cellipse cx='11' cy='12.6' rx='4.7' ry='6' fill='none' stroke='%23a4843e' stroke-width='.55'/%3E%3Cellipse cx='9.3' cy='10.2' rx='1.45' ry='2.1' fill='%23fff' opacity='.8'/%3E%3C/g%3E%3Cg transform='translate(66)'%3E%3Crect x='8.7' y='2' width='4.6' height='2.6' rx='.4' fill='%234a433c'/%3E%3Crect x='9.1' y='2.8' width='3.8' height='.55' fill='%2390867c'/%3E%3Cellipse cx='11' cy='12.6' rx='4.7' ry='6' fill='%233E7AD0'/%3E%3Cellipse cx='11' cy='12.6' rx='4.7' ry='6' fill='none' stroke='%232a5696' stroke-width='.55'/%3E%3Cellipse cx='9.3' cy='10.2' rx='1.45' ry='2.1' fill='%23fff' opacity='.75'/%3E%3C/g%3E%3C/svg%3E");
+        background-size: 88px 22px;
         background-repeat: repeat-x;
-        filter: drop-shadow(0 1px 1px rgba(26,24,20,.35));
+        filter: drop-shadow(0 1px 1px rgba(26,24,20,.28));
       }
       body.hx-sale-on { padding-top: 76px; }
       #hxSaleBar .perks { color: rgba(247,243,236,.84); font-size: .78rem; }
