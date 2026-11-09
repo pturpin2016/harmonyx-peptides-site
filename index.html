@@ -670,6 +670,23 @@
       }
       #hxSaleBar a:hover { color: #E4C27A; }
       #hxSaleBar { min-height: 0; overflow: visible; }
+      #hxSaleBar::after {
+        content: "";
+        position: absolute;
+        left: 0; right: 0; bottom: -9px;
+        height: 16px;
+        pointer-events: none;
+        background-image:
+          radial-gradient(circle at 7px 5px, #fff 0 1px, #D64545 1.5px 4px, transparent 4.5px),
+          radial-gradient(circle at 25px 5px, #fff 0 1px, #2F8A45 1.5px 4px, transparent 4.5px),
+          radial-gradient(circle at 43px 5px, #fff 0 1px, #E4C27A 1.5px 4px, transparent 4.5px),
+          radial-gradient(circle at 61px 5px, #fff 0 1px, #3E74C4 1.5px 4px, transparent 4.5px),
+          linear-gradient(#6d5a32, #6d5a32);
+        background-size: 72px 16px, 72px 16px, 72px 16px, 72px 16px, 72px 1px;
+        background-position: 0 0, 0 0, 0 0, 0 0, 0 5px;
+        background-repeat: repeat-x;
+        filter: drop-shadow(0 1px 1px rgba(26,24,20,.35));
+      }
       body.hx-sale-on { padding-top: 76px; }
       #hxSaleBar .perks { color: rgba(247,243,236,.84); font-size: .78rem; }
       #hxOffer .x { z-index: 3; }
