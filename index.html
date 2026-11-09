@@ -675,6 +675,48 @@
       body.hx-sale-on .fixed.inset-0.z-50 {
         z-index: 75;
       }
+      body.hx-sale-on .fixed.inset-y-0.right-0.z-50::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        --hx-r: radial-gradient(circle at 7px 7px, #fff 0 1px, #D64545 1.5px 4px, transparent 4.5px);
+        --hx-g: radial-gradient(circle at 25px 7px, #fff 0 1px, #2F8A45 1.5px 4px, transparent 4.5px);
+        --hx-y: radial-gradient(circle at 43px 7px, #fff 0 1px, #E4C27A 1.5px 4px, transparent 4.5px);
+        --hx-b: radial-gradient(circle at 61px 7px, #fff 0 1px, #3E74C4 1.5px 4px, transparent 4.5px);
+        --hx-rv: radial-gradient(circle at 7px 7px, #fff 0 1px, #3E74C4 1.5px 4px, transparent 4.5px);
+        --hx-gv: radial-gradient(circle at 7px 25px, #fff 0 1px, #E4C27A 1.5px 4px, transparent 4.5px);
+        --hx-yv: radial-gradient(circle at 7px 43px, #fff 0 1px, #2F8A45 1.5px 4px, transparent 4.5px);
+        --hx-bv: radial-gradient(circle at 7px 61px, #fff 0 1px, #D64545 1.5px 4px, transparent 4.5px);
+        background-image:
+          var(--hx-r), var(--hx-g), var(--hx-y), var(--hx-b),
+          var(--hx-r), var(--hx-g), var(--hx-y), var(--hx-b),
+          var(--hx-rv), var(--hx-gv), var(--hx-yv), var(--hx-bv),
+          var(--hx-rv), var(--hx-gv), var(--hx-yv), var(--hx-bv),
+          linear-gradient(#6d5a32, #6d5a32),
+          linear-gradient(#6d5a32, #6d5a32),
+          linear-gradient(#6d5a32, #6d5a32),
+          linear-gradient(#6d5a32, #6d5a32);
+        background-size:
+          72px 14px, 72px 14px, 72px 14px, 72px 14px,
+          72px 14px, 72px 14px, 72px 14px, 72px 14px,
+          14px 72px, 14px 72px, 14px 72px, 14px 72px,
+          14px 72px, 14px 72px, 14px 72px, 14px 72px,
+          100% 1px, 100% 1px, 1px 100%, 1px 100%;
+        background-position:
+          left top, left top, left top, left top,
+          left bottom, left bottom, left bottom, left bottom,
+          left top, left top, left top, left top,
+          right top, right top, right top, right top,
+          left 6px, left bottom 6px, 6px top, right 6px top;
+        background-repeat:
+          repeat-x, repeat-x, repeat-x, repeat-x,
+          repeat-x, repeat-x, repeat-x, repeat-x,
+          repeat-y, repeat-y, repeat-y, repeat-y,
+          repeat-y, repeat-y, repeat-y, repeat-y,
+          no-repeat, no-repeat, no-repeat, no-repeat;
+      }
       #hxSaleBar::after {
         content: "";
         position: absolute;
