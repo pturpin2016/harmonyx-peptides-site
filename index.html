@@ -264,9 +264,6 @@
                   } else if (/dihexa/i.test(nm) && !window.__hxBlendNasalOnServer) {
                     var blendTotal = Math.round(qty * 130 * 100) / 100;
                     invoiceNotes.push("ADD TO INVOICE: Semax/Selank/Dihexa Nasal Spray 15mg x " + qty + " @ $130.00 = $" + blendTotal.toFixed(2) + ". This item is not on the Master Catalog sheet yet, so price this line by hand. If a promo code is on the order, apply that same percent to this line.");
-                  } else if (/nm5|endure-x|endure x/i.test(nm) && !window.__hxNm5OnServer) {
-                    var nm5Total = Math.round(qty * 99.99 * 100) / 100;
-                    invoiceNotes.push("ADD TO INVOICE: NM5 Endure-X Blend x " + qty + " @ $99.99 = $" + nm5Total.toFixed(2) + ". In stock.");
                   } else if (!/snap[\s-]*8/i.test(nm)) kept.push(it);
                 }
 
@@ -274,8 +271,6 @@
                   payload.customer = payload.customer || {};
                   payload.fulfillment = payload.fulfillment || {};
                   payload.promo = payload.promo || {};
-                  var holidayBits = [];
-                  holidayBits.push("Holiday gift: one free 10 mL bacteriostatic water bottle is included with this order.");
                   var paidVials = 0;
                   var scanItems = kept.length ? kept : (payload.items || []);
                   for (var hv = 0; hv < scanItems.length; hv++) {
@@ -288,7 +283,6 @@
                     if (paidVials >= 4) {
                       payload.fulfillment.shippingFee = 0;
                       payload.fulfillment.label = "USPS Priority — free (4+ vials)";
-                      holidayBits.push("Holiday shipping: USPS is free on this order (" + paidVials + " paid vials).");
                     }
                   }
                   var sentCode = String(payload.promo.code || "").toUpperCase();
@@ -301,17 +295,18 @@
                       discount: payload.promo.discount || 0
                     };
                   }
-                  invoiceNotes = invoiceNotes.concat(holidayBits);
                 })();
 
-                if (invoiceNotes.length) {
-                  var addNote = invoiceNotes.join("\n");
-                  if (kept.length) {
-                    payload.items = kept;
+                if (kept.length) {
+                  payload.items = kept;
+                  if (invoiceNotes.length) {
+                    var addNote = invoiceNotes.join("\n");
                     payload.customer = payload.customer || {};
                     payload.customer.notes = payload.customer.notes ? (payload.customer.notes + "\n" + addNote) : addNote;
-                    init = Object.assign({}, init, { body: JSON.stringify(payload) });
-                  } else {
+                  }
+                  init = Object.assign({}, init, { body: JSON.stringify(payload) });
+                } else if (invoiceNotes.length) {
+                    var addNote = invoiceNotes.join("\n");
                     var c = payload.customer || {};
                     var ship = c.shippingAddress || {};
                     var addr = [ship.address1, ship.address2, ship.city, ship.state, ship.postalCode, ship.country].filter(Boolean).join(", ");
@@ -338,7 +333,6 @@
                         turnstileToken: payload.turnstileToken || ""
                       })
                     });
-                  }
                 } else if (kept.length !== payload.items.length) {
                   payload.items = kept;
                   init = Object.assign({}, init, { body: JSON.stringify(payload) });
