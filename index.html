@@ -266,7 +266,7 @@
                     invoiceNotes.push("ADD TO INVOICE: Semax/Selank/Dihexa Nasal Spray 15mg x " + qty + " @ $130.00 = $" + blendTotal.toFixed(2) + ". This item is not on the Master Catalog sheet yet, so price this line by hand. If a promo code is on the order, apply that same percent to this line.");
                   } else if (/nm5|endure-x|endure x/i.test(nm) && !window.__hxNm5OnServer) {
                     var nm5Total = Math.round(qty * 99.99 * 100) / 100;
-                    invoiceNotes.push("ADD TO INVOICE: NM5 Endure-X Blend x " + qty + " @ $99.99 = $" + nm5Total.toFixed(2) + ". In stock. Not on the Master Catalog sheet yet, so price this line by hand, then apply the Holiday Sale 25% to this line.");
+                    invoiceNotes.push("ADD TO INVOICE: NM5 Endure-X Blend x " + qty + " @ $99.99 = $" + nm5Total.toFixed(2) + ". In stock.");
                   } else if (!/snap[\s-]*8/i.test(nm)) kept.push(it);
                 }
 

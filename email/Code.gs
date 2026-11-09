@@ -280,7 +280,7 @@ function submitOrder(payload) {
       );
 
       if (!product) {
-        if (/^nm5 endure-x blend$/i.test(String(item.productName || '').trim())) {
+        if (/nm5/i.test(item.productName) && /endure/i.test(item.productName)) {
           const nm5Price = 99.99;
           const nm5Line = roundMoney_(nm5Price * item.vialQuantity);
           return {
@@ -339,6 +339,8 @@ function submitOrder(payload) {
       };
     });
 
+    appendNotedHolidayItems_(verifiedItems, customer.notes);
+
     const paidVials = holidayPaidVials_(verifiedItems);
     if (fulfillment.method === 'shipping') {
       fulfillment.shippingFee = paidVials >= 4 ? 0 : 15;
@@ -348,7 +350,7 @@ function submitOrder(payload) {
     }
 
     verifiedItems.push({
-      productName: 'Bacteriostatic Water 10mL (holiday gift)',
+      productName: 'Bacteriostatic Water 10mL — Holiday gift',
       category: 'Laboratory Supplies',
       vialQuantity: 1,
       pricePerVial: 0,
@@ -1258,11 +1260,12 @@ function populateDraftInvoice_(spreadsheet, order) {
   sheet.getRange('H10').setValue(
     order.fulfillment.method === 'pickup'
       ? 'Local pickup'
-      : 'USPS Priority Shipping'
+      : (order.fulfillment.shippingFee > 0
+          ? 'USPS Priority Shipping'
+          : 'USPS Priority Shipping — free')
   );
-  sheet.getRange('H11').setFormula(
-    '=IF(H10="Local pickup",0,15)'
-  );
+  sheet.getRange('H11').setValue(Number(order.fulfillment.shippingFee) || 0)
+    .setNumberFormat('$#,##0.00');
   sheet.getRange('H12').setValue('Unpaid');
   sheet.getRange('H13').setValue(CONFIG.DEFAULT_PAYMENT_METHOD);
 
@@ -2900,6 +2903,34 @@ function validateCustomer_(customer, fulfillment) {
     shippingAddress,
     fulfillmentMethod: fulfillment.method
   };
+}
+
+
+function appendNotedHolidayItems_(items, notes) {
+  const text = String(notes || '');
+  const already = items.some(item =>
+    /nm5/i.test(item.productName) && /endure/i.test(item.productName)
+  );
+
+  if (!already) {
+    const match = text.match(/NM5 Endure-X Blend x\s+(\d+)/i);
+    if (match) {
+      const qty = Math.max(1, Math.min(100, Number(match[1]) || 1));
+      const price = 99.99;
+      items.push({
+        productName: 'NM5 Endure-X Blend',
+        category: 'Mitochondrial & Metabolic Pathway Research',
+        vialQuantity: qty,
+        pricePerVial: price,
+        lineTotal: roundMoney_(price * qty),
+        pricePending: false,
+        localStock: true,
+        estimatedUnitCost: null,
+        estimatedLineCost: null,
+        estimatedGrossProfit: null
+      });
+    }
+  }
 }
 
 
