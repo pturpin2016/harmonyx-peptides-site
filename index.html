@@ -295,7 +295,7 @@
                   var keepHigher = sentCode === "PLATINUM30" || sentCode === "LABORDAY30" || sentCode === "MIX50";
                   if (!keepHigher) {
                     payload.promo = {
-                      code: "ELITE25",
+                      code: "HOLIDAY25",
                       percent: 25,
                       label: "Holiday Sale — 25% off",
                       discount: payload.promo.discount || 0
@@ -857,6 +857,7 @@
     </main>
     <div id="hxSaleBar" role="region" aria-label="Holiday Sale. 25% off sitewide. Free shipping on 4 or more paid vials. A free 10 mL bac water bottle with every order.">
       <span class="tag">Holiday Sale</span>
+      <span class="code">HOLIDAY25</span>
       <span><strong>25% OFF</strong> sitewide</span>
       <span class="perks">Free shipping on 4+ vials · Free 10 mL bac water</span>
       <a href="#catalog">Shop the catalog</a>
@@ -872,7 +873,7 @@
           <div class="offers">
             <div class="offer">
               <strong>25% off</strong>
-              <p>Sitewide, on every listed item.</p>
+              <p>Sitewide, on every listed item. Code HOLIDAY25 is applied at checkout.</p>
             </div>
             <div class="offer">
               <strong>Free shipping</strong>
@@ -946,7 +947,7 @@
           var amount = parseFloat(m[1].replace(/,/g, ""));
           if (!isFinite(amount) || amount <= 0) return;
           el.setAttribute("data-hx-sale", "1");
-          el.innerHTML = '<s class="hx-was">' + raw + '</s><span class="hx-now">' + money(sale(amount)) + '</span><span class="hx-code">25% OFF</span>';
+          el.innerHTML = '<s class="hx-was">' + raw + '</s><span class="hx-now">' + money(sale(amount)) + '</span><span class="hx-code">HOLIDAY25</span>';
         }
         
         function injectGridComingSoon() {
@@ -1219,18 +1220,40 @@
         line-height: 1.5;
         max-width: 38rem;
       }
-      #hxComingSoon .badge {
+      #hxComingSoon .price {
+        margin: 0.85rem 0 0;
+        font-size: 1.15rem;
+        font-variant-numeric: tabular-nums;
+      }
+      #hxComingSoon .price s {
+        color: #8A8175;
+        font-weight: 400;
+        margin-right: 0.45rem;
+      }
+      #hxComingSoon .price strong {
+        color: #B08A3E;
+        font-size: 1.45rem;
+        font-weight: 600;
+      }
+      #hxComingSoon .price span {
         display: inline-block;
-        margin-top: 0.9rem;
-        padding: 0.35rem 0.75rem;
-        border-radius: 999px;
+        margin-left: 0.45rem;
+        font-size: 0.68rem;
+        letter-spacing: 0.14em;
+        font-weight: 600;
+        color: #B08A3E;
+      }
+      #hxComingSoon .add {
+        margin-top: 1rem;
+        border: 0;
+        border-radius: 8px;
         background: #1A1814;
         color: #F7F3EC;
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
+        padding: 0.75rem 1.1rem;
+        font-size: 0.92rem;
+        cursor: pointer;
       }
+      #hxComingSoon .add:hover { background: #B08A3E; }
     
       /* Secondary Coming Soon card in the product grid */
       #hxComingSoonGrid .card {
@@ -1295,7 +1318,6 @@
     <script>
       (function () {
         function injectComingSoon() {
-          return;
           if (document.getElementById("hxComingSoon")) return;
           var heads = document.querySelectorAll("h2");
           var target = null;
@@ -1308,24 +1330,43 @@
           if (!target) return;
           var section = document.createElement("section");
           section.id = "hxComingSoon";
+          section.setAttribute("aria-label", "Featured research blend");
           section.innerHTML =
             '<div class="card">' +
               '<div class="vial-wrap">' +
-                '<img src="/vials/nm5-endure-x.jpg?v=3" alt="NM5 Endure-X Blend research vial" />' +
+                '<img src="/vials/nm5-endure-x.jpg?v=4" alt="NM5 Endure-X Blend research vial" />' +
               '</div>' +
               '<div class="copy">' +
-                '<p class="kicker">Coming Soon</p>' +
-                '<h2>NM5 Endure-X Blend</h2>' +
-                '<p class="lede">NAD+ 100 mg · MOTS-c 10 mg · 5-Amino-1MQ 10 mg. Formulated as an endurance and cellular energy research blend — supporting mitochondrial function, NAD+ pathways, and metabolic research. Product should be here soon.</p>' +
-                '<span class="badge">Arriving soon</span>' +
+                '<p class="kicker">Featured</p>' +
+                '<h2>NM5 Endure-X</h2>' +
+                '<p class="lede">NAD+ 100 mg · MOTS-c 10 mg · 5-Amino-1MQ 10 mg. Endurance and cellular energy research blend. In stock now.</p>' +
+                '<p class="price"><s>$99.99</s><strong>$74.99</strong><span>HOLIDAY25</span></p>' +
+                '<button type="button" class="add" id="hxFeaturedAdd">Add to request</button>' +
               '</div>' +
             '</div>';
-          // Insert before the catalog heading's parent block
           var parent = target.parentElement;
           if (parent && parent.parentElement) {
             parent.parentElement.insertBefore(section, parent);
           } else if (parent) {
             parent.insertBefore(section, target);
+          }
+          var add = document.getElementById("hxFeaturedAdd");
+          if (add) {
+            add.addEventListener("click", function () {
+              var cards = document.querySelectorAll("article");
+              for (var c = 0; c < cards.length; c++) {
+                var label = cards[c].textContent || "";
+                if (label.indexOf("NM5 Endure-X") === -1) continue;
+                var buttons = cards[c].querySelectorAll("button");
+                for (var b = 0; b < buttons.length; b++) {
+                  if ((buttons[b].textContent || "").trim() === "Add to request") {
+                    buttons[b].click();
+                    cards[c].scrollIntoView({ behavior: "smooth", block: "center" });
+                    return;
+                  }
+                }
+              }
+            });
           }
         }
         function moveSearch() {
