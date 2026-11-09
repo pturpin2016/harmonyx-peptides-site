@@ -670,6 +670,11 @@
       }
       #hxSaleBar a:hover { color: #E4C27A; }
       #hxSaleBar { min-height: 0; overflow: visible; }
+      /* The sale bar is fixed above the page. The request drawer was opening underneath it. */
+      body.hx-sale-on .fixed.inset-y-0.right-0.z-50,
+      body.hx-sale-on .fixed.inset-0.z-50 {
+        z-index: 75;
+      }
       #hxSaleBar::after {
         content: "";
         position: absolute;
