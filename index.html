@@ -265,8 +265,8 @@
                     var blendTotal = Math.round(qty * 130 * 100) / 100;
                     invoiceNotes.push("ADD TO INVOICE: Semax/Selank/Dihexa Nasal Spray 15mg x " + qty + " @ $130.00 = $" + blendTotal.toFixed(2) + ". This item is not on the Master Catalog sheet yet, so price this line by hand. If a promo code is on the order, apply that same percent to this line.");
                   } else if (/\bhcg\b/i.test(nm) && !window.__hxHcgOnServer) {
-                    var hcgTotal = Math.round(qty * 49.99 * 100) / 100;
-                    invoiceNotes.push("ADD TO INVOICE: HCG 5000 IU x " + qty + " @ $49.99 = $" + hcgTotal.toFixed(2) + ". This item is not on the Master Catalog sheet yet, so price this line by hand. If a promo code is on the order, apply that same percent to this line.");
+                    var hcgTotal = Math.round(qty * 54.99 * 100) / 100;
+                    invoiceNotes.push("ADD TO INVOICE: HCG 5000 IU x " + qty + " @ $54.99 = $" + hcgTotal.toFixed(2) + ". This item is not on the Master Catalog sheet yet, so price this line by hand. If a promo code is on the order, apply that same percent to this line.");
                   } else if (!/snap[\s-]*8/i.test(nm)) kept.push(it);
                 }
 
@@ -405,7 +405,7 @@
                   products[i] = Object.assign({}, item, {
                     name: "HCG 5000 IU",
                     category: "Neuroendocrine Signaling Research",
-                    retailPrice: 49.99,
+                    retailPrice: 54.99,
                     localStock: true,
                     description: "Glycoprotein hormone studied for luteinizing-hormone receptor signaling in research models. 5000 IU per vial.",
                     productDetails: "HCG (human chorionic gonadotropin) is a glycoprotein hormone studied in the research literature for luteinizing-hormone receptor signaling and reproductive-axis pathway models. This listing is 5000 IU per vial. For laboratory and research use only; not evaluated for human or veterinary use.",
