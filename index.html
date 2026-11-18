@@ -264,6 +264,9 @@
                   } else if (/dihexa/i.test(nm) && !window.__hxBlendNasalOnServer) {
                     var blendTotal = Math.round(qty * 130 * 100) / 100;
                     invoiceNotes.push("ADD TO INVOICE: Semax/Selank/Dihexa Nasal Spray 15mg x " + qty + " @ $130.00 = $" + blendTotal.toFixed(2) + ". This item is not on the Master Catalog sheet yet, so price this line by hand. If a promo code is on the order, apply that same percent to this line.");
+                  } else if (/\bhcg\b/i.test(nm) && !window.__hxHcgOnServer) {
+                    var hcgTotal = Math.round(qty * 49.99 * 100) / 100;
+                    invoiceNotes.push("ADD TO INVOICE: HCG 5000 IU x " + qty + " @ $49.99 = $" + hcgTotal.toFixed(2) + ". This item is not on the Master Catalog sheet yet, so price this line by hand. If a promo code is on the order, apply that same percent to this line.");
                   } else if (!/snap[\s-]*8/i.test(nm)) kept.push(it);
                 }
 
@@ -351,6 +354,7 @@
               var hasOxyNasal = false;
               var hasBlendNasal = false;
               var hasNm5 = false;
+              var hasHcg = false;
               for (var i = 0; i < products.length; i++) {
                 var item = products[i];
                 if (!item || !item.name) continue;
@@ -395,6 +399,21 @@
                   changed = true;
                   hasNm5 = true;
                   if (liveCatalog) window.__hxNm5OnServer = true;
+                }
+
+                if (/\bhcg\b/i.test(item.name)) {
+                  products[i] = Object.assign({}, item, {
+                    name: "HCG 5000 IU",
+                    category: "Neuroendocrine Signaling Research",
+                    retailPrice: 49.99,
+                    localStock: true,
+                    description: "Glycoprotein hormone studied for luteinizing-hormone receptor signaling in research models. 5000 IU per vial.",
+                    productDetails: "HCG (human chorionic gonadotropin) is a glycoprotein hormone studied in the research literature for luteinizing-hormone receptor signaling and reproductive-axis pathway models. This listing is 5000 IU per vial. For laboratory and research use only; not evaluated for human or veterinary use.",
+                    highlights: "5000 IU | LH-Receptor Signaling"
+                  });
+                  changed = true;
+                  hasHcg = true;
+                  if (liveCatalog) window.__hxHcgOnServer = true;
                 }
               }
               var oosKeys = ["dsip 5 mg","tesamorelin 10 mg","5 amino 1mq 10 mg","glp 2x 10 mg","glp 3x 20 mg","mots c 10 mg","ss 31 10 mg","glutathione 500 mg","glutathione 600 mg","wolverine 10 mg"];
@@ -479,6 +498,24 @@
                 if (liveCatalog) window.__hxNm5OnServer = false;
               }
 
+              if (!hasHcg) {
+                products.push({
+                  id: "hcg-5000-iu-55",
+                  name: "HCG 5000 IU",
+                  category: "Neuroendocrine Signaling Research",
+                  description: "Glycoprotein hormone studied for luteinizing-hormone receptor signaling in research models. 5000 IU per vial.",
+                  productDetails: "HCG (human chorionic gonadotropin) is a glycoprotein hormone studied in the research literature for luteinizing-hormone receptor signaling and reproductive-axis pathway models. This listing is 5000 IU per vial. For laboratory and research use only; not evaluated for human or veterinary use.",
+                  highlights: "5000 IU | LH-Receptor Signaling",
+                  researchGuideUrl: "",
+                  featured: false,
+                  popularRank: null,
+                  retailPrice: 49.99,
+                  localStock: true
+                });
+                changed = true;
+                if (liveCatalog) window.__hxHcgOnServer = false;
+              }
+
               if (!changed) return res;
               var headers = new Headers(res.headers);
               headers.delete("content-length");
@@ -514,6 +551,11 @@
             if (src.indexOf("nm5-endure-x") !== -1) return;
             img.src = "/vials/nm5-endure-x.jpg?v=4";
             img.alt = "NM5 Endure-X Blend";
+          }
+          if (/\bhcg\b/i.test(text)) {
+            if (src.indexOf("hcg-5000-iu") !== -1) return;
+            img.src = "/vials/hcg-5000-iu.jpg?v=1";
+            img.alt = "HCG 5000 IU";
           }
         }
         
