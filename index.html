@@ -407,8 +407,8 @@
                 if (/dsip/i.test(item.name) && /nasal/i.test(item.name)) {
                   products[i] = Object.assign({}, item, {
                     name: "DSIP Nasal Spray 5mg",
-                    category: "Nasal",
-                    retailPrice: 94.99,
+                    category: "Currently Out of Stock",
+                    retailPrice: 97.99,
                     localStock: false,
                     featured: false,
                     popularRank: null,
@@ -486,14 +486,14 @@
                 products.push({
                   id: "dsip-nasal-spray-5mg-56",
                   name: "DSIP Nasal Spray 5mg",
-                  category: "Nasal",
+                  category: "Currently Out of Stock",
                   description: "Intranasal DSIP research preparation, 5 mg per bottle, studied in sleep-architecture and circadian-pathway research.",
                   productDetails: "DSIP (delta sleep-inducing peptide) is a research peptide studied in the literature for sleep-architecture and circadian-pathway research. This listing is a 5 mg nasal spray research preparation. For laboratory and research use only; not evaluated for human or veterinary use.",
                   highlights: "Nasal Spray | Sleep-Architecture Pathway | 5 mg",
                   researchGuideUrl: "https://harmonyxpeptides.com/PDF%20Peptides%20One%20Pager/DSIP%20One%20Pager.pdf",
                   featured: false,
                   popularRank: null,
-                  retailPrice: 94.99,
+                  retailPrice: 97.99,
                   localStock: false
                 });
                 changed = true;
@@ -575,7 +575,7 @@
           if (/dsip/i.test(text) && /nasal/i.test(text)) {
             if (src.indexOf("dsip-nasal-spray-5mg") !== -1) return;
             if (src.indexOf("Nasal-Spray") === -1 && src.indexOf("nasal") === -1) return;
-            img.src = "/vials/dsip-nasal-spray-5mg.jpg?v=1";
+            img.src = "/vials/dsip-nasal-spray-5mg.jpg?v=2";
             img.alt = "DSIP Nasal Spray 5mg";
             return;
           }
