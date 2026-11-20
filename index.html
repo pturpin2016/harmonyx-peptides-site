@@ -755,6 +755,11 @@
         color: #F7F3EC; text-decoration: none; border-bottom: 1px solid #B08A3E;
       }
       #hxSaleBar a:hover { color: #E4C27A; }
+      #hxSaleBar a.give {
+        color: #1A1814; background: #E4C27A; border: 0; border-radius: 999px;
+        padding: .2rem .6rem; font-weight: 600; letter-spacing: .04em;
+      }
+      #hxSaleBar a.give:hover { color: #1A1814; background: #F3DCA4; }
       #hxSaleBar { min-height: 0; overflow: visible; }
       /* The sale bar is fixed above the page. The request drawer was opening underneath it. */
       body.hx-sale-on .fixed.inset-y-0.right-0.z-50,
@@ -804,8 +809,60 @@
       }
       #hxOffer .sheet .actions { padding: 1rem 0 0; }
       @media (max-width: 640px) {
-        body.hx-sale-on { padding-top: 104px; }
+        body.hx-sale-on { padding-top: 118px; }
         #hxSaleBar { padding-top: .6rem; padding-bottom: .6rem; }
+      }
+
+      #hxGiveaway { scroll-margin-top: 120px; }
+      #hxGiveaway .card {
+        display: grid; grid-template-columns: 1.2fr .8fr;
+        background: #FFFCF7; color: #1A1814;
+        border: 1px solid rgba(176,138,62,.7);
+        border-radius: 16px; overflow: hidden;
+        box-shadow: 0 12px 32px rgba(26,24,20,.06);
+        font-family: Inter, system-ui, sans-serif;
+      }
+      #hxGiveaway img {
+        width: 100%; height: 100%; min-height: 280px;
+        object-fit: cover; object-position: center;
+        background: #F6ECE2; display: block;
+      }
+      #hxGiveaway .copy { padding: 1.35rem 1.35rem 1.2rem; }
+      #hxGiveaway .kicker {
+        margin: 0; font-size: .7rem; font-weight: 600;
+        letter-spacing: .18em; text-transform: uppercase; color: #B08A3E;
+      }
+      #hxGiveaway h2 {
+        margin: .25rem 0 .35rem;
+        font-family: "Instrument Serif", Georgia, serif;
+        font-size: 2.15rem; font-weight: 400; letter-spacing: -.02em; line-height: 1.05;
+      }
+      #hxGiveaway .lede { margin: 0 0 .85rem; color: #3c3832; font-size: .95rem; line-height: 1.5; }
+      #hxGiveaway .lede strong { color: #1A1814; }
+      #hxGiveaway ul {
+        margin: 0 0 .95rem; padding: 0; list-style: none;
+        display: grid; grid-template-columns: 1fr 1fr; gap: .35rem .75rem;
+        font-size: .86rem; color: #3c3832;
+      }
+      #hxGiveaway li { padding-left: .7rem; position: relative; }
+      #hxGiveaway li::before {
+        content: ""; position: absolute; left: 0; top: .45rem;
+        width: .35rem; height: .35rem; border-radius: 999px; background: #B08A3E;
+      }
+      #hxGiveaway a.enter {
+        display: inline-block; text-decoration: none;
+        background: #1A1814; color: #F7F3EC;
+        border-radius: 8px; padding: .7rem 1rem; font-size: .9rem; font-weight: 500;
+      }
+      #hxGiveaway a.enter:hover { background: #B08A3E; color: #FFFCF7; }
+      #hxGiveaway .fine { margin: .7rem 0 0; color: #6B6458; font-size: .72rem; line-height: 1.45; }
+      #hxOffer .giveaway-line {
+        margin: .15rem 0 .9rem; font-size: .84rem; line-height: 1.45; color: #3c3832;
+      }
+      #hxOffer .giveaway-line a { color: #8C6A2E; font-weight: 600; }
+      @media (max-width: 800px) {
+        #hxGiveaway .card { grid-template-columns: 1fr; }
+        #hxGiveaway ul { grid-template-columns: 1fr; }
       }
 
       #hxSaleBar .stamp, #hxOffer .datestamp {
@@ -959,6 +1016,7 @@
       <span class="code">HOLIDAY25</span>
       <span><strong>25% OFF</strong> sitewide</span>
       <span class="perks">Free shipping on 4+ vials · Free 10 mL bac water</span>
+      <a class="give" href="#hxGiveaway">Giveaway · Dec 10 & Jan 10</a>
       <a href="#catalog">Shop the catalog</a>
     </div>
     <div id="hxOffer" role="dialog" aria-modal="true" aria-labelledby="hxOfferTitle">
@@ -969,6 +1027,7 @@
           <p class="brand">HARMONYX</p>
           <h2 id="hxOfferTitle">Holiday <em>Sale</em></h2>
           <p class="lede">Three gifts on the research catalog.</p>
+          <p class="giveaway-line"><a href="#hxGiveaway" id="hxOfferGiveaway">Giveaway</a> — one purchase enters you to win the Ultimate Starter Kit. Drawings December 10 and January 10.</p>
           <div class="offers">
             <div class="offer">
               <strong>25% off</strong>
@@ -1012,6 +1071,7 @@
         }
         document.getElementById("hxOfferClose").addEventListener("click", dismiss);
         document.getElementById("hxOfferShop").addEventListener("click", dismiss);
+        document.getElementById("hxOfferGiveaway").addEventListener("click", dismiss);
         el.addEventListener("click", function (e) {
           if (e.target === el) dismiss();
         });
@@ -1025,6 +1085,45 @@
             if (n > 120) clearInterval(t);
           }, 500);
         }
+      })();
+    </script>
+    <script>
+      (function () {
+        var markup = ''
+          + '<section id="hxGiveaway" aria-label="Ultimate Starter Kit giveaway">'
+          + '<div class="card">'
+          + '<img src="/assets/giveaway-kit.jpg" alt="Ultimate Starter Kit: GLP-3X 30 mg, KLOW 80 mg, NAD+ 1000 mg, a 30 mL bacteriostatic water bottle, and a black travel case.">'
+          + '<div class="copy">'
+          + '<p class="kicker">Giveaway</p>'
+          + '<h2>Ultimate Starter Kit</h2>'
+          + '<p class="lede">One purchase before a drawing enters you in that drawing. Winners drawn <strong>December 10</strong> and <strong>January 10</strong>.</p>'
+          + '<ul>'
+          + '<li>GLP-3X 30 mg</li>'
+          + '<li>KLOW 80 mg</li>'
+          + '<li>NAD+ 1000 mg</li>'
+          + '<li>30 mL bacteriostatic water</li>'
+          + '<li>Travel and storage case</li>'
+          + '<li>Starter kit to begin your research</li>'
+          + '</ul>'
+          + '<a class="enter" href="#catalog">Shop to enter</a>'
+          + '<p class="fine">One qualifying purchase before each date is one entry. For qualified research purchasers. Not for human or veterinary use.</p>'
+          + '</div></div></section>';
+        function place() {
+          var catalog = document.getElementById("catalog");
+          if (!catalog || !catalog.parentNode) return;
+          var existing = document.getElementById("hxGiveaway");
+          if (existing && existing.nextElementSibling === catalog) return;
+          if (existing) existing.remove();
+          var holder = document.createElement("div");
+          holder.innerHTML = markup;
+          catalog.parentNode.insertBefore(holder.firstElementChild, catalog);
+        }
+        new MutationObserver(place).observe(document.documentElement, {
+          childList: true,
+          subtree: true
+        });
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", place);
+        else place();
       })();
     </script>
 
