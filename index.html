@@ -267,6 +267,8 @@
                   } else if (/\bhcg\b/i.test(nm) && !window.__hxHcgOnServer) {
                     var hcgTotal = Math.round(qty * 54.99 * 100) / 100;
                     invoiceNotes.push("ADD TO INVOICE: HCG 5000 IU x " + qty + " @ $54.99 = $" + hcgTotal.toFixed(2) + ". This item is not on the Master Catalog sheet yet, so price this line by hand. If a promo code is on the order, apply that same percent to this line.");
+                  } else if (/dsip/i.test(nm) && /nasal/i.test(nm)) {
+                    // DSIP Nasal Spray 5mg is listed, but currently not in stock.
                   } else if (!/snap[\s-]*8/i.test(nm)) kept.push(it);
                 }
 
@@ -353,6 +355,7 @@
               var changed = false;
               var hasOxyNasal = false;
               var hasBlendNasal = false;
+              var hasDsipNasal = false;
               var hasNm5 = false;
               var hasHcg = false;
               for (var i = 0; i < products.length; i++) {
@@ -399,6 +402,23 @@
                   changed = true;
                   hasNm5 = true;
                   if (liveCatalog) window.__hxNm5OnServer = true;
+                }
+
+                if (/dsip/i.test(item.name) && /nasal/i.test(item.name)) {
+                  products[i] = Object.assign({}, item, {
+                    name: "DSIP Nasal Spray 5mg",
+                    category: "Nasal",
+                    retailPrice: 94.99,
+                    localStock: false,
+                    featured: false,
+                    popularRank: null,
+                    description: "Intranasal DSIP research preparation, 5 mg per bottle, studied in sleep-architecture and circadian-pathway research.",
+                    productDetails: "DSIP (delta sleep-inducing peptide) is a research peptide studied in the literature for sleep-architecture and circadian-pathway research. This listing is a 5 mg nasal spray research preparation. For laboratory and research use only; not evaluated for human or veterinary use.",
+                    highlights: "Nasal Spray | Sleep-Architecture Pathway | 5 mg",
+                    researchGuideUrl: "https://harmonyxpeptides.com/PDF%20Peptides%20One%20Pager/DSIP%20One%20Pager.pdf"
+                  });
+                  changed = true;
+                  hasDsipNasal = true;
                 }
 
                 if (/\bhcg\b/i.test(item.name)) {
@@ -462,6 +482,23 @@
                 changed = true;
                 if (liveCatalog) window.__hxOxyNasalOnServer = false;
               }
+              if (!hasDsipNasal) {
+                products.push({
+                  id: "dsip-nasal-spray-5mg-56",
+                  name: "DSIP Nasal Spray 5mg",
+                  category: "Nasal",
+                  description: "Intranasal DSIP research preparation, 5 mg per bottle, studied in sleep-architecture and circadian-pathway research.",
+                  productDetails: "DSIP (delta sleep-inducing peptide) is a research peptide studied in the literature for sleep-architecture and circadian-pathway research. This listing is a 5 mg nasal spray research preparation. For laboratory and research use only; not evaluated for human or veterinary use.",
+                  highlights: "Nasal Spray | Sleep-Architecture Pathway | 5 mg",
+                  researchGuideUrl: "https://harmonyxpeptides.com/PDF%20Peptides%20One%20Pager/DSIP%20One%20Pager.pdf",
+                  featured: false,
+                  popularRank: null,
+                  retailPrice: 94.99,
+                  localStock: false
+                });
+                changed = true;
+              }
+
               if (!hasBlendNasal) {
                 products.push({
                   id: "semax-selank-dihexa-nasal-15mg-54",
@@ -535,6 +572,13 @@
           if (!img || img.tagName !== "IMG") return;
           var src = img.getAttribute("src") || "";
           var text = cardText(img);
+          if (/dsip/i.test(text) && /nasal/i.test(text)) {
+            if (src.indexOf("dsip-nasal-spray-5mg") !== -1) return;
+            if (src.indexOf("Nasal-Spray") === -1 && src.indexOf("nasal") === -1) return;
+            img.src = "/vials/dsip-nasal-spray-5mg.jpg?v=1";
+            img.alt = "DSIP Nasal Spray 5mg";
+            return;
+          }
           if (/oxytocin/i.test(text) && /nasal/i.test(text)) {
             if (src.indexOf("oxytocin-nasal-spray-5mg") !== -1) return;
             if (src.indexOf("Nasal-Spray") === -1 && src.indexOf("nasal") === -1) return;
@@ -605,7 +649,7 @@
       })();
     </script>
 
-    <script type="module" crossorigin src="/assets/index-hx-20261109.js?v=holiday4"></script>
+    <script type="module" crossorigin src="/assets/index-hx-20261109.js?v=dsip94"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-XAOMhhJ0.css">
     <style>
       #hxOffer {
